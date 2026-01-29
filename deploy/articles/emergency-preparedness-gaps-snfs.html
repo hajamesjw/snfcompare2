@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OIG Audit Identifies Emergency Preparedness Gaps at SNFs | SNF Compare</title>
+  <meta name="description" content="Review of facilities in hurricane and wildfire zones finds deficiencies in evacuation planning, backup power, and communication systems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif; background:#fafafa; color:#1a1a1a; line-height:1.7; }
+
+    /* Nav */
+    .article-nav { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#fff; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:100; }
+    .article-nav a { text-decoration:none; }
+    .nav-logo { display:flex; align-items:center; gap:0.5rem; font-weight:800; font-size:1.15rem; color:#0f172a; }
+    .nav-logo .badge { background:#10b981; color:#fff; padding:0.2rem 0.5rem; border-radius:6px; font-size:0.7rem; font-weight:700; }
+    .nav-back { color:#6b7280; font-size:0.88rem; font-weight:500; transition:color .2s; display:flex; align-items:center; gap:0.4rem; }
+    .nav-back:hover { color:#10b981; }
+
+    /* Article */
+    .article-wrapper { max-width:720px; margin:0 auto; padding:3rem 1.5rem 4rem; }
+    .article-meta-top { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+    .category-badge { background:#ecfdf5; color:#059669; padding:0.3rem 0.75rem; border-radius:100px; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+    .meta-sep { color:#d1d5db; }
+    .meta-text { color:#6b7280; font-size:0.85rem; font-weight:500; }
+    .article-title { font-size:2.1rem; font-weight:800; color:#0f172a; line-height:1.25; letter-spacing:-0.02em; margin-bottom:1rem; }
+    .article-subtitle { font-size:1.1rem; color:#6b7280; line-height:1.6; margin-bottom:2rem; border-left:3px solid #10b981; padding-left:1rem; }
+    .article-byline { display:flex; align-items:center; gap:0.75rem; padding-bottom:2rem; border-bottom:1px solid #e5e7eb; margin-bottom:2.5rem; }
+    .byline-avatar { width:40px; height:40px; border-radius:50%; background:#10b981; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:0.85rem; }
+    .byline-info { font-size:0.85rem; }
+    .byline-name { font-weight:700; color:#0f172a; }
+    .byline-date { color:#6b7280; }
+
+    /* Body content */
+    .article-body { font-size:1.05rem; color:#334155; }
+    .article-body p { margin-bottom:1.5rem; }
+    .article-body h2 { font-size:1.35rem; font-weight:800; color:#0f172a; margin:2.5rem 0 1rem; letter-spacing:-0.01em; }
+    .article-body blockquote { border-left:3px solid #10b981; padding:0.75rem 1.25rem; margin:1.5rem 0; background:#f0fdf4; border-radius:0 8px 8px 0; font-style:italic; color:#475569; }
+    .article-body ul, .article-body ol { margin:0 0 1.5rem 1.5rem; }
+    .article-body li { margin-bottom:0.5rem; }
+
+    /* Related */
+    .related-section { margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid #e5e7eb; }
+    .related-section h2 { font-size:1.15rem; font-weight:800; color:#0f172a; margin-bottom:1.25rem; }
+    .related-list { display:flex; flex-direction:column; gap:0.75rem; }
+    .related-link { display:block; padding:1rem 1.25rem; background:#fff; border:1px solid #e5e7eb; border-radius:12px; text-decoration:none; color:#0f172a; font-weight:600; font-size:0.95rem; transition:all .2s; }
+    .related-link:hover { border-color:#10b981; color:#059669; box-shadow:0 2px 8px rgba(16,185,129,.1); }
+
+    /* Footer */
+    .article-footer { max-width:720px; margin:0 auto; padding:2rem 1.5rem 3rem; text-align:center; }
+    .footer-cta { display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2rem; background:#10b981; color:#fff; border-radius:100px; text-decoration:none; font-weight:700; font-size:0.95rem; transition:background .2s; margin-bottom:1.5rem; }
+    .footer-cta:hover { background:#059669; }
+    .footer-links { display:flex; justify-content:center; gap:1.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+    .footer-links a { color:#6b7280; text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; }
+    .footer-links a:hover { color:#10b981; }
+    .footer-disclaimer { font-size:0.75rem; color:#9ca3af; max-width:500px; margin:0 auto; line-height:1.5; }
+
+    /* Responsive */
+    @media (max-width:640px) {
+      .article-nav { padding:0.85rem 1rem; }
+      .article-wrapper { padding:2rem 1rem 3rem; }
+      .article-title { font-size:1.55rem; }
+      .article-body { font-size:0.98rem; }
+      .article-footer { padding:1.5rem 1rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="article-nav">
+    <a href="../" class="nav-logo">SNF Compare <span class="badge">NEWS</span></a>
+    <a href="javascript:history.back()" class="nav-back">&larr; Back</a>
+  </header>
+
+  <article class="article-wrapper">
+    <div class="article-meta-top">
+      <span class="category-badge">Compliance</span>
+      <span class="meta-sep">&middot;</span>
+      <span class="meta-text">January 3, 2026</span>
+      <span class="meta-sep">&middot;</span>
+      <span class="meta-text">4 min read</span>
+    </div>
+    <h1 class="article-title">OIG Audit Identifies Emergency Preparedness Gaps at SNFs</h1>
+    <p class="article-subtitle">Review of facilities in hurricane and wildfire zones finds deficiencies in evacuation planning, backup power, and communication systems.</p>
+    <div class="article-byline">
+      <div class="byline-avatar">SC</div>
+      <div class="byline-info">
+        <div class="byline-name">SNF Compare Editorial</div>
+        <div class="byline-date">January 3, 2026</div>
+      </div>
+    </div>
+    <div class="article-body">
+      <p>A Department of Health and Human Services Office of Inspector General audit has identified significant emergency preparedness deficiencies at skilled nursing facilities in disaster-prone regions, raising concerns about the sector&rsquo;s readiness for climate-related emergencies. The audit, focused on facilities in hurricane zones along the Gulf and Atlantic coasts and wildfire-prone areas of California, found that 42% of surveyed facilities had at least one serious gap in their emergency plans.</p>
+
+            <h2>Key Findings</h2>
+            <p>The OIG review of 300 facilities across 10 states found several common deficiencies. Evacuation planning was inadequate at 38% of facilities, with gaps including insufficient transportation arrangements, unclear triggers for evacuation decisions, and inadequate provisions for residents requiring specialized medical equipment during transport.</p>
+            <p>Backup power systems were deficient at 27% of facilities. While most facilities had generators, many lacked sufficient fuel storage to operate beyond 72 hours, and some had not conducted load testing to verify that critical systems (HVAC, medical equipment, refrigeration) would function during extended outages.</p>
+            <p>Communication systems were vulnerable at 31% of facilities, which relied primarily on cellular networks without backup satellite or radio capabilities. Recent disasters have demonstrated that cellular networks often fail during major emergencies precisely when communication is most critical.</p>
+
+            <h2>Recent Disaster Impacts</h2>
+            <p>The audit findings gain urgency in light of recent disaster events affecting nursing homes. Hurricane-related deaths at nursing facilities in Florida and Texas have drawn scrutiny in recent years, with investigations finding that inadequate preparation contributed to resident harm. California wildfires have forced multiple facility evacuations, with varying degrees of success depending on advance planning and execution.</p>
+            <p>The OIG noted that facilities that experienced disasters and subsequently corrected deficiencies demonstrated significantly improved performance, suggesting that emergency preparedness improves with experience but that proactive preparation remains inconsistent.</p>
+
+            <h2>Regulatory Requirements</h2>
+            <p>CMS emergency preparedness requirements, implemented in 2016 and revised in 2021, establish detailed standards for emergency planning, communication, training, and testing. However, the OIG found that survey enforcement has been inconsistent, with significant variation in how state survey agencies assess emergency preparedness compliance.</p>
+            <p>The audit recommends that CMS develop standardized survey tools specifically for emergency preparedness assessment, increase the frequency of focused emergency preparedness reviews in disaster-prone areas, and establish minimum backup power duration requirements for different facility sizes and populations.</p>
+
+            <h2>Operator Response</h2>
+            <p>The American Health Care Association acknowledged the findings while noting that emergency preparedness investment competes with other operational priorities in a sector facing financial pressures. AHCA has called for federal emergency preparedness grants to help facilities upgrade generators, communication systems, and evacuation resources.</p>
+            <p>Several states have implemented emergency preparedness enhancement programs following recent disasters. Florida now requires nursing facilities to maintain 96 hours of backup fuel and conducts annual generator testing inspections. California has established regional evacuation coordination networks that facilitate resource sharing among facilities during disasters.</p>
+
+            <h2>Best Practices</h2>
+            <p>Facilities seeking to strengthen emergency preparedness should conduct comprehensive risk assessments specific to their geographic location and resident population; establish mutual aid agreements with nearby facilities and community partners; test backup systems under realistic load conditions at least annually; train all staff on emergency procedures with documented competency verification; and maintain current contact information for residents&rsquo; emergency contacts and receiving facilities.</p>
+    </div>
+    <div class="related-section">
+      <h2>Related Articles</h2>
+      <div class="related-list">
+                <a href="oig-infection-control-gaps.html" class="related-link">OIG Report Flags Infection Control Gaps in 30% of Surveyed Facilities</a>
+        <a href="states-push-back-survey-changes.html" class="related-link">States Push Back on Federal Survey Process Changes</a>
+        <a href="2026-regulatory-preview-snf.html" class="related-link">2026 Regulatory Preview: Key Compliance Deadlines for SNF Operators</a>
+      </div>
+    </div>
+  </article>
+
+  <footer class="article-footer">
+    <a href="./" class="footer-cta">View All Articles &rarr;</a>
+    <div class="footer-links">
+      <a href="../">SNF Compare Tool</a>
+      <a href="./">All Articles</a>
+    </div>
+    <p class="footer-disclaimer">SNF Compare is an independent resource. Data sourced from CMS and publicly available records. Not affiliated with or endorsed by CMS or any government agency.</p>
+  </footer>
+</body>
+</html>

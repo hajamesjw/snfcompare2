@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use SNF Compare | Guide to Understanding Nursing Home Ratings</title>
+  <!-- Google Analytics - Replace GA_MEASUREMENT_ID with your actual ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  <meta name="description" content="Learn how to use SNF Compare to find the best nursing home. Understand CMS star ratings, staffing metrics, quality measures, and what to look for in a facility.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #fafafa; color: #1a1a1a; line-height: 1.7; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .nav a { text-decoration: none; }
+    .nav-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.15rem; color: #0f172a; }
+    .nav-logo .badge { background: #10b981; color: #fff; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+    .nav-back { color: #6b7280; font-size: 0.88rem; font-weight: 500; transition: color .2s; }
+    .nav-back:hover { color: #10b981; }
+    .hero { background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); padding: 4rem 2rem; text-align: center; }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; color: #6b7280; max-width: 600px; margin: 0 auto; }
+    .content { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .section { margin-bottom: 3rem; }
+    .section h2 { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+    .section h2 .num { background: #10b981; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+    .section p { color: #475569; margin-bottom: 1rem; }
+    .section h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem; }
+    .rating-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .rating-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; }
+    .rating-card .stars { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .rating-card h4 { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem; }
+    .rating-card p { font-size: 0.85rem; color: #6b7280; margin: 0; }
+    .tip-box { background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0; }
+    .tip-box h4 { font-size: 0.85rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .tip-box p { color: #065f46; margin: 0; font-size: 0.95rem; }
+    .metric-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .metric-table th, .metric-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    .metric-table th { font-weight: 700; color: #0f172a; background: #f9fafb; font-size: 0.9rem; }
+    .metric-table td { color: #475569; font-size: 0.9rem; }
+    .cta-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 3rem; }
+    .cta-section h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .cta-section p { color: #6b7280; margin-bottom: 1.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: #10b981; color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; }
+    .btn:hover { background: #059669; }
+    .footer { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; text-align: center; border-top: 1px solid #e5e7eb; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: #6b7280; text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+    .footer-links a:hover { color: #10b981; }
+    .footer-disclaimer { font-size: 0.75rem; color: #9ca3af; max-width: 500px; margin: 0 auto; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .content { padding: 2rem 1rem; }
+      .nav { padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a href="/" class="nav-logo">SNF Compare <span class="badge">GUIDE</span></a>
+    <a href="/" class="nav-back">&larr; Back to Home</a>
+  </header>
+
+  <section class="hero">
+    <h1>How to Use SNF Compare</h1>
+    <p>A comprehensive guide to understanding nursing home ratings and finding the right facility for your loved one.</p>
+  </section>
+
+  <main class="content">
+    <div class="section">
+      <h2><span class="num">1</span> Understanding the Star Ratings</h2>
+      <p>CMS (Centers for Medicare & Medicaid Services) rates nursing homes on a 1 to 5 star scale, with 5 being the best. The overall rating combines three separate components:</p>
+
+      <div class="rating-grid">
+        <div class="rating-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <h4>5 Stars - Much Above Average</h4>
+          <p>Top performers in quality, staffing, and inspections.</p>
+        </div>
+        <div class="rating-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+          <h4>4 Stars - Above Average</h4>
+          <p>Better than most facilities in your area.</p>
+        </div>
+        <div class="rating-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</div>
+          <h4>3 Stars - Average</h4>
+          <p>Meets expectations but room for improvement.</p>
+        </div>
+        <div class="rating-card">
+          <div class="stars">&#9733;&#9733;&#9734;&#9734;&#9734;</div>
+          <h4>2 Stars - Below Average</h4>
+          <p>Some concerns; investigate further before choosing.</p>
+        </div>
+        <div class="rating-card">
+          <div class="stars">&#9733;&#9734;&#9734;&#9734;&#9734;</div>
+          <h4>1 Star - Much Below Average</h4>
+          <p>Significant quality concerns identified.</p>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <h4>Pro Tip</h4>
+        <p>Don't rely solely on the overall rating. A facility might have 5 stars for quality measures but lower staffing scores. Look at each component individually.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">2</span> The Three Rating Components</h2>
+
+      <h3>Health Inspections Rating</h3>
+      <p>Based on the last 3 years of state health inspections. Surveyors visit unannounced and check for compliance with federal quality standards. More recent inspections carry more weight.</p>
+
+      <h3>Staffing Rating</h3>
+      <p>Measures the amount of care provided by nurses and aides. Higher staffing levels generally lead to better resident outcomes. This is measured in Hours Per Resident Day (HPRD).</p>
+
+      <h3>Quality Measures Rating</h3>
+      <p>Based on clinical outcomes like hospital readmissions, falls, pressure ulcers, and medication management. These metrics come from the facility's own reported data.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">3</span> Understanding Staffing Metrics</h2>
+      <p>Staffing is one of the most important factors in quality care. Here's what the numbers mean:</p>
+
+      <table class="metric-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>What It Measures</th>
+            <th>Good Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Total Nursing HPRD</strong></td>
+            <td>Total hours of nursing care per resident per day</td>
+            <td>4.0+ hours</td>
+          </tr>
+          <tr>
+            <td><strong>RN HPRD</strong></td>
+            <td>Registered nurse hours per resident per day</td>
+            <td>0.75+ hours</td>
+          </tr>
+          <tr>
+            <td><strong>CNA HPRD</strong></td>
+            <td>Certified nursing assistant hours per resident per day</td>
+            <td>2.5+ hours</td>
+          </tr>
+          <tr>
+            <td><strong>Staff Turnover</strong></td>
+            <td>Percentage of staff who left in past year</td>
+            <td>Under 50%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box">
+        <h4>Why Staffing Matters</h4>
+        <p>Research shows facilities with higher staffing levels have fewer falls, pressure ulcers, infections, and hospital readmissions. Staff turnover affects continuity of care.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">4</span> Using the Compare Tool</h2>
+      <p>Our comparison tool lets you evaluate up to 3 facilities side-by-side. Here's how to get the most out of it:</p>
+
+      <h3>Step 1: Search for Facilities</h3>
+      <p>Enter a city, state, or facility name in the search box. Results update as you type.</p>
+
+      <h3>Step 2: Choose Your View</h3>
+      <p><strong>Family View:</strong> Simplified metrics focused on what matters most to families choosing care.<br>
+      <strong>Professional View:</strong> Detailed data including wages, turnover rates, and technical metrics.</p>
+
+      <h3>Step 3: Select Facilities to Compare</h3>
+      <p>Click the checkbox on up to 3 facility cards. Your selections appear in the tray at the bottom.</p>
+
+      <h3>Step 4: Review and Decide</h3>
+      <p>Click "Compare Selected" to see a detailed side-by-side comparison of your chosen facilities.</p>
+    </div>
+
+    <div class="section">
+      <h2><span class="num">5</span> Questions to Ask During Tours</h2>
+      <p>Once you've narrowed down your choices, visit each facility and ask:</p>
+      <ul style="margin-left: 1.5rem; color: #475569;">
+        <li>What is your current staffing ratio?</li>
+        <li>Can I see a copy of your most recent inspection report?</li>
+        <li>How do you handle medical emergencies?</li>
+        <li>What activities and therapies do you offer?</li>
+        <li>How do you communicate with families?</li>
+        <li>What are the total costs, including any additional fees?</li>
+        <li>Can I speak with current residents or family members?</li>
+      </ul>
+    </div>
+
+    <div class="cta-section">
+      <h2>Ready to Find the Right Facility?</h2>
+      <p>Use our free comparison tool to evaluate nursing homes in your area.</p>
+      <a href="/snf-facility-compare.html" class="btn">Start Comparing Facilities &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/snf-facility-compare.html">Compare Tool</a>
+      <a href="/articles/">Articles</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/about.html">About</a>
+    </div>
+    <p class="footer-disclaimer">SNF Compare is an independent resource. Data sourced from CMS and publicly available records. Not affiliated with or endorsed by CMS or any government agency.</p>
+  </footer>
+</body>
+</html>

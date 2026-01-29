@@ -106,6 +106,20 @@ tr:hover td{background:#fafbfc}
 .gate-modal .gate-divider{height:1px;background:#f0f0f0;margin:20px 0 0}
 .gate-modal .gate-back{display:block;padding:14px;color:#6b7280;font-size:13px;font-weight:600;text-decoration:none;transition:color .2s}
 .gate-modal .gate-back:hover{color:#111827;text-decoration:none}
+.share-floating{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1f2937 0%,#111827 100%);border-radius:60px;padding:12px 16px 12px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 40px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.05);z-index:50}
+.share-floating-text{color:white;font-size:14px;font-weight:600;white-space:nowrap}
+.share-floating-btns{display:flex;gap:8px}
+.share-floating-btn{width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.share-floating-btn.copy{background:linear-gradient(135deg,#14b8a6 0%,#0d9488 100%);color:white}
+.share-floating-btn.copy:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 6px 20px rgba(13,148,136,.4)}
+.share-floating-btn.email{background:linear-gradient(135deg,#60a5fa 0%,#3b82f6 100%);color:white}
+.share-floating-btn.email:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,.4)}
+.share-floating-btn.sms{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white}
+.share-floating-btn.sms:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 6px 20px rgba(34,197,94,.4)}
+.share-floating-btn svg{width:20px;height:20px}
+.share-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#111827;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;opacity:0;transition:all .3s ease;z-index:100;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.share-toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+.share-toast svg{width:18px;height:18px;color:#10b981}
 </style>
 </head>
 <body>
@@ -150,7 +164,7 @@ Back to Compare Tool
 
 <div class="card">
 <div class="card-header"><h2>Facility Information</h2></div>
-<div class="card-body"><div class="info-grid"><div class="info-item"><div class="lbl">Certified Beds</div><div class="val">180</div></div><div class="info-item"><div class="lbl">Average Residents/Day</div><div class="val">118.2</div></div><div class="info-item"><div class="lbl">Ownership Type</div><div class="val">For profit - Limited Liability company</div></div><div class="info-item"><div class="lbl">Chain Affiliation</div><div class="val">NORBERT BENNETT &amp; DONALD DENZ</div></div><div class="info-item"><div class="lbl">Provider Type</div><div class="val">Medicare and Medicaid</div></div><div class="info-item"><div class="lbl">CCRC</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Special Focus Status</div><div class="val"><span class="badge badge-red">SFF</span></div></div><div class="info-item"><div class="lbl">Abuse Icon</div><div class="val">No</div></div><div class="info-item"><div class="lbl">In Hospital</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Ownership Changed (12 mo)</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Sprinkler Systems</div><div class="val">No</div></div></div></div>
+<div class="card-body"><div class="info-grid"><div class="info-item"><div class="lbl">Certified Beds</div><div class="val">180</div></div><div class="info-item"><div class="lbl">Average Residents/Day</div><div class="val">118.2</div></div><div class="info-item"><div class="lbl">Ownership Type</div><div class="val">For profit - Limited Liability company</div></div><div class="info-item"><div class="lbl">Chain Affiliation</div><div class="val">NORBERT BENNETT &amp; DONALD DENZ</div></div><div class="info-item"><div class="lbl">Provider Type</div><div class="val">Medicare and Medicaid</div></div><div class="info-item"><div class="lbl">CCRC</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Long-Stay QM Rating</div><div class="val">N/A</div></div><div class="info-item"><div class="lbl">Short-Stay QM Rating</div><div class="val">N/A</div></div><div class="info-item"><div class="lbl">Resident/Family Council</div><div class="val"><span class="badge badge-blue">Resident</span></div></div><div class="info-item"><div class="lbl">Special Focus Status</div><div class="val"><span class="badge badge-red">SFF</span></div></div><div class="info-item"><div class="lbl">Abuse Icon</div><div class="val">No</div></div><div class="info-item"><div class="lbl">In Hospital</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Ownership Changed (12 mo)</div><div class="val">No</div></div><div class="info-item"><div class="lbl">Sprinkler Systems</div><div class="val">No</div></div></div></div>
 </div>
 
 <div class="card">
@@ -163,12 +177,29 @@ Back to Compare Tool
 <div class="card-body" style="padding:0"><div class="qm-type">Long-Stay Measures</div>
 <div style="overflow-x:auto"><table>
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
-<tbody><tr><td style="max-width:300px">Percentage of long-stay residents whose need for help with daily activities has increased *</td><td>12.087912</td><td>18.279570</td><td>22.826087</td><td>24.731183</td><td style="font-weight:600">19.512195</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who lose too much weight</td><td>7.526882</td><td>4.901961</td><td>6.521739</td><td>5.263158</td><td style="font-weight:600">6.020942</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with a catheter inserted and left in their bladder *</td><td>0.000000</td><td>0.000000</td><td>3.594558</td><td>0.000000</td><td style="font-weight:600">0.874352</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with a urinary tract infection *</td><td>3.092784</td><td>2.857143</td><td>0.000000</td><td>0.000000</td><td style="font-weight:600">1.500000</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who have depressive symptoms</td><td>1.098901</td><td>0.000000</td><td>0.000000</td><td>1.086957</td><td style="font-weight:600">0.557103</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who were physically restrained</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td style="font-weight:600">0.000000</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents experiencing one or more falls with major injury *</td><td>0.000000</td><td>2.830189</td><td>3.809524</td><td>2.884615</td><td style="font-weight:600">2.403846</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the pneumococcal vaccine</td><td>71.287129</td><td>85.849057</td><td>99.047619</td><td>100.000000</td><td style="font-weight:600">89.182692</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who received an antipsychotic medication *</td><td>11.111111</td><td>13.978495</td><td>16.483516</td><td>15.384615</td><td style="font-weight:600">14.246575</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents whose ability to walk independently worsened *</td><td>10.242610</td><td>23.669336</td><td>17.142546</td><td>18.877760</td><td style="font-weight:600">17.428564</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who received an antianxiety or hypnotic medication</td><td>21.649485</td><td>28.155340</td><td>31.313131</td><td>29.000000</td><td style="font-weight:600">27.568922</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">90.000000</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with pressure ulcers *</td><td>0.000000</td><td>4.803723</td><td>4.951678</td><td>1.141918</td><td style="font-weight:600">2.769142</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with new or worsened bowel or bladder incontinence</td><td>4.250139</td><td>6.134856</td><td>13.891204</td><td>8.058112</td><td style="font-weight:600">8.035615</td></tr></tbody>
+<tbody><tr><td style="max-width:300px">Percentage of long-stay residents whose need for help with daily activities has increased *</td><td>12.09</td><td>18.28</td><td>22.83</td><td>24.73</td><td style="font-weight:600">19.51</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who lose too much weight</td><td>7.53</td><td>4.90</td><td>6.52</td><td>5.26</td><td style="font-weight:600">6.02</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with a catheter inserted and left in their bladder *</td><td>0.00</td><td>0.00</td><td>3.59</td><td>0.00</td><td style="font-weight:600">0.87</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with a urinary tract infection *</td><td>3.09</td><td>2.86</td><td>0.00</td><td>0.00</td><td style="font-weight:600">1.50</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who have depressive symptoms</td><td>1.10</td><td>0.00</td><td>0.00</td><td>1.09</td><td style="font-weight:600">0.56</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who were physically restrained</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td style="font-weight:600">0.00</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents experiencing one or more falls with major injury *</td><td>0.00</td><td>2.83</td><td>3.81</td><td>2.88</td><td style="font-weight:600">2.40</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the pneumococcal vaccine</td><td>71.29</td><td>85.85</td><td>99.05</td><td>100.00</td><td style="font-weight:600">89.18</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who received an antipsychotic medication *</td><td>11.11</td><td>13.98</td><td>16.48</td><td>15.38</td><td style="font-weight:600">14.25</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents whose ability to walk independently worsened *</td><td>10.24</td><td>23.67</td><td>17.14</td><td>18.88</td><td style="font-weight:600">17.43</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents who received an antianxiety or hypnotic medication</td><td>21.65</td><td>28.16</td><td>31.31</td><td>29.00</td><td style="font-weight:600">27.57</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">90.00</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with pressure ulcers *</td><td>0.00</td><td>4.80</td><td>4.95</td><td>1.14</td><td style="font-weight:600">2.77</td></tr><tr><td style="max-width:300px">Percentage of long-stay residents with new or worsened bowel or bladder incontinence</td><td>4.25</td><td>6.13</td><td>13.89</td><td>8.06</td><td style="font-weight:600">8.04</td></tr></tbody>
 </table></div><div class="qm-type">Short-Stay Measures</div>
 <div style="overflow-x:auto"><table>
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
-<tbody><tr><td style="max-width:300px">Percentage of short-stay residents assessed and appropriately given the pneumococcal vaccine</td><td>10.000000</td><td>40.000000</td><td>93.333333</td><td>97.297297</td><td style="font-weight:600">63.114754</td></tr><tr><td style="max-width:300px">Percentage of short-stay residents who newly received an antipsychotic medication *</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">11.111111</td></tr><tr><td style="max-width:300px">Percentage of short-stay residents who were assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">5.882353</td></tr></tbody>
+<tbody><tr><td style="max-width:300px">Percentage of short-stay residents assessed and appropriately given the pneumococcal vaccine</td><td>10.00</td><td>40.00</td><td>93.33</td><td>97.30</td><td style="font-weight:600">63.11</td></tr><tr><td style="max-width:300px">Percentage of short-stay residents who newly received an antipsychotic medication *</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">11.11</td></tr><tr><td style="max-width:300px">Percentage of short-stay residents who were assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600">5.88</td></tr></tbody>
 </table></div><p style="padding:12px;font-size:11px;color:#9ca3af">* Used in CMS Five-Star Quality Rating</p></div>
+</div>
+
+<div class="card">
+<div class="card-header"><h2>Care Outcomes (Claims-Based)</h2></div>
+<div class="card-body"><div class="safety-grid"><div class="safety-card">
+                    <div class="val val-bad">24.1%</div>
+                    <div class="lbl">Rehospitalization Rate (Short-Stay)</div>
+                </div><div class="safety-card">
+                    <div class="val val-good">8.3%</div>
+                    <div class="lbl">ED Visit Rate (Short-Stay)</div>
+                </div><div class="safety-card">
+                    <div class="val val-bad">3.94</div>
+                    <div class="lbl">Hospitalizations per 1000 Days (Long-Stay)</div>
+                </div><div class="safety-card">
+                    <div class="val val-warn">1.37</div>
+                    <div class="lbl">ED Visits per 1000 Days (Long-Stay)</div>
+                </div></div><p style="padding:12px 0;font-size:11px;color:#9ca3af">Lower rates indicate better care quality. Based on Medicare claims data.</p></div>
 </div>
 
 <div class="card">
@@ -284,6 +315,37 @@ Last updated: November 2025.
     document.body.style.overflow='';
   }
 })();
+</script>
+
+<div id="shareToast" class="share-toast"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Link copied to clipboard!</div>
+<div id="shareFloating" class="share-floating">
+  <span class="share-floating-text">Share this facility</span>
+  <div class="share-floating-btns">
+    <button class="share-floating-btn copy" onclick="copyShareUrl()" title="Copy Link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+    <button class="share-floating-btn email" onclick="shareViaEmail()" title="Email"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></button>
+    <button class="share-floating-btn sms" onclick="shareViaSMS()" title="Text"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.42-4.03 8-9 8a9.863 9.86 0 01-4.25-.949L3 20l1.395-3.72C3.512 15.04 3 13.57 3 12c0-4.42 4.03-8 9-8s9 3.58 9 8z"/></svg></button>
+  </div>
+</div>
+<script>
+function getShareUrl(){ return window.location.href; }
+function copyShareUrl(){
+  navigator.clipboard.writeText(getShareUrl()).then(function(){
+    var t=document.getElementById('shareToast');
+    t.classList.add('visible');
+    setTimeout(function(){ t.classList.remove('visible'); },2500);
+  });
+}
+function shareViaEmail(){
+  var url=getShareUrl();
+  var subj=encodeURIComponent('Check out this nursing facility');
+  var body=encodeURIComponent('I found this facility on SNF Compare:\n\n'+url);
+  window.location.href='mailto:?subject='+subj+'&body='+body;
+}
+function shareViaSMS(){
+  var url=getShareUrl();
+  var body=encodeURIComponent('Check out this nursing facility: '+url);
+  window.location.href='sms:?&body='+body;
+}
 </script>
 
 </body>

@@ -79,6 +79,264 @@
       color: #10b981;
     }
 
+    .nav-link-soon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link-soon:hover {
+      color: #7c3aed !important;
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+    }
+
+    .nav-soon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+      animation: badge-glow 2s ease-in-out infinite;
+    }
+
+    .nav-soon-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #fbbf24;
+      border-radius: 50%;
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes badge-glow {
+      0%, 100% { box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35); }
+      50% { box-shadow: 0 2px 16px rgba(124, 58, 237, 0.5); }
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    /* Job Board Popup */
+    .job-board-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .job-board-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .job-board-popup {
+      background: white;
+      border-radius: 24px;
+      max-width: 520px;
+      width: 94%;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .job-board-overlay.show .job-board-popup {
+      transform: scale(1) translateY(0);
+    }
+
+    .job-board-x {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .job-board-x:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .job-board-header {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      padding: 2.5rem 2rem 2rem;
+      color: white;
+      text-align: center;
+    }
+
+    .job-board-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .job-board-header h3 {
+      font-size: 1.65rem;
+      margin: 0 0 0.75rem;
+      color: white;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .job-board-header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .job-board-benefits {
+      padding: 1.5rem 1.75rem;
+    }
+
+    .job-board-benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid #f1f5f9;
+      text-align: left;
+    }
+
+    .job-board-benefit:last-child {
+      border-bottom: none;
+    }
+
+    .job-board-benefit-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+    }
+
+    .job-board-benefit-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .job-board-benefit-text strong {
+      font-size: 0.95rem;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    .job-board-benefit-text span {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .job-board-cta {
+      padding: 1.5rem 1.75rem 2rem;
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      text-align: center;
+    }
+
+    .job-board-cta-label {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.85rem;
+      font-size: 1rem;
+    }
+
+    .job-board-form {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .job-board-form input {
+      flex: 1;
+      padding: 1rem 1.15rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    .job-board-form input:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+    }
+
+    .job-board-form button {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      color: white;
+      border: none;
+      padding: 1rem 1.75rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .job-board-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    .job-board-note {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin: 0.75rem 0 0;
+    }
+
+    .job-board-success {
+      color: #10b981;
+      font-weight: 600;
+      padding: 1rem;
+      background: #f0fdf4;
+      border-radius: 10px;
+      border: 1px solid #bbf7d0;
+    }
+
     /* Hamburger menu button - mobile only */
     .hamburger {
       display: none;
@@ -117,20 +375,23 @@
 
     .nav-cta {
       padding: 0.6rem 1.25rem;
-      background: transparent;
-      color: #10b981;
-      border: 2px solid #10b981;
+      background: #10b981;
+      color: #fff;
+      border: none;
       border-radius: 8px;
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
       text-decoration: none;
     }
-    
+
     .nav-cta:hover {
-      background: #10b981;
-      color: white;
+      background: #059669;
+    }
+
+    .mobile-quick-nav {
+      display: none;
     }
     
     /* Hero Section */
@@ -799,6 +1060,8 @@
     .ticker-scroll:hover { animation-play-state:paused; }
     @keyframes tickerScroll { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
     .ticker-item { font-size:13px; color:#cbd5e1; white-space:nowrap; font-weight:500; padding-right:28px; }
+    .ticker-item a { color:#cbd5e1; text-decoration:none; transition:color .2s; }
+    .ticker-item a:hover { color:#10b981; }
     .ticker-item .ticker-sep { color:#334155; padding-left:28px; }
 
     /* Body layout */
@@ -812,7 +1075,7 @@
     .news-featured-header-content { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:16px; }
     .news-featured-header-left { display:flex; align-items:center; gap:14px; }
     .news-featured-title { color:#fff; font-size:1.1rem; font-weight:800; line-height:1.25; letter-spacing:-0.01em; margin:0; }
-    .news-featured-badge { background:rgba(255,255,255,.15); color:rgba(255,255,255,.8); padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:600; letter-spacing:0.03em; backdrop-filter:blur(4px); white-space:nowrap; }
+    .news-featured-badge { background:rgba(255,255,255,.18); color:#fff; padding:5px 12px; border-radius:8px; font-size:0.78rem; font-weight:700; letter-spacing:0.03em; white-space:nowrap; }
     .news-featured-body { padding:6px 0; }
     .news-featured-bites { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; }
     .news-featured-bite { padding:18px 24px; border-bottom:1px solid #f1f5f9; border-right:1px solid #f1f5f9; }
@@ -822,8 +1085,8 @@
     .news-featured-bite-dek { font-size:0.84rem; color:#334155; line-height:1.5; }
     .news-featured-footer { padding:0 24px 18px; display:flex; align-items:center; justify-content:space-between; }
     .news-featured-time { font-size:0.75rem; color:#9ca3af; font-weight:500; display:flex; align-items:center; gap:5px; }
-    .news-featured-readmore { display:inline-flex; align-items:center; gap:6px; color:#10b981; font-weight:700; font-size:0.82rem; text-decoration:none; transition:gap .2s; }
-    .news-featured-readmore:hover { gap:10px; }
+    .news-featured-readmore { display:inline-flex; align-items:center; gap:6px; color:#0f172a; font-weight:700; font-size:0.85rem; text-decoration:none; transition:all .2s; border-bottom:2px solid #10b981; padding-bottom:2px; }
+    .news-featured-readmore:hover { gap:10px; color:#059669; }
 
     /* Section headers */
     .newsletter-section-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
@@ -831,17 +1094,24 @@
     .section-line { flex:1; height:1px; background:#e5e7eb; }
 
     /* Article list */
-    .news-list { display:flex; flex-direction:column; gap:0; }
-    .news-list-item { display:grid; grid-template-columns:3rem 1fr; gap:16px; padding:20px 0; border-bottom:1px solid #f0f0f0; cursor:pointer; transition:background .15s; }
-    .news-list-item:first-child { padding-top:0; }
-    .news-list-item:last-child { border-bottom:none; }
+    .news-list { display:flex; flex-direction:column; gap:12px; }
+    .news-list-item { display:grid; grid-template-columns:3rem 1fr; gap:16px; padding:20px 22px; background:#fff; border:1px solid #e5e7eb; border-radius:14px; cursor:pointer; transition:all .2s; }
+    .news-list-item:hover { border-color:#10b981; box-shadow:0 4px 16px rgba(16,185,129,.08); }
     .news-list-item:hover .news-list-title { color:#10b981; }
-    .news-list-num { font-size:1.75rem; font-weight:900; color:#e5e7eb; line-height:1; }
+    .news-list-num { font-size:1.75rem; font-weight:900; color:#94a3b8; line-height:1; }
     .news-list-body { display:flex; flex-direction:column; gap:6px; }
     .news-list-title { font-size:0.95rem; font-weight:700; color:#0f172a; line-height:1.4; transition:color .2s; margin:0; }
     .news-list-excerpt { font-size:0.82rem; color:#6b7280; line-height:1.5; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .news-meta { display:flex; gap:16px; font-size:11px; color:#9ca3af; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; }
-    .news-category { display:inline-block; background:#ecfdf5; color:#059669; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; }
+    .news-category { display:inline-block; width:fit-content; background:#ecfdf5; color:#059669; padding:4px 10px; border-radius:6px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; }
+    .news-category.cat-reimbursement { background:#eff6ff; color:#2563eb; }
+    .news-category.cat-staffing { background:#f5f3ff; color:#7c3aed; }
+    .news-category.cat-operations { background:#fff7ed; color:#ea580c; }
+    .news-category.cat-finance { background:#eef2ff; color:#4f46e5; }
+    .news-category.cat-compliance { background:#fffbeb; color:#d97706; }
+    .news-category.cat-technology { background:#ecfeff; color:#0891b2; }
+    .news-category.cat-medicaid { background:#fdf2f8; color:#db2777; }
+    .news-category.cat-legislation { background:#f1f5f9; color:#475569; }
 
     /* Two-column article grid below */
     .news-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
@@ -869,8 +1139,17 @@
 
     /* Topic tags */
     .topic-tags { display:flex; flex-wrap:wrap; gap:8px; }
-    .topic-tag { padding:6px 14px; border-radius:8px; background:#f8fafc; border:1px solid #e5e7eb; font-size:12px; font-weight:600; color:#374151; cursor:pointer; transition:all .2s; }
-    .topic-tag:hover { border-color:#10b981; color:#059669; background:#ecfdf5; }
+    .topic-tag { padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; border:1px solid; }
+    .topic-tag.tt-reimbursement { background:#eff6ff; color:#2563eb; border-color:#bfdbfe; }
+    .topic-tag.tt-staffing { background:#f5f3ff; color:#7c3aed; border-color:#ddd6fe; }
+    .topic-tag.tt-compliance { background:#fffbeb; color:#d97706; border-color:#fde68a; }
+    .topic-tag.tt-operations { background:#fff7ed; color:#ea580c; border-color:#fed7aa; }
+    .topic-tag.tt-finance { background:#eef2ff; color:#4f46e5; border-color:#c7d2fe; }
+    .topic-tag.tt-technology { background:#ecfeff; color:#0891b2; border-color:#a5f3fc; }
+    .topic-tag.tt-medicaid { background:#fdf2f8; color:#db2777; border-color:#fbcfe8; }
+    .topic-tag.tt-medicare { background:#ecfdf5; color:#059669; border-color:#a7f3d0; }
+    .topic-tag.tt-legislation { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+    .topic-tag.tt-ma { background:#fef2f2; color:#dc2626; border-color:#fecaca; }
 
     /* Stats */
     .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -1028,7 +1307,33 @@
         font-size: 1rem;
         border-radius: 8px;
       }
-      
+
+      .mobile-quick-nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background: #f8fafc;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .mobile-quick-nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #374151;
+        text-decoration: none;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        transition: all 0.2s;
+      }
+
+      .mobile-quick-nav a:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+      }
+
       #tool-content iframe {
         height: calc(100vh - 57px);
       }
@@ -1301,12 +1606,16 @@
     </button>
     <div class="nav-links" id="navLinks">
       <a href="#" class="nav-link active" onclick="showTab('home'); closeMobileMenu(); return false;">Home</a>
-      <a href="#" class="nav-link" onclick="showTab('tool','pro'); closeMobileMenu(); return false;">For Nurses</a>
-      <a href="#" class="nav-link" onclick="showTab('tool','family'); closeMobileMenu(); return false;">For Patients</a>
+      <a href="#" class="nav-link" onclick="showTab('tool','pro'); closeMobileMenu(); return false;">Compare Tool</a>
+      <a href="#" class="nav-link nav-link-soon" onclick="showJobBoardPopup(); return false;">Job Board <span class="nav-soon-badge">Coming Soon</span></a>
       <a href="#" class="nav-link" onclick="showTab('newsletter'); closeMobileMenu(); return false;">Newsletter</a>
     </div>
-    <a href="#" class="nav-cta" onclick="showTab('tool'); return false;">Launch Tool</a>
+    <a href="snf-facility-compare.html" class="nav-cta">Compare Now</a>
   </nav>
+  <div class="mobile-quick-nav">
+    <a href="#" onclick="showTab('tool','pro'); return false;">Compare Tool</a>
+    <a href="#" onclick="showTab('newsletter'); return false;">Newsletter</a>
+  </div>
 
   <div id="landing-content">
   <!-- Hero Section -->
@@ -1639,7 +1948,7 @@
             <span>SNF Industry Intelligence</span>
             <span class="dot"></span>
           </div>
-          <h1>Skilled Nursing News</h1>
+          <h1>Skilled Nursing Report</h1>
           <div class="hero-rule"></div>
           <p>Policy changes, reimbursement updates, staffing mandates, and operational insights shaping the skilled nursing industry.</p>
           <form class="newsletter-subscribe newsletter-form" onsubmit="return false;">
@@ -1656,14 +1965,16 @@
           <span class="ticker-label">Trending</span>
           <div class="ticker-track">
             <div class="ticker-scroll">
-              <span class="ticker-item">CMS finalizes 3.7% SNF rate increase for FY2026<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">Federal staffing mandate deadline: May 2026<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">OIG flags infection control gaps in 30% of facilities<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">$820M acquisition reshapes Southeast market<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">CMS finalizes 3.7% SNF rate increase for FY2026<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">Federal staffing mandate deadline: May 2026<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">OIG flags infection control gaps in 30% of facilities<span class="ticker-sep">/</span></span>
-              <span class="ticker-item">$820M acquisition reshapes Southeast market<span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/cms-finalizes-2026-snf-payment-rule.html">CMS Finalizes 2026 SNF Payment Rule With 3.7% Rate Increase</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/federal-staffing-mandate-deadline.html">Federal Staffing Mandate Implementation Deadline Approaches</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/oig-infection-control-gaps.html">OIG Report Flags Infection Control Gaps in 30% of Facilities</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/southeast-chain-acquisition.html">Major Regional Chain Acquires 45 Facilities Across Southeast</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/snf-ownership-transparency-bill.html">Bipartisan Bill Targets SNF Ownership Transparency</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/cms-finalizes-2026-snf-payment-rule.html">CMS Finalizes 2026 SNF Payment Rule With 3.7% Rate Increase</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/federal-staffing-mandate-deadline.html">Federal Staffing Mandate Implementation Deadline Approaches</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/oig-infection-control-gaps.html">OIG Report Flags Infection Control Gaps in 30% of Facilities</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/southeast-chain-acquisition.html">Major Regional Chain Acquires 45 Facilities Across Southeast</a><span class="ticker-sep">/</span></span>
+              <span class="ticker-item"><a href="articles/snf-ownership-transparency-bill.html">Bipartisan Bill Targets SNF Ownership Transparency</a><span class="ticker-sep">/</span></span>
             </div>
           </div>
         </div>
@@ -1704,8 +2015,8 @@
               </div>
             </div>
             <div class="news-featured-footer">
-              <span class="news-featured-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 60 sec read</span>
-              <a href="articles/daily-rundown-jan-27-2026.html" class="news-featured-readmore">Full coverage &rarr;</a>
+              <span class="news-featured-time">60 sec read</span>
+              <a href="articles/daily-rundown-jan-27-2026.html" class="news-featured-readmore">Read full rundown &rarr;</a>
             </div>
           </div>
 
@@ -1720,7 +2031,7 @@
             <article class="news-list-item">
               <span class="news-list-num">01</span>
               <div class="news-list-body">
-                <span class="news-category">Staffing</span>
+                <span class="news-category cat-staffing">Staffing</span>
                 <h3 class="news-list-title">Federal Staffing Mandate Implementation Deadline Approaches: What Operators Need to Know</h3>
                 <p class="news-list-excerpt">Facilities face May 2026 compliance deadline for minimum RN and nurse aide hours per resident day requirements.</p>
                 <div class="news-meta"><span>Jan 22, 2026</span><span>4 min read</span></div>
@@ -1731,7 +2042,7 @@
             <article class="news-list-item">
               <span class="news-list-num">02</span>
               <div class="news-list-body">
-                <span class="news-category">Operations</span>
+                <span class="news-category cat-operations">Operations</span>
                 <h3 class="news-list-title">OIG Report Flags Infection Control Gaps in 30% of Surveyed Facilities</h3>
                 <p class="news-list-excerpt">New oversight report calls for stricter enforcement and targeted training programs to address recurring deficiencies.</p>
                 <div class="news-meta"><span>Jan 20, 2026</span><span>3 min read</span></div>
@@ -1742,7 +2053,7 @@
             <article class="news-list-item">
               <span class="news-list-num">03</span>
               <div class="news-list-body">
-                <span class="news-category">Finance</span>
+                <span class="news-category cat-finance">Finance</span>
                 <h3 class="news-list-title">Major Regional Chain Acquires 45 Facilities Across Southeast</h3>
                 <p class="news-list-excerpt">The $820M deal marks the largest skilled nursing acquisition in 2026, reshaping the competitive landscape in five states.</p>
                 <div class="news-meta"><span>Jan 18, 2026</span><span>4 min read</span></div>
@@ -1760,7 +2071,7 @@
           <div class="news-grid">
             <a href="articles/states-push-back-survey-changes.html" style="text-decoration:none;color:inherit;display:flex;">
             <article class="news-card" style="width:100%;">
-              <div class="news-category">Compliance</div>
+              <div class="news-category cat-compliance">Compliance</div>
               <h3>States Push Back on Federal Survey Process Changes</h3>
               <p>A coalition of 12 state survey agencies raises concerns about proposed revisions to the Life Safety Code inspection framework.</p>
               <div class="news-meta"><span>Jan 16, 2026</span><span>3 min read</span></div>
@@ -1768,7 +2079,7 @@
             </a>
             <a href="articles/ai-fall-prevention-pilot.html" style="text-decoration:none;color:inherit;display:flex;">
             <article class="news-card" style="width:100%;">
-              <div class="news-category">Technology</div>
+              <div class="news-category cat-technology">Technology</div>
               <h3>AI-Powered Fall Prevention Systems Show 40% Reduction in Incidents</h3>
               <p>Multi-site pilot study demonstrates significant safety improvements through predictive analytics and real-time monitoring.</p>
               <div class="news-meta"><span>Jan 14, 2026</span><span>4 min read</span></div>
@@ -1776,7 +2087,7 @@
             </a>
             <a href="articles/three-states-medicaid-rate-increases.html" style="text-decoration:none;color:inherit;display:flex;">
             <article class="news-card" style="width:100%;">
-              <div class="news-category">Medicaid</div>
+              <div class="news-category cat-medicaid">Medicaid</div>
               <h3>Ohio, Florida, and Pennsylvania Propose SNF Medicaid Rate Increases</h3>
               <p>Three states target chronic Medicaid underfunding with rate hikes totaling over $1.2B annually.</p>
               <div class="news-meta"><span>Jan 12, 2026</span><span>3 min read</span></div>
@@ -1784,7 +2095,7 @@
             </a>
             <a href="articles/snf-ownership-transparency-bill.html" style="text-decoration:none;color:inherit;display:flex;">
             <article class="news-card" style="width:100%;">
-              <div class="news-category">Legislation</div>
+              <div class="news-category cat-legislation">Legislation</div>
               <h3>Bipartisan Bill Targets SNF Ownership Transparency</h3>
               <p>New legislation would require PE-backed operators to disclose financial structures and related-party transactions.</p>
               <div class="news-meta"><span>Jan 10, 2026</span><span>5 min read</span></div>
@@ -1794,7 +2105,7 @@
 
           <!-- View All Articles -->
           <div style="text-align:center;margin-top:2.5rem;">
-            <a href="articles/" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 2.25rem;border:2px solid #10b981;color:#10b981;border-radius:100px;text-decoration:none;font-weight:700;font-size:0.95rem;transition:all .2s;background:transparent;" onmouseover="this.style.background='#10b981';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#10b981'">View All Articles &rarr;</a>
+            <a href="articles/" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 2.25rem;border:none;color:#fff;border-radius:100px;text-decoration:none;font-weight:700;font-size:0.95rem;transition:all .2s;background:#10b981;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">View All Articles &rarr;</a>
           </div>
         </div>
 
@@ -1808,28 +2119,62 @@
               <button type="submit">Subscribe Free</button>
             </form>
           </div>
-          <div class="sidebar-box">
-            <h3>Browse Topics</h3>
-            <div class="topic-tags">
-              <span class="topic-tag">Reimbursement</span>
-              <span class="topic-tag">Staffing</span>
-              <span class="topic-tag">Compliance</span>
-              <span class="topic-tag">Operations</span>
-              <span class="topic-tag">Finance</span>
-              <span class="topic-tag">Technology</span>
-              <span class="topic-tag">Medicaid</span>
-              <span class="topic-tag">Medicare</span>
-              <span class="topic-tag">Legislation</span>
-              <span class="topic-tag">M&A</span>
+          <div class="sidebar-box" style="padding:0;overflow:hidden;background:#0f172a;border-color:#1e293b;">
+            <div style="padding:16px 18px 10px;">
+              <h3 style="color:#fff;margin:0 0 2px;">SNF Industry Pulse</h3>
+              <p style="font-size:0.75rem;color:#94a3b8;margin:0;">Live prices of key SNF operators, REITs &amp; benchmarks</p>
             </div>
-          </div>
-          <div class="sidebar-box">
-            <h3>Industry at a Glance</h3>
-            <div class="stat-grid">
-              <div class="stat-card"><span class="stat-val">15K+</span><span class="stat-label">Facilities</span></div>
-              <div class="stat-card"><span class="stat-val">3.7%</span><span class="stat-label">Rate Increase</span></div>
-              <div class="stat-card"><span class="stat-val">1.3M</span><span class="stat-label">Residents</span></div>
-              <div class="stat-card"><span class="stat-val">$108B</span><span class="stat-label">Industry Rev.</span></div>
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+              {
+                "colorTheme": "dark",
+                "dateRange": "1D",
+                "showChart": true,
+                "locale": "en",
+                "width": "100%",
+                "height": "460",
+                "largeChartUrl": "",
+                "isTransparent": true,
+                "showSymbolLogo": true,
+                "showFloatingTooltip": false,
+                "plotLineColorGrowing": "rgba(16,185,129,1)",
+                "plotLineColorFalling": "rgba(220,38,38,1)",
+                "gridLineColor": "rgba(240,240,240,1)",
+                "scaleFontColor": "rgba(120,120,120,1)",
+                "belowLineFillColorGrowing": "rgba(16,185,129,0.06)",
+                "belowLineFillColorFalling": "rgba(220,38,38,0.06)",
+                "belowLineFillColorGrowingBottom": "rgba(16,185,129,0)",
+                "belowLineFillColorFallingBottom": "rgba(220,38,38,0)",
+                "symbolActiveColor": "rgba(16,185,129,0.08)",
+                "tabs": [
+                  {
+                    "title": "Benchmarks",
+                    "symbols": [
+                      { "s": "AMEX:XLV", "d": "Healthcare SPDR" },
+                      { "s": "AMEX:IHF", "d": "US HC Providers" },
+                      { "s": "AMEX:VHT", "d": "Vanguard Health" }
+                    ]
+                  },
+                  {
+                    "title": "Operators",
+                    "symbols": [
+                      { "s": "NASDAQ:ENSG", "d": "Ensign Group" },
+                      { "s": "NASDAQ:PNTG", "d": "Pennant Group" },
+                      { "s": "NYSE:HCA", "d": "HCA Healthcare" }
+                    ]
+                  },
+                  {
+                    "title": "REITs",
+                    "symbols": [
+                      { "s": "NYSE:OHI", "d": "Omega Healthcare" },
+                      { "s": "NASDAQ:SBRA", "d": "Sabra REIT" },
+                      { "s": "NYSE:WELL", "d": "Welltower" }
+                    ]
+                  }
+                ]
+              }
+              </script>
             </div>
           </div>
         </aside>
@@ -2228,26 +2573,16 @@
         currentTab = audienceType === 'family' ? 'family' : 'pro';
 
         const iframe = document.getElementById('tool-iframe');
+        const iframeMode = audienceType === 'pro' ? 'professional' : 'family';
         if (!toolLoaded) {
-          iframe.src = 'snf-facility-compare.html';
+          iframe.src = 'snf-facility-compare.html' + (audienceType ? '?mode=' + iframeMode : '');
           toolLoaded = true;
-        }
-
-        // Switch mode inside the iframe once loaded
-        if (audienceType) {
-          const iframeMode = audienceType === 'pro' ? 'professional' : 'family';
-          const trySetMode = () => {
-            try {
-              if (iframe.contentWindow && iframe.contentWindow.setMode) {
-                iframe.contentWindow.setMode(iframeMode);
-              }
-            } catch(e) {}
-          };
-          if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-            trySetMode();
-          } else {
-            iframe.addEventListener('load', trySetMode, { once: true });
-          }
+        } else if (audienceType) {
+          try {
+            if (iframe.contentWindow && iframe.contentWindow.setMode) {
+              iframe.contentWindow.setMode(iframeMode);
+            }
+          } catch(e) {}
         }
 
         const activeIdx = audienceType === 'pro' ? 1 : audienceType === 'family' ? 2 : 1;
@@ -2294,7 +2629,6 @@
       const familyContent = document.getElementById('family-content');
       const proContent = document.getElementById('pro-content');
       const buttons = document.querySelectorAll('.audience-btn');
-
       if (type === 'family') {
         familyContent.style.display = 'grid';
         proContent.style.display = 'none';
@@ -2444,5 +2778,88 @@
       </div>
     </div>
   </div>
+
+  <!-- Job Board Coming Soon Popup -->
+  <div id="jobBoardOverlay" class="job-board-overlay" onclick="if(event.target===this)hideJobBoardPopup()">
+    <div class="job-board-popup">
+      <button class="job-board-x" onclick="hideJobBoardPopup()">&times;</button>
+      <div class="job-board-header">
+        <span class="job-board-tag">Coming Soon</span>
+        <h3>The Only Job Board Built for SNF Professionals</h3>
+        <p>Stop scrolling generic job sites. Find roles at facilities with the ratings, staffing, and culture you actually care about.</p>
+      </div>
+      <div class="job-board-benefits">
+        <div class="job-board-benefit">
+          <div class="job-board-benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="job-board-benefit-text">
+            <strong>See facility ratings before you apply</strong>
+            <span>Know the CMS stars, staffing levels, and inspection history upfront</span>
+          </div>
+        </div>
+        <div class="job-board-benefit">
+          <div class="job-board-benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="job-board-benefit-text">
+            <strong>Filter by what matters to nurses</strong>
+            <span>RN hours per resident, nurse-to-patient ratios, benefits packages</span>
+          </div>
+        </div>
+        <div class="job-board-benefit">
+          <div class="job-board-benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="job-board-benefit-text">
+            <strong>Employers: reach nurses who do their research</strong>
+            <span>Connect with candidates who value quality care</span>
+          </div>
+        </div>
+      </div>
+      <div class="job-board-cta">
+        <div class="job-board-cta-label">Join the waitlist for early access</div>
+        <form id="jobBoardForm" class="job-board-form" data-list-id="XzLefx">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Join Waitlist</button>
+        </form>
+        <p class="job-board-note">Free for job seekers. Limited early-bird pricing for employers.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showJobBoardPopup() {
+      document.getElementById('jobBoardOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function hideJobBoardPopup() {
+      document.getElementById('jobBoardOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('jobBoardForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var email = form.querySelector('input').value;
+      var listId = form.getAttribute('data-list-id');
+      var btn = form.querySelector('button');
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      fetch('https://a.klaviyo.com/api/v2/list/' + listId + '/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: 'pk_0a2f048ef893f90cf00f62e6059c990bb0',
+          profiles: [{ email: email, job_board_interest: true }]
+        })
+      }).then(function() {
+        form.innerHTML = '<div class="job-board-success">You\'re on the list! We\'ll notify you when we launch.</div>';
+      }).catch(function() {
+        form.innerHTML = '<div class="job-board-success">You\'re on the list! We\'ll notify you when we launch.</div>';
+      });
+    });
+  </script>
 </body>
 </html>

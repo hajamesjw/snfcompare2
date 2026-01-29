@@ -1,0 +1,9 @@
+# SNF Compare robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://snfcompare.com/sitemap.xml
+
+# Crawl-delay suggestion
+Crawl-delay: 1

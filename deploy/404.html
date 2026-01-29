@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | SNF Compare</title>
+  <!-- Google Analytics - Replace GA_MEASUREMENT_ID with your actual ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .nav a { text-decoration: none; }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0f172a;
+    }
+    .nav-logo .badge {
+      background: #10b981;
+      color: #fff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .error-code {
+      font-size: 8rem;
+      font-weight: 800;
+      color: #e5e7eb;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .error-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+    }
+    .error-message {
+      font-size: 1.05rem;
+      color: #6b7280;
+      margin-bottom: 2rem;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #10b981;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #059669;
+    }
+    .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+    .btn-secondary:hover {
+      border-color: #10b981;
+      color: #059669;
+    }
+    .suggestions {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+      max-width: 500px;
+    }
+    .suggestions h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .suggestions ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .suggestions a {
+      color: #10b981;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .suggestions a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 640px) {
+      .error-code { font-size: 5rem; }
+      .error-title { font-size: 1.35rem; }
+      .nav { padding: 0.85rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a href="/" class="nav-logo">SNF Compare <span class="badge">BETA</span></a>
+  </header>
+
+  <main class="content">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-message">
+      Sorry, we couldn't find the page you're looking for. It may have been moved, deleted, or never existed.
+    </p>
+    <div class="actions">
+      <a href="/" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Go Home
+      </a>
+      <a href="/snf-facility-compare.html" class="btn btn-secondary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        Search Facilities
+      </a>
+    </div>
+    <div class="suggestions">
+      <h3>Popular Pages</h3>
+      <ul>
+        <li><a href="/snf-facility-compare.html">Compare Nursing Facilities</a></li>
+        <li><a href="/articles/">Latest News & Articles</a></li>
+        <li><a href="/guide.html">How to Use SNF Compare</a></li>
+        <li><a href="/faq.html">Frequently Asked Questions</a></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

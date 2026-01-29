@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Articles | SNF Compare News</title>
+  <!-- Google Analytics - Replace GA_MEASUREMENT_ID with your actual ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
   <meta name="description" content="All SNF industry news articles — policy changes, reimbursement updates, staffing mandates, and operational insights.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,46 +19,67 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif; background:#fafafa; color:#1a1a1a; line-height:1.6; }
-
-    /* Nav */
     .article-nav { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#fff; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:100; }
     .article-nav a { text-decoration:none; }
     .nav-logo { display:flex; align-items:center; gap:0.5rem; font-weight:800; font-size:1.15rem; color:#0f172a; }
     .nav-logo .badge { background:#10b981; color:#fff; padding:0.2rem 0.5rem; border-radius:6px; font-size:0.7rem; font-weight:700; }
     .nav-back { color:#6b7280; font-size:0.88rem; font-weight:500; transition:color .2s; display:flex; align-items:center; gap:0.4rem; }
     .nav-back:hover { color:#10b981; }
-
-    /* Hero */
     .index-hero { background:linear-gradient(135deg,#0f766e 0%,#10b981 50%,#34d399 100%); padding:3.5rem 2rem; text-align:center; color:#fff; }
     .index-hero h1 { font-size:2.2rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:0.5rem; }
     .index-hero p { font-size:1.05rem; opacity:0.9; max-width:540px; margin:0 auto; }
-
-    /* Articles list */
-    .index-content { max-width:800px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
-    .article-card { display:block; background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:1.75rem; margin-bottom:1rem; text-decoration:none; transition:all .2s; }
+    .search-container { max-width:800px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+    .search-input { width:100%; padding:0.85rem 1rem 0.85rem 2.75rem; font-size:0.95rem; border:1px solid #e5e7eb; border-radius:12px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%239ca3af' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") no-repeat 0.85rem center; font-family:inherit; transition:border-color .2s, box-shadow .2s; }
+    .search-input:focus { outline:none; border-color:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.1); }
+    .search-input::placeholder { color:#9ca3af; }
+    .no-results { text-align:center; padding:3rem 1rem; color:#6b7280; }
+    .no-results h3 { font-size:1.1rem; color:#374151; margin-bottom:0.5rem; }
+    .topic-filter { display:flex; flex-wrap:wrap; gap:8px; max-width:800px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+    .topic-btn { padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid; transition:all .2s; background:#f8fafc; color:#374151; border-color:#e5e7eb; }
+    .topic-btn:hover { opacity:.85; }
+    .topic-btn.active { box-shadow:0 2px 8px rgba(0,0,0,.1); }
+    .topic-btn[data-cat="all"] { background:#0f172a; color:#fff; border-color:#0f172a; }
+    .topic-btn[data-cat="daily-rundown"] { background:#ecfdf5; color:#059669; border-color:#a7f3d0; }
+    .topic-btn[data-cat="reimbursement"] { background:#eff6ff; color:#2563eb; border-color:#bfdbfe; }
+    .topic-btn[data-cat="staffing"] { background:#f5f3ff; color:#7c3aed; border-color:#ddd6fe; }
+    .topic-btn[data-cat="compliance"] { background:#fffbeb; color:#d97706; border-color:#fde68a; }
+    .topic-btn[data-cat="operations"] { background:#fff7ed; color:#ea580c; border-color:#fed7aa; }
+    .topic-btn[data-cat="finance"] { background:#eef2ff; color:#4f46e5; border-color:#c7d2fe; }
+    .topic-btn[data-cat="technology"] { background:#ecfeff; color:#0891b2; border-color:#a5f3fc; }
+    .topic-btn[data-cat="medicaid"] { background:#fdf2f8; color:#db2777; border-color:#fbcfe8; }
+    .topic-btn[data-cat="legislation"] { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+    .topic-btn:not(.active) { opacity:.6; }
+    .article-card.hidden { display:none; }
+    .index-content { max-width:800px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+    .article-card { display:block; background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:1.5rem; margin-bottom:0.75rem; text-decoration:none; transition:all .2s; }
     .article-card:hover { border-color:#10b981; box-shadow:0 4px 20px rgba(16,185,129,.08); transform:translateY(-1px); }
-    .card-top { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem; flex-wrap:wrap; }
-    .card-badge { background:#ecfdf5; color:#059669; padding:0.25rem 0.65rem; border-radius:100px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
-    .card-date { color:#9ca3af; font-size:0.82rem; font-weight:500; }
-    .card-title { font-size:1.15rem; font-weight:700; color:#0f172a; line-height:1.35; margin-bottom:0.5rem; }
+    .card-top { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem; flex-wrap:wrap; }
+    .card-badge { padding:0.2rem 0.6rem; border-radius:100px; font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; background:#ecfdf5; color:#059669; }
+    .card-badge.reimbursement { background:#eff6ff; color:#2563eb; }
+    .card-badge.staffing { background:#f5f3ff; color:#7c3aed; }
+    .card-badge.operations { background:#fff7ed; color:#ea580c; }
+    .card-badge.finance { background:#eef2ff; color:#4f46e5; }
+    .card-badge.compliance { background:#fffbeb; color:#d97706; }
+    .card-badge.technology { background:#ecfeff; color:#0891b2; }
+    .card-badge.medicaid { background:#fdf2f8; color:#db2777; }
+    .card-badge.legislation { background:#f1f5f9; color:#475569; }
+    .card-date { color:#9ca3af; font-size:0.78rem; font-weight:500; }
+    .card-title { font-size:1.05rem; font-weight:700; color:#0f172a; line-height:1.35; margin-bottom:0.35rem; }
     .article-card:hover .card-title { color:#059669; }
-    .card-excerpt { font-size:0.9rem; color:#6b7280; line-height:1.55; margin-bottom:0.5rem; }
-    .card-read { font-size:0.82rem; color:#10b981; font-weight:600; }
-
-    /* Footer */
+    .card-excerpt { font-size:0.85rem; color:#6b7280; line-height:1.5; margin-bottom:0.35rem; }
+    .card-read { font-size:0.78rem; color:#10b981; font-weight:600; }
     .index-footer { text-align:center; padding:2rem 1.5rem 3rem; }
     .footer-links { display:flex; justify-content:center; gap:1.5rem; margin-bottom:1rem; flex-wrap:wrap; }
     .footer-links a { color:#6b7280; text-decoration:none; font-size:0.82rem; font-weight:500; transition:color .2s; }
     .footer-links a:hover { color:#10b981; }
     .footer-disclaimer { font-size:0.75rem; color:#9ca3af; max-width:500px; margin:0 auto; line-height:1.5; }
-
     @media (max-width:640px) {
       .article-nav { padding:0.85rem 1rem; }
       .index-hero { padding:2.5rem 1rem; }
       .index-hero h1 { font-size:1.65rem; }
       .index-content { padding:1.5rem 1rem 3rem; }
       .article-card { padding:1.25rem; }
-      .card-title { font-size:1.05rem; }
+      .card-title { font-size:1rem; }
     }
   </style>
 </head>
@@ -59,21 +88,65 @@
     <a href="../" class="nav-logo">SNF Compare <span class="badge">NEWS</span></a>
     <a href="../" class="nav-back">&larr; Back to SNF Compare</a>
   </header>
-
   <div class="index-hero">
     <h1>All Articles</h1>
     <p>Policy changes, reimbursement updates, staffing mandates, and operational insights shaping the skilled nursing industry.</p>
   </div>
-
+  <div class="search-container">
+    <input type="text" class="search-input" id="articleSearch" placeholder="Search articles..." aria-label="Search articles">
+  </div>
+  <div class="topic-filter">
+    <button class="topic-btn active" data-cat="all" onclick="filterArticles('all')">All</button>
+    <button class="topic-btn" data-cat="daily-rundown" onclick="filterArticles('daily-rundown')">Daily Rundown</button>
+    <button class="topic-btn" data-cat="reimbursement" onclick="filterArticles('reimbursement')">Reimbursement</button>
+    <button class="topic-btn" data-cat="staffing" onclick="filterArticles('staffing')">Staffing</button>
+    <button class="topic-btn" data-cat="compliance" onclick="filterArticles('compliance')">Compliance</button>
+    <button class="topic-btn" data-cat="operations" onclick="filterArticles('operations')">Operations</button>
+    <button class="topic-btn" data-cat="finance" onclick="filterArticles('finance')">Finance</button>
+    <button class="topic-btn" data-cat="technology" onclick="filterArticles('technology')">Technology</button>
+    <button class="topic-btn" data-cat="medicaid" onclick="filterArticles('medicaid')">Medicaid</button>
+    <button class="topic-btn" data-cat="legislation" onclick="filterArticles('legislation')">Legislation</button>
+  </div>
   <main class="index-content">
+    <div id="noResults" class="no-results" style="display:none;">
+      <h3>No articles found</h3>
+      <p>Try adjusting your search or filter criteria.</p>
+    </div>
     <a href="daily-rundown-jan-27-2026.html" class="article-card">
       <div class="card-top">
         <span class="card-badge">Daily Rundown</span>
         <span class="card-date">Jan 27, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 27</h2>
-      <p class="card-excerpt">Medicare rates, staffing deadlines, OIG findings, and the biggest M&A deal of the year.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-26-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 26, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 26</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-25-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 25, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 25</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="cms-finalizes-2026-snf-payment-rule.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge reimbursement">Reimbursement</span>
+        <span class="card-date">Jan 24, 2026</span>
+      </div>
+      <h2 class="card-title">CMS Finalizes 2026 SNF Payment Rule With 3.7% Rate Increase</h2>
+      <p class="card-excerpt">Final rule updates PDPM and wage index calculations.</p>
+      <span class="card-read">5 min read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-24-2026.html" class="article-card">
       <div class="card-top">
@@ -81,26 +154,53 @@
         <span class="card-date">Jan 24, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 24</h2>
-      <p class="card-excerpt">3.7% payment rule finalized, first staffing mandate enforcement, occupancy tops 80%.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
-    <a href="cms-finalizes-2026-snf-payment-rule.html" class="article-card">
+    <a href="daily-rundown-jan-23-2026.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Reimbursement</span>
-        <span class="card-date">Jan 24, 2026</span>
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 23, 2026</span>
       </div>
-      <h2 class="card-title">CMS Finalizes 2026 SNF Payment Rule With 3.7% Rate Increase</h2>
-      <p class="card-excerpt">The final rule updates the Patient Driven Payment Model and adjusts wage index calculations, impacting Medicare reimbursement for thousands of facilities nationwide.</p>
-      <span class="card-read">5 min read &rarr;</span>
+      <h2 class="card-title">The Daily Rundown — Jan 23</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="federal-staffing-mandate-deadline.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Staffing</span>
+        <span class="card-badge staffing">Staffing</span>
         <span class="card-date">Jan 22, 2026</span>
       </div>
-      <h2 class="card-title">Federal Staffing Mandate Implementation Deadline Approaches: What Operators Need to Know</h2>
-      <p class="card-excerpt">Facilities face May 2026 compliance deadline for minimum RN and nurse aide hours per resident day requirements.</p>
-      <span class="card-read">4 min read &rarr;</span>
+      <h2 class="card-title">Federal Staffing Mandate Implementation Deadline Approaches</h2>
+      <p class="card-excerpt">Facilities face compliance deadline for minimum staffing.</p>
+      <span class="card-read">7 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-22-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 22, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 22</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-21-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 21, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 21</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="oig-infection-control-gaps.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge operations">Operations</span>
+        <span class="card-date">Jan 20, 2026</span>
+      </div>
+      <h2 class="card-title">OIG Report Flags Infection Control Gaps in 30% of Surveyed Facilities</h2>
+      <p class="card-excerpt">Oversight report calls for stricter enforcement.</p>
+      <span class="card-read">6 min read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-20-2026.html" class="article-card">
       <div class="card-top">
@@ -108,26 +208,53 @@
         <span class="card-date">Jan 20, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 20</h2>
-      <p class="card-excerpt">CMS targets MA denials, OIG announces 1,200-facility review, $820M Southeast deal closes.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
-    <a href="oig-infection-control-gaps.html" class="article-card">
+    <a href="daily-rundown-jan-19-2026.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Operations</span>
-        <span class="card-date">Jan 20, 2026</span>
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 19, 2026</span>
       </div>
-      <h2 class="card-title">OIG Report Flags Infection Control Gaps in 30% of Surveyed Facilities</h2>
-      <p class="card-excerpt">New oversight report calls for stricter enforcement and targeted training programs to address recurring deficiencies.</p>
-      <span class="card-read">3 min read &rarr;</span>
+      <h2 class="card-title">The Daily Rundown — Jan 19</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="southeast-chain-acquisition.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Finance</span>
+        <span class="card-badge finance">Finance</span>
         <span class="card-date">Jan 18, 2026</span>
       </div>
       <h2 class="card-title">Major Regional Chain Acquires 45 Facilities Across Southeast</h2>
-      <p class="card-excerpt">The $820M deal marks the largest skilled nursing acquisition in 2026, reshaping the competitive landscape in five states.</p>
-      <span class="card-read">4 min read &rarr;</span>
+      <p class="card-excerpt">The $820M deal marks the largest SNF acquisition.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-18-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 18, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 18</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-17-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 17, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 17</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="states-push-back-survey-changes.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Jan 16, 2026</span>
+      </div>
+      <h2 class="card-title">States Push Back on Federal Survey Process Changes</h2>
+      <p class="card-excerpt">Coalition of state survey agencies raises concerns.</p>
+      <span class="card-read">6 min read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-16-2026.html" class="article-card">
       <div class="card-top">
@@ -135,26 +262,35 @@
         <span class="card-date">Jan 16, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 16</h2>
-      <p class="card-excerpt">VBP redistributes $250M, states battle CMS on surveys, PBJ audits hit 800+ facilities.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
-    <a href="states-push-back-survey-changes.html" class="article-card">
+    <a href="daily-rundown-jan-15-2026.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Compliance</span>
-        <span class="card-date">Jan 16, 2026</span>
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 15, 2026</span>
       </div>
-      <h2 class="card-title">States Push Back on Federal Survey Process Changes</h2>
-      <p class="card-excerpt">A coalition of 12 state survey agencies raises concerns about proposed revisions to the Life Safety Code inspection framework.</p>
-      <span class="card-read">3 min read &rarr;</span>
+      <h2 class="card-title">The Daily Rundown — Jan 15</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="ai-fall-prevention-pilot.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Technology</span>
+        <span class="card-badge technology">Technology</span>
         <span class="card-date">Jan 14, 2026</span>
       </div>
       <h2 class="card-title">AI-Powered Fall Prevention Systems Show 40% Reduction in Incidents</h2>
-      <p class="card-excerpt">Multi-site pilot study demonstrates significant safety improvements through predictive analytics and real-time monitoring.</p>
-      <span class="card-read">4 min read &rarr;</span>
+      <p class="card-excerpt">Pilot program demonstrates significant safety improvements.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-14-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 14, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 14</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-13-2026.html" class="article-card">
       <div class="card-top">
@@ -162,25 +298,61 @@
         <span class="card-date">Jan 13, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 13</h2>
-      <p class="card-excerpt">FL and PA join Medicaid push, immigration visa pathway for CNAs, norovirus outbreaks spike.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="three-states-medicaid-rate-increases.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Medicaid</span>
+        <span class="card-badge medicaid">Medicaid</span>
         <span class="card-date">Jan 12, 2026</span>
       </div>
       <h2 class="card-title">Ohio, Florida, and Pennsylvania Propose SNF Medicaid Rate Increases</h2>
-      <p class="card-excerpt">Three states target chronic Medicaid underfunding with rate hikes totaling over $1.2B annually.</p>
-      <span class="card-read">3 min read &rarr;</span>
+      <p class="card-excerpt">Three states target chronic Medicaid underfunding with rate hikes.</p>
+      <span class="card-read">6 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-12-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 12, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 12</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-11-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 11, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 11</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="snf-ownership-transparency-bill.html" class="article-card">
       <div class="card-top">
-        <span class="card-badge">Legislation</span>
+        <span class="card-badge legislation">Legislation</span>
         <span class="card-date">Jan 10, 2026</span>
       </div>
       <h2 class="card-title">Bipartisan Bill Targets SNF Ownership Transparency</h2>
-      <p class="card-excerpt">New legislation would require PE-backed operators to disclose financial structures and related-party transactions.</p>
+      <p class="card-excerpt">New legislation would require PE-backed operators to disclose financial structures.</p>
+      <span class="card-read">6 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-10-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 10, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 10</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="cms-proposes-snf-pps-case-mix-changes.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge reimbursement">Reimbursement</span>
+        <span class="card-date">Jan 9, 2026</span>
+      </div>
+      <h2 class="card-title">CMS Proposes Major PDPM Case-Mix Recalibration for FY2027</h2>
+      <p class="card-excerpt">Proposed rule would adjust 34 ICD-10 code mappings.</p>
       <span class="card-read">5 min read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-09-2026.html" class="article-card">
@@ -189,8 +361,44 @@
         <span class="card-date">Jan 9, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 9</h2>
-      <p class="card-excerpt">Ohio's 7.5% Medicaid hike, ownership transparency bill introduced, survey backlog clears.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="rsv-flu-vaccination-ltc-improvement.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge operations">Operations</span>
+        <span class="card-date">Jan 8, 2026</span>
+      </div>
+      <h2 class="card-title">RSV and Flu Vaccination Rates Improve in Long-Term Care</h2>
+      <p class="card-excerpt">Mandatory NHSN reporting drives vaccination increases.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-08-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 8, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 8</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-07-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 7, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 7</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="international-nurse-recruitment-surge.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge staffing">Staffing</span>
+        <span class="card-date">Jan 6, 2026</span>
+      </div>
+      <h2 class="card-title">International Nurse Recruitment Surges 45%</h2>
+      <p class="card-excerpt">Filipino and Caribbean nurses increasingly fill RN vacancies.</p>
+      <span class="card-read">4 min read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-06-2026.html" class="article-card">
       <div class="card-top">
@@ -198,7 +406,43 @@
         <span class="card-date">Jan 6, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 6</h2>
-      <p class="card-excerpt">Medicaid shortfall hits $32.49/day, Five-Star reshuffle, DOJ settles $48M False Claims case.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-05-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 5, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 5</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-04-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 4, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 4</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="emergency-preparedness-gaps-snfs.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Jan 3, 2026</span>
+      </div>
+      <h2 class="card-title">OIG Audit Identifies Emergency Preparedness Gaps at SNFs</h2>
+      <p class="card-excerpt">Review finds deficiencies in evacuation planning and backup power.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-03-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 3, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 3</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="daily-rundown-jan-02-2026.html" class="article-card">
@@ -207,7 +451,43 @@
         <span class="card-date">Jan 2, 2026</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Jan 2</h2>
-      <p class="card-excerpt">Part A deductible hits record $1,676, minimum wage hikes in 22 states, new emergency prep rules.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-jan-01-2026.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Jan 1, 2026</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Jan 1</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-31-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 31, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 31</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="2026-regulatory-preview-snf.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Dec 30, 2025</span>
+      </div>
+      <h2 class="card-title">2026 Regulatory Preview: Key Compliance Deadlines for SNF Operators</h2>
+      <p class="card-excerpt">Key regulatory changes SNF operators need to prepare for.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-30-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 30, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 30</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="daily-rundown-dec-29-2025.html" class="article-card">
@@ -216,7 +496,61 @@
         <span class="card-date">Dec 29, 2025</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Dec 29</h2>
-      <p class="card-excerpt">MA denials at record 14.2%, 2025 year in review, flu season strains staffing, state transparency rules.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-28-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 28, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 28</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="telehealth-adoption-snfs-doubles.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge technology">Technology</span>
+        <span class="card-date">Dec 27, 2025</span>
+      </div>
+      <h2 class="card-title">Telehealth Adoption in SNFs Doubles Since 2023</h2>
+      <p class="card-excerpt">Virtual care capabilities now available at 78% of facilities.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-27-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 27, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 27</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-26-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 26, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 26</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-25-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 25, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 25</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-24-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 24, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 24</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
     <a href="daily-rundown-dec-23-2025.html" class="article-card">
@@ -225,8 +559,53 @@
         <span class="card-date">Dec 23, 2025</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Dec 23</h2>
-      <p class="card-excerpt">$2.1B in year-end Medicaid supplements, CNA turnover drops below 50%, EHR vendor consolidation.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="snf-ma-activity-2025-review.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge finance">Finance</span>
+        <span class="card-date">Dec 22, 2025</span>
+      </div>
+      <h2 class="card-title">Year in Review: SNF M&A Activity Reaches 420 Deals in 2025</h2>
+      <p class="card-excerpt">Transaction volume rebounds to near pre-pandemic levels.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-22-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 22, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 22</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-21-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 21, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 21</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-20-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 20, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 20</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="nurse-aide-shortage-rural-markets.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge staffing">Staffing</span>
+        <span class="card-date">Dec 19, 2025</span>
+      </div>
+      <h2 class="card-title">Nurse Aide Shortage Reaches Critical Levels in Rural Markets</h2>
+      <p class="card-excerpt">Rural facilities report CNA vacancy rates exceeding 25%.</p>
+      <span class="card-read">5 min read &rarr;</span>
     </a>
     <a href="daily-rundown-dec-19-2025.html" class="article-card">
       <div class="card-top">
@@ -234,16 +613,897 @@
         <span class="card-date">Dec 19, 2025</span>
       </div>
       <h2 class="card-title">The Daily Rundown — Dec 19</h2>
-      <p class="card-excerpt">CMS proposes 3.4% rate increase, staffing mandate details emerge, Medicaid freezes in GA and TN.</p>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-18-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 18, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 18</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="caretrust-500m-snf-acquisition.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge finance">Finance</span>
+        <span class="card-date">Dec 17, 2025</span>
+      </div>
+      <h2 class="card-title">CareTrust REIT Announces Largest-Ever SNF Portfolio Acquisition</h2>
+      <p class="card-excerpt">The $500 million deal adds 31 skilled nursing facilities across seven states.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-17-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 17, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 17</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-16-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 16, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 16</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-15-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 15, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 15</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="private-equity-snf-scrutiny-hhs-report.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge finance">Finance</span>
+        <span class="card-date">Dec 14, 2025</span>
+      </div>
+      <h2 class="card-title">HHS Report Intensifies Scrutiny of Private Equity in Nursing Homes</h2>
+      <p class="card-excerpt">Federal report recommends expanded oversight of PE-backed acquisitions.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-14-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 14, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 14</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-13-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 13, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 13</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="snf-occupancy-recovery-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge operations">Operations</span>
+        <span class="card-date">Dec 12, 2025</span>
+      </div>
+      <h2 class="card-title">SNF Occupancy Rates Continue Recovery, Approaching Pre-Pandemic Levels</h2>
+      <p class="card-excerpt">National occupancy reaches 79.2%, the highest level since March 2020.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-12-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 12, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 12</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-11-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 11, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 11</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="cms-repeals-minimum-staffing-rule.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge staffing">Staffing</span>
+        <span class="card-date">Dec 10, 2025</span>
+      </div>
+      <h2 class="card-title">CMS Repeals Federal Nursing Home Minimum Staffing Requirements</h2>
+      <p class="card-excerpt">In a dramatic reversal, CMS has rescinded the Biden-era staffing mandate.</p>
+      <span class="card-read">6 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-10-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 10, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 10</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-09-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 9, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 9</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-08-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 8, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 8</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-07-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 7, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 7</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-06-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 6, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 6</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-05-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 5, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 5</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-04-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 4, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 4</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="cms-updates-rops-guidance.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Dec 3, 2025</span>
+      </div>
+      <h2 class="card-title">CMS Releases Updated Requirements of Participation Guidance for Nursing Homes</h2>
+      <p class="card-excerpt">Revised State Operations Manual appendix clarifies survey procedures and enforcement expectations.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-03-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 3, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 3</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-02-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 2, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 2</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-dec-01-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Dec 1, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Dec 1</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-30-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 30, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 30</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-29-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 29, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 29</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-28-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 28, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 28</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-27-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 27, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 27</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="snf-construction-pipeline-slows.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge finance">Finance</span>
+        <span class="card-date">Nov 26, 2025</span>
+      </div>
+      <h2 class="card-title">Nursing Home Construction Pipeline Reaches 15-Year Low</h2>
+      <p class="card-excerpt">New facility development declines 40% from 2019 levels as construction costs and regulatory uncertainty deter investment.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-26-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 26, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 26</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-25-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 25, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 25</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-24-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 24, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 24</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-23-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 23, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 23</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-22-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 22, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 22</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-21-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 21, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 21</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-20-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 20, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 20</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="fall-respiratory-illness-prep.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge operations">Operations</span>
+        <span class="card-date">Nov 19, 2025</span>
+      </div>
+      <h2 class="card-title">SNFs Prepare for Respiratory Illness Season With Enhanced Protocols</h2>
+      <p class="card-excerpt">Facilities implement updated CDC guidance on flu, COVID, and RSV as triple threat season approaches peak months.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-19-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 19, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 19</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-18-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 18, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 18</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-17-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 17, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 17</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-16-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 16, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 16</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-15-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 15, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 15</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-14-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 14, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 14</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-13-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 13, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 13</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="medicare-advantage-prior-auth-delays.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge reimbursement">Reimbursement</span>
+        <span class="card-date">Nov 12, 2025</span>
+      </div>
+      <h2 class="card-title">GAO Report Highlights Prior Authorization Delays in Medicare Advantage SNF Coverage</h2>
+      <p class="card-excerpt">Government watchdog finds MA plans deny or delay SNF admissions at higher rates than traditional Medicare.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-12-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 12, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 12</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-11-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 11, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 11</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-10-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 10, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 10</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-09-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 9, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 9</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-08-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 8, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 8</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-07-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 7, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 7</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-06-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 6, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 6</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="special-focus-facilities-november.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Nov 5, 2025</span>
+      </div>
+      <h2 class="card-title">CMS Releases November Special Focus Facilities List With 88 Nursing Homes</h2>
+      <p class="card-excerpt">Updated SFF list identifies nursing homes with persistent quality problems requiring enhanced oversight.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-05-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 5, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 5</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-04-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 4, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 4</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-03-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 3, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 3</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-02-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 2, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 2</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-nov-01-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Nov 1, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Nov 1</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-31-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 31, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 31</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-30-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 30, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 30</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="eighth-circuit-staffing-appeal.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge staffing">Staffing</span>
+        <span class="card-date">Oct 29, 2025</span>
+      </div>
+      <h2 class="card-title">Staffing Mandate Legal Battle: Administration Withdraws Eighth Circuit Appeal</h2>
+      <p class="card-excerpt">DOJ's voluntary dismissal of appeal signals likely end of federal minimum staffing requirements.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-29-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 29, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 29</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-28-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 28, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 28</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-27-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 27, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 27</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-26-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 26, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 26</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-25-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 25, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 25</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-24-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 24, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 24</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-23-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 23, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 23</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="ipo-list-elimination-concerns.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge reimbursement">Reimbursement</span>
+        <span class="card-date">Oct 22, 2025</span>
+      </div>
+      <h2 class="card-title">SNF Industry Sounds Alarm on CMS Inpatient-Only List Phase-Out</h2>
+      <p class="card-excerpt">Proposed elimination of 285 procedures from inpatient-only status could reduce Medicare-covered SNF admissions.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-22-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 22, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 22</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-21-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 21, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 21</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-20-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 20, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 20</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-19-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 19, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 19</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-18-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 18, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 18</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-17-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 17, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 17</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-16-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 16, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 16</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="snf-qrp-october-refresh.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge operations">Operations</span>
+        <span class="card-date">Oct 15, 2025</span>
+      </div>
+      <h2 class="card-title">CMS Releases October Quality Data Refresh With New Measures</h2>
+      <p class="card-excerpt">Care Compare updates include first public reporting of health information transfer and COVID vaccination measures.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-15-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 15, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 15</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-14-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 14, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 14</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-13-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 13, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 13</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-12-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 12, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 12</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-11-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 11, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 11</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-10-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 10, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 10</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-09-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 9, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 9</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="medicare-revalidation-process-begins.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge compliance">Compliance</span>
+        <span class="card-date">Oct 8, 2025</span>
+      </div>
+      <h2 class="card-title">CMS Launches Off-Cycle Medicare Revalidation for Nursing Homes</h2>
+      <p class="card-excerpt">Facilities receive 90-day notices to submit updated enrollment information as CMS implements enhanced provider screening.</p>
+      <span class="card-read">4 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-08-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 8, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 8</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-07-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 7, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 7</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-06-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 6, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 6</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-05-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 5, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 5</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-04-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 4, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 4</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-03-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 3, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 3</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="fy2026-snf-payment-takes-effect.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge reimbursement">Reimbursement</span>
+        <span class="card-date">Oct 2, 2025</span>
+      </div>
+      <h2 class="card-title">FY2026 SNF Payment Rule Takes Effect: What Changed on October 1</h2>
+      <p class="card-excerpt">The new fiscal year brings a 4.0% Medicare payment increase for skilled nursing facilities, along with updates to quality measures and value-based purchasing.</p>
+      <span class="card-read">5 min read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-02-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 2, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 2</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
+      <span class="card-read">60 sec read &rarr;</span>
+    </a>
+    <a href="daily-rundown-oct-01-2025.html" class="article-card">
+      <div class="card-top">
+        <span class="card-badge">Daily Rundown</span>
+        <span class="card-date">Oct 1, 2025</span>
+      </div>
+      <h2 class="card-title">The Daily Rundown — Oct 1</h2>
+      <p class="card-excerpt">Your daily briefing on SNF industry news.</p>
       <span class="card-read">60 sec read &rarr;</span>
     </a>
   </main>
-
   <footer class="index-footer">
     <div class="footer-links">
       <a href="../">SNF Compare Tool</a>
     </div>
     <p class="footer-disclaimer">SNF Compare is an independent resource. Data sourced from CMS and publicly available records. Not affiliated with or endorsed by CMS or any government agency.</p>
   </footer>
+<script>
+  var currentCategory = 'all';
+  var currentSearch = '';
+
+  document.querySelectorAll('.article-card').forEach(function(card) {
+    var badge = card.querySelector('.card-badge');
+    if (badge) {
+      card.dataset.category = badge.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+    }
+    var title = card.querySelector('.card-title');
+    var excerpt = card.querySelector('.card-excerpt');
+    card.dataset.searchtext = ((title ? title.textContent : '') + ' ' + (excerpt ? excerpt.textContent : '')).toLowerCase();
+  });
+
+  function applyFilters() {
+    var visibleCount = 0;
+    document.querySelectorAll('.article-card').forEach(function(card) {
+      var matchesCategory = currentCategory === 'all' || card.dataset.category === currentCategory;
+      var matchesSearch = !currentSearch || card.dataset.searchtext.indexOf(currentSearch) !== -1;
+      if (matchesCategory && matchesSearch) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    var noResults = document.getElementById('noResults');
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+
+  function filterArticles(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.topic-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
+    applyFilters();
+  }
+
+  document.getElementById('articleSearch').addEventListener('input', function(e) {
+    currentSearch = e.target.value.toLowerCase().trim();
+    applyFilters();
+  });
+</script>
 </body>
 </html>

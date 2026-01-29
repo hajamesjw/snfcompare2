@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions | SNF Compare</title>
+  <!-- Google Analytics - Replace GA_MEASUREMENT_ID with your actual ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  <meta name="description" content="Common questions about choosing a nursing home, understanding CMS ratings, Medicare coverage, and using SNF Compare to find the right facility.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a skilled nursing facility (SNF)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A skilled nursing facility provides 24-hour nursing care and rehabilitation services for people who need medical care but don't require hospitalization. SNFs offer physical therapy, occupational therapy, speech therapy, wound care, and other medical services."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are nursing homes rated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CMS rates nursing homes on a 1 to 5 star scale based on health inspections, staffing levels, and quality measures. The overall rating combines these three components to give you a snapshot of facility quality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Medicare cover nursing home care?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Medicare covers skilled nursing care for up to 100 days following a qualifying 3-day hospital stay. Days 1-20 are fully covered; days 21-100 require a daily copay. Medicare does not cover long-term custodial care."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #fafafa; color: #1a1a1a; line-height: 1.7; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; }
+    .nav a { text-decoration: none; }
+    .nav-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.15rem; color: #0f172a; }
+    .nav-logo .badge { background: #10b981; color: #fff; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+    .nav-back { color: #6b7280; font-size: 0.88rem; font-weight: 500; transition: color .2s; }
+    .nav-back:hover { color: #10b981; }
+    .hero { background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); padding: 4rem 2rem; text-align: center; }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; color: #6b7280; max-width: 600px; margin: 0 auto; }
+    .content { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .category { margin-bottom: 3rem; }
+    .category h2 { font-size: 1.25rem; font-weight: 800; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #d1fae5; }
+    .faq-item { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+    .faq-question { padding: 1.25rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-question h3 { font-size: 1rem; font-weight: 700; color: #0f172a; margin: 0; }
+    .faq-question .icon { width: 24px; height: 24px; border-radius: 50%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.2s, background 0.2s; }
+    .faq-item.open .faq-question .icon { background: #10b981; transform: rotate(45deg); }
+    .faq-item.open .faq-question .icon svg { stroke: #fff; }
+    .faq-answer { padding: 0 1.5rem 1.25rem; display: none; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer p { color: #475569; margin-bottom: 0.75rem; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+    .faq-answer ul { margin-left: 1.25rem; color: #475569; }
+    .faq-answer li { margin-bottom: 0.25rem; }
+    .cta-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
+    .cta-section h2 { font-size: 1.35rem; margin-bottom: 0.75rem; }
+    .cta-section p { color: #6b7280; margin-bottom: 1.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: #10b981; color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: background 0.2s; }
+    .btn:hover { background: #059669; }
+    .footer { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; text-align: center; border-top: 1px solid #e5e7eb; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: #6b7280; text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+    .footer-links a:hover { color: #10b981; }
+    .footer-disclaimer { font-size: 0.75rem; color: #9ca3af; max-width: 500px; margin: 0 auto; }
+    @media (max-width: 640px) {
+      .hero { padding: 2.5rem 1rem; }
+      .hero h1 { font-size: 1.75rem; }
+      .content { padding: 2rem 1rem; }
+      .nav { padding: 0.85rem 1rem; }
+      .faq-question { padding: 1rem 1.25rem; }
+      .faq-answer { padding: 0 1.25rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a href="/" class="nav-logo">SNF Compare <span class="badge">FAQ</span></a>
+    <a href="/" class="nav-back">&larr; Back to Home</a>
+  </header>
+
+  <section class="hero">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about choosing a nursing home and using SNF Compare.</p>
+  </section>
+
+  <main class="content">
+    <div class="category">
+      <h2>About Nursing Homes</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>What is a skilled nursing facility (SNF)?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>A skilled nursing facility (SNF) provides 24-hour nursing care and rehabilitation services for people who need medical care but don't require hospitalization. SNFs offer:</p>
+          <ul>
+            <li>Physical, occupational, and speech therapy</li>
+            <li>Wound care and IV medications</li>
+            <li>Post-surgical recovery care</li>
+            <li>Long-term care for chronic conditions</li>
+            <li>Memory care for dementia patients</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>What's the difference between a nursing home and assisted living?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>Nursing homes (SNFs)</strong> provide skilled medical care with licensed nurses on duty 24/7. They're designed for people who need regular medical attention, rehabilitation, or help with most daily activities.</p>
+          <p><strong>Assisted living</strong> provides help with daily activities (bathing, dressing, meals) but less intensive medical care. Residents are generally more independent and don't require constant nursing supervision.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>How long do people typically stay in a nursing home?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>It varies significantly based on the reason for admission:</p>
+          <ul>
+            <li><strong>Short-stay rehabilitation:</strong> 2-4 weeks (post-surgery, stroke recovery)</li>
+            <li><strong>Post-acute care:</strong> 1-3 months (recovering from serious illness)</li>
+            <li><strong>Long-term care:</strong> Months to years (chronic conditions, dementia)</li>
+          </ul>
+          <p>About 25% of residents stay less than 3 months, while others may reside for years.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>Understanding Ratings</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>How are nursing homes rated?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>CMS (Centers for Medicare & Medicaid Services) rates nursing homes on a 1 to 5 star scale based on three components:</p>
+          <ul>
+            <li><strong>Health Inspections (most weighted):</strong> Results from state surveys over the past 3 years</li>
+            <li><strong>Staffing:</strong> Hours of care provided per resident per day</li>
+            <li><strong>Quality Measures:</strong> Clinical outcomes like falls, infections, and readmissions</li>
+          </ul>
+          <p>The overall rating combines these factors, with health inspections having the most impact.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>Can I trust the star ratings?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Star ratings are a useful starting point but have limitations:</p>
+          <ul>
+            <li>Quality measures are self-reported by facilities</li>
+            <li>Inspections are snapshots in time</li>
+            <li>A facility might excel in one area but struggle in another</li>
+          </ul>
+          <p>We recommend using ratings to narrow your options, then visiting facilities in person and speaking with current residents and families.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>What is "Hours Per Resident Day" (HPRD)?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>HPRD measures how much nursing time each resident receives on average per day. For example, if a facility has 4.0 total nursing HPRD, each resident receives an average of 4 hours of direct nursing care daily.</p>
+          <p>Higher HPRD generally correlates with better outcomes. Research suggests 4.1+ total HPRD is ideal, with at least 0.75 hours from registered nurses (RNs).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>Costs & Coverage</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>Does Medicare cover nursing home care?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Medicare covers <strong>skilled nursing care</strong> (not custodial care) under specific conditions:</p>
+          <ul>
+            <li>You had a qualifying hospital stay of at least 3 days</li>
+            <li>You enter a Medicare-certified SNF within 30 days of discharge</li>
+            <li>You need skilled nursing or therapy services</li>
+          </ul>
+          <p><strong>Coverage:</strong> Days 1-20: $0 copay | Days 21-100: ~$200/day copay (2024) | After 100 days: Not covered</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>Does Medicaid cover nursing home care?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, Medicaid is the largest payer for nursing home care, covering about 60% of all nursing home residents. Unlike Medicare, Medicaid covers long-term custodial care.</p>
+          <p>To qualify, you must meet income and asset limits, which vary by state. Many people "spend down" their assets to become eligible. An elder law attorney can help with Medicaid planning.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>How much does nursing home care cost?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Costs vary significantly by location and level of care:</p>
+          <ul>
+            <li><strong>National median (2024):</strong> ~$300/day for a semi-private room</li>
+            <li><strong>Private room:</strong> ~$340/day or ~$125,000/year</li>
+            <li><strong>Range:</strong> $200-$500+/day depending on location and services</li>
+          </ul>
+          <p>Urban areas and states like California, New York, and Massachusetts tend to have higher costs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>Using SNF Compare</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>Where does SNF Compare get its data?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Our data comes from official CMS (Centers for Medicare & Medicaid Services) databases, including:</p>
+          <ul>
+            <li>Nursing Home Compare data (star ratings, inspection results)</li>
+            <li>Payroll-Based Journal staffing data</li>
+            <li>Quality measures from MDS assessments</li>
+            <li>Provider enrollment data</li>
+          </ul>
+          <p>We update our database regularly as CMS releases new information.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>How often is the data updated?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>CMS updates nursing home data monthly. We refresh our database within 1-2 weeks of each CMS release. However, some data (like inspection results) may reflect conditions from several months ago, as inspections happen on an annual cycle.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h3>Is SNF Compare free to use?</h3>
+          <span class="icon"><svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes, SNF Compare is completely free. We believe everyone should have access to quality information when making healthcare decisions for themselves or their loved ones.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Still Have Questions?</h2>
+      <p>Check out our comprehensive guide or contact us directly.</p>
+      <a href="/guide.html" class="btn">Read the Full Guide &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/snf-facility-compare.html">Compare Tool</a>
+      <a href="/articles/">Articles</a>
+      <a href="/guide.html">Guide</a>
+      <a href="/about.html">About</a>
+    </div>
+    <p class="footer-disclaimer">SNF Compare is an independent resource. Data sourced from CMS and publicly available records. Not affiliated with or endorsed by CMS or any government agency.</p>
+  </footer>
+
+  <script>
+    function toggleFaq(el) {
+      const item = el.closest('.faq-item');
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
