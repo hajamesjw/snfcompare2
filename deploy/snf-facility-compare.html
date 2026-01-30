@@ -508,12 +508,6 @@
           <div class="search-container">
             <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input id="searchInput" type="text" class="search-input" placeholder="City, state, or zip..." oninput="handleSearch()">
-            <div class="search-divider"></div>
-            <select id="radiusSelect" class="radius-select" onchange="handleSearch()">
-              <option value="0">Any distance</option>
-              <option value="50">Within 50 mi</option>
-              <option value="100">Within 100 mi</option>
-            </select>
           </div>
           <div id="roleToggle" class="role-toggle">
             <button class="role-btn active" onclick="setRole('RN')">RN</button>
@@ -934,25 +928,24 @@
 
     function parseSearch(q) {
       q = q.trim().toLowerCase();
-      const radius = parseInt(document.getElementById('radiusSelect').value);
       if(!q) return {type:'none'};
       // Check for 5-digit zip code
-      if(/^\d{5}$/.test(q)) return {type:'zip', zip:q, radius};
+      if(/^\d{5}$/.test(q)) return {type:'zip', zip:q};
       // Check for "city, state" format
       const cityStateMatch = q.match(/^([a-z\s]+),\s*([a-z]{2}|[a-z\s]+)$/i);
       if(cityStateMatch) {
         let city = cityStateMatch[1].trim();
         let state = cityStateMatch[2].trim().toUpperCase();
         if(state.length > 2) state = stateNames[state.toLowerCase()] || state;
-        return {type:'cityState', city, state, radius};
+        return {type:'cityState', city, state};
       }
       // Check for state abbreviation only (2 letters)
       if(/^[a-z]{2}$/i.test(q) && stateAbbr[q.toUpperCase()]) return {type:'state', state:q.toUpperCase()};
       // Check for full state name
       const stateCode = stateNames[q];
       if(stateCode) return {type:'state', state:stateCode};
-      // Default: search by name/city (with radius support)
-      return {type:'text', query:q, radius};
+      // Default: search by name/city
+      return {type:'text', query:q};
     }
 
     // Get unique zip prefixes from a set of facilities
@@ -982,33 +975,30 @@
         const search = parseSearch(searchQuery);
         switch(search.type) {
           case 'zip':
+            // Exact zip matches first, then within 50 miles (3-digit prefix)
+            const exactZip = facilitiesData.filter(x => x.zip === search.zip);
             const z3 = search.zip.substring(0,3);
-            const z2 = search.zip.substring(0,2);
-            if(search.radius === 0) {
-              // Exact area only
-              f = facilitiesData.filter(x => x.zip && x.zip.startsWith(z3));
-            } else if(search.radius <= 50) {
-              // ~50 mi: 3-digit prefix
-              f = facilitiesData.filter(x => x.zip && x.zip.substring(0,3) === z3);
-            } else {
-              // ~100 mi: 2-digit prefix
-              f = facilitiesData.filter(x => x.zip && x.zip.substring(0,2) === z2);
-            }
+            const nearbyZip = facilitiesData.filter(x => x.zip && x.zip.substring(0,3) === z3 && x.zip !== search.zip);
+            f = [...exactZip, ...nearbyZip];
             break;
           case 'cityState':
-            const cityMatches = f.filter(x => x.city.toLowerCase() === search.city && x.state === search.state);
-            f = search.radius > 0 ? expandByRadius(cityMatches, search.radius) : cityMatches;
+            // Exact city matches first, then within 50 miles
+            const exactCity = facilitiesData.filter(x => x.city.toLowerCase() === search.city && x.state === search.state);
+            const nearbyCity = expandByRadius(exactCity, 50).filter(x => !(x.city.toLowerCase() === search.city && x.state === search.state));
+            f = [...exactCity, ...nearbyCity];
             break;
           case 'state':
+            // All facilities in state
             f = f.filter(x => x.state === search.state);
             break;
           case 'text':
             const q = search.query;
-            // First find exact city matches for radius expansion
+            // Check if it's a city name
             const exactCityMatches = f.filter(x => x.city.toLowerCase() === q);
-            if(exactCityMatches.length > 0 && search.radius > 0) {
-              // City found - expand by radius
-              f = expandByRadius(exactCityMatches, search.radius);
+            if(exactCityMatches.length > 0) {
+              // City found - show exact city first, then 50 miles
+              const nearbyCityText = expandByRadius(exactCityMatches, 50).filter(x => x.city.toLowerCase() !== q);
+              f = [...exactCityMatches, ...nearbyCityText];
             } else {
               // Fallback to text search in name/city
               f = f.filter(x => x.name.toLowerCase().includes(q) || x.city.toLowerCase().includes(q));
