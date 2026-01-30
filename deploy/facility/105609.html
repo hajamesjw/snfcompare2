@@ -91,6 +91,10 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .info-item:hover{background:#f0fdf9;border-color:rgba(16,185,129,0.2)}
 .info-item .lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
 .info-item .val{font-size:15px;color:var(--text);font-weight:700}
+.turnover-grid{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px}
+.turnover-card{background:#fafbfc;border:1px solid #e5e7eb;border-radius:var(--radius-sm);padding:20px 24px;min-width:140px;text-align:center}
+.turnover-val{font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px}
+.turnover-lbl{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
 .badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
 .badge-green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#065f46;border:1px solid rgba(16,185,129,0.2)}
 .badge-red{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#991b1b;border:1px solid rgba(239,68,68,0.2)}
@@ -160,7 +164,7 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 <div class="card-body"><table>
 <thead><tr><th>Role</th><th>Reported Hrs/Res/Day</th><th>Case-Mix Adjusted</th><th>Weekend</th></tr></thead>
 <tbody><tr><td style="font-weight:600">Registered Nurse (RN)</td><td>1.10</td><td>0.64</td><td>0.93</td></tr><tr><td style="font-weight:600">Licensed Practical Nurse (LPN)</td><td>0.15</td><td>0.81</td><td>N/A</td></tr><tr><td style="font-weight:600">Certified Nursing Assistant (CNA)</td><td>2.11</td><td>2.18</td><td>N/A</td></tr><tr><td style="font-weight:600">Physical Therapist (PT)</td><td>0.02</td><td>N/A</td><td>N/A</td></tr><tr><td style="font-weight:600">Total Nursing</td><td>3.36</td><td>3.63</td><td>3.14</td></tr></tbody>
-</table><div style="margin-top:16px;display:flex;gap:24px;flex-wrap:wrap"><div><span class="info-item"><span class="lbl">Total Nursing Turnover</span><br><span class="val val-warn">39.8%</span></span></div><div><span class="info-item"><span class="lbl">RN Turnover</span><br><span class="val val-bad">57.1%</span></span></div><div><span class="info-item"><span class="lbl">Administrators Left</span><br><span class="val">0</span></span></div></div></div>
+</table><div class="turnover-grid"><div class="turnover-card"><div class="turnover-val val-warn">39.8%</div><div class="turnover-lbl">Total Nursing Turnover</div></div><div class="turnover-card"><div class="turnover-val val-bad">57.1%</div><div class="turnover-lbl">RN Turnover</div></div><div class="turnover-card"><div class="turnover-val">0</div><div class="turnover-lbl">Administrators Left</div></div></div></div>
 </div>
 
 <div class="card">

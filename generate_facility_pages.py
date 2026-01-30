@@ -282,6 +282,10 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .info-item:hover{background:#f0fdf9;border-color:rgba(16,185,129,0.2)}
 .info-item .lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
 .info-item .val{font-size:15px;color:var(--text);font-weight:700}
+.turnover-grid{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px}
+.turnover-card{background:#fafbfc;border:1px solid #e5e7eb;border-radius:var(--radius-sm);padding:20px 24px;min-width:140px;text-align:center}
+.turnover-val{font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px}
+.turnover-lbl{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
 .badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
 .badge-green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);color:#065f46;border:1px solid rgba(16,185,129,0.2)}
 .badge-red{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#991b1b;border:1px solid rgba(239,68,68,0.2)}
@@ -370,15 +374,15 @@ def build_staffing_table(p):
     rn_turnover = safe_float(p.get('Registered Nurse turnover'))
     admin_left = p.get('Number of administrators who have left the nursing home', '').strip()
 
-    turnover_html = '<div style="margin-top:16px;display:flex;gap:24px;flex-wrap:wrap">'
+    turnover_html = '<div class="turnover-grid">'
     if turnover is not None:
         tc = 'val-good' if turnover < 30 else ('val-warn' if turnover < 50 else 'val-bad')
-        turnover_html += f'<div><span class="info-item"><span class="lbl">Total Nursing Turnover</span><br><span class="val {tc}">{turnover:.1f}%</span></span></div>'
+        turnover_html += f'<div class="turnover-card"><div class="turnover-val {tc}">{turnover:.1f}%</div><div class="turnover-lbl">Total Nursing Turnover</div></div>'
     if rn_turnover is not None:
         rc = 'val-good' if rn_turnover < 30 else ('val-warn' if rn_turnover < 50 else 'val-bad')
-        turnover_html += f'<div><span class="info-item"><span class="lbl">RN Turnover</span><br><span class="val {rc}">{rn_turnover:.1f}%</span></span></div>'
+        turnover_html += f'<div class="turnover-card"><div class="turnover-val {rc}">{rn_turnover:.1f}%</div><div class="turnover-lbl">RN Turnover</div></div>'
     if admin_left:
-        turnover_html += f'<div><span class="info-item"><span class="lbl">Administrators Left</span><br><span class="val">{esc(admin_left)}</span></span></div>'
+        turnover_html += f'<div class="turnover-card"><div class="turnover-val">{esc(admin_left)}</div><div class="turnover-lbl">Administrators Left</div></div>'
     turnover_html += '</div>'
 
     return f'''<table>
