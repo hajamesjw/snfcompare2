@@ -803,7 +803,7 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages):
 
 <div class="header">
 <div class="header-inner">
-<a href="../snf-compare-landing.html#tool" class="back-link">
+<a href="../index.html#tool" class="back-link">
 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
 Back to Compare Tool
 </a>
@@ -871,10 +871,10 @@ Last updated: November 2025.
 
 <div class="footer">
 <div class="footer-inner">
-<a href="../snf-compare-landing.html" class="footer-logo"><span class="logo-badge">SNF</span> compare</a>
+<a href="../index.html" class="footer-logo"><span class="logo-badge">SNF</span> compare</a>
 <div class="footer-links">
-<a href="../snf-compare-landing.html#tool">Compare Tool</a>
-<a href="../snf-compare-landing.html">Home</a>
+<a href="../index.html#tool">Compare Tool</a>
+<a href="../index.html">Home</a>
 </div>
 </div>
 </div>
@@ -893,7 +893,7 @@ Last updated: November 2025.
 <p class="gate-privacy">We respect your privacy. Unsubscribe anytime.</p>
 </div>
 <div class="gate-divider"></div>
-<a href="../snf-compare-landing.html#tool" class="gate-back">&larr; Go Back to Compare Tool</a>
+<a href="../index.html#tool" class="gate-back">&larr; Go Back to Compare Tool</a>
 </div>
 </div>
 
