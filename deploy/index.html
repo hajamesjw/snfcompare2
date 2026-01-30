@@ -1318,6 +1318,12 @@
       nav.in-tool {
         flex-wrap: nowrap;
       }
+      nav.in-tool:has(.nav-links.open) {
+        flex-wrap: wrap;
+      }
+      nav.in-tool .nav-links.open {
+        order: 10;
+      }
 
       .hamburger {
         display: flex;
