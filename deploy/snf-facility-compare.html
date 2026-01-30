@@ -429,7 +429,7 @@
       .tag-pill { font-size:9px; padding:2px 6px; }
       .selection-checkbox { width:20px; height:20px; top:10px; right:10px; border-radius:5px; }
       .selection-checkbox svg { width:12px; height:12px; }
-      .selection-tray { bottom:calc(160px + env(safe-area-inset-bottom, 0px)); }
+      .selection-tray { bottom:80px; }
       .tray-content { padding:5px 5px 5px 14px; gap:10px; }
       .tray-count { font-size:13px; }
       .tray-clear { font-size:10px; padding:3px 6px; }
@@ -458,6 +458,9 @@
       .instructions { padding:0 24px; }
       .results-count { padding:8px 24px 12px; }
     }
+
+    /* Hide role toggle when in iframe (header has it) */
+    body.in-iframe .role-toggle { display: none !important; }
 
   </style>
   <script type="application/ld+json">
@@ -755,7 +758,10 @@
       }
     }
 
-    function initPage() { renderSortOptions(); loadFromUrl(); detectUserLocation(); }
+    function initPage() {
+      if (window.self !== window.top) document.body.classList.add('in-iframe');
+      renderSortOptions(); loadFromUrl(); detectUserLocation();
+    }
     document.addEventListener('DOMContentLoaded', initPage);
     window.addEventListener('pageshow', (e) => { if (e.persisted) initPage(); });
     document.addEventListener('click', (e) => { if (!e.target.closest('.info-tip')) document.querySelectorAll('.info-tip.active').forEach(t => t.classList.remove('active')); });
