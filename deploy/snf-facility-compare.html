@@ -15,19 +15,7 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans',sans-serif; }
     html { scroll-behavior:smooth; }
     body { background:#f8fafc; min-height:100vh; }
-    .site-nav { display:flex; align-items:center; justify-content:space-between; padding:0.875rem 1.5rem; background:white; border-bottom:1px solid #eee; position:sticky; top:0; z-index:50; }
-    .site-nav .logo { display:flex; align-items:center; gap:0.5rem; font-weight:800; font-size:1.125rem; color:#1a1a1a; text-decoration:none; }
-    .site-nav .logo-badge { background:#10b981; color:white; padding:0.2rem 0.4rem; border-radius:5px; font-size:0.7rem; font-weight:700; }
-    .site-nav .nav-links { display:flex; align-items:center; gap:0.25rem; }
-    .site-nav .nav-link { padding:0.4rem 0.75rem; text-decoration:none; color:#666; font-size:0.85rem; font-weight:500; border-radius:6px; transition:all 0.2s; }
-    .site-nav .nav-link:hover { color:#1a1a1a; background:#f5f5f5; }
-    .site-nav .nav-link.active { background:#e8faf3; color:#10b981; }
-    .site-nav .nav-link-soon { display:inline-flex; align-items:center; gap:0.4rem; }
-    .site-nav .nav-soon-badge { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:white; font-size:0.55rem; font-weight:700; text-transform:uppercase; padding:0.15rem 0.4rem; border-radius:10px; }
-    .site-nav .nav-cta { padding:0.5rem 1rem; background:#10b981; color:#fff; border:none; border-radius:6px; font-size:0.85rem; font-weight:700; text-decoration:none; transition:all 0.2s; }
-    .site-nav .nav-cta:hover { background:#059669; }
-    @media(max-width:768px) { .site-nav .nav-links { display:none; } .site-nav .nav-cta { padding:0.4rem 0.75rem; font-size:0.8rem; } .site-nav { padding:0.625rem 1rem; } .header { top:44px; } }
-    .header { position:sticky; top:52px; z-index:40; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
+    .header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
     .header-content { max-width:1400px; margin:0 auto; padding:8px 20px 10px; }
     .mode-toggle-container { display:flex; justify-content:center; margin-bottom:8px; }
     .mode-toggle { background:#f3f4f6; border-radius:9999px; padding:2px; display:inline-flex; }
@@ -542,15 +530,6 @@
       <div class="def-modal-body" id="defModalBody"></div>
     </div>
   </div>
-  <nav class="site-nav">
-    <a href="index.html" class="logo"><span class="logo-badge">SNF</span>compare</a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="snf-facility-compare.html" class="nav-link active">Compare Tool</a>
-      <span class="nav-link nav-link-soon">Job Board <span class="nav-soon-badge">Coming Soon</span></span>
-    </div>
-    <a href="snf-facility-compare.html" class="nav-cta">Compare Now</a>
-  </nav>
   <div id="browseView" class="browse-view">
     <div class="header">
       <div class="header-content">
