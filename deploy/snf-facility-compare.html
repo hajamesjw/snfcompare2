@@ -924,7 +924,7 @@
             <div class="metrics">${popupMetrics}</div>
             <div class="actions">
               <button class="select-btn ${isSelected ? 'selected' : ''}" onclick="toggleSelectFromMap(${f.id})">${isSelected ? 'Remove' : 'Add to Compare'}</button>
-              <a href="facility/${f.ccn}.html" class="details-link">View Full Profile</a>
+              <a href="facility/${f.ccn}.html" target="_blank" class="details-link">View Full Profile</a>
             </div>
           </div>
         `, {maxWidth: 300, closeOnClick: false, autoClose: false});
@@ -1466,7 +1466,7 @@
           ${badge}
           <h3>${titleCase(f.name)}</h3>
           <span class="facility-location">${f.city}, ${f.state}</span>
-          <a href="facility/${f.ccn}.html?ref=${mode}" class="facility-info-link">View Full Profile <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a href="facility/${f.ccn}.html?ref=${mode}" target="_blank" class="facility-info-link">View Full Profile <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>`;
       }).join('');
     }
