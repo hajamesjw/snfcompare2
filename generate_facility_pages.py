@@ -597,13 +597,21 @@ def build_safety_section(p):
     def safety_card(label, value, color_fn=None):
         v = safe_int(value)
         display = str(v) if v is not None else 'N/A'
-        cls = ''
-        if color_fn and v is not None:
-            cls = color_fn(v)
+        cls = 'val-na'
+        if v is not None:
+            cls = color_fn(v) if color_fn else 'val-na'
         return f'<div class="safety-card"><div class="val {cls}">{display}</div><div class="lbl">{label}</div></div>'
 
-    def def_color(v): return 'val-good' if v <= 2 else ('val-warn' if v <= 5 else 'val-bad')
-    def low_good(v): return 'val-good' if v == 0 else ('val-warn' if v <= 2 else 'val-bad')
+    # Deficiencies: US avg ~8, good facilities <5, concerning >12
+    def def_color(v): return 'val-good' if v <= 4 else ('val-warn' if v <= 10 else 'val-bad')
+    # Complaints: 0-1 good, 2-5 warn, >5 bad
+    def complaint_color(v): return 'val-good' if v <= 1 else ('val-warn' if v <= 5 else 'val-bad')
+    # Incidents: 0 good, 1-3 warn, >3 bad
+    def incident_color(v): return 'val-good' if v == 0 else ('val-warn' if v <= 3 else 'val-bad')
+    # Penalties: 0 good, 1-2 warn, >2 bad
+    def penalty_color(v): return 'val-good' if v == 0 else ('val-warn' if v <= 2 else 'val-bad')
+    # Infection: 0 good, 1-2 warn, >2 bad
+    def infection_color(v): return 'val-good' if v == 0 else ('val-warn' if v <= 2 else 'val-bad')
 
     c1_defs = p.get('Rating Cycle 1 Total Number of Health Deficiencies', '').strip()
     c2_defs = p.get('Rating Cycle 2/3 Total Number of Health Deficiencies', '').strip()
@@ -625,15 +633,20 @@ def build_safety_section(p):
     else:
         fine_display = 'N/A'
 
+    # Fine color: 0 = good, any = bad
+    fine_cls = 'val-na'
+    if nf is not None:
+        fine_cls = 'val-good' if nf == 0 else 'val-bad'
+
     cards = [
         safety_card('Cycle 1 Health Deficiencies', c1_defs, def_color),
         safety_card('Cycle 2/3 Health Deficiencies', c2_defs, def_color),
-        safety_card('Substantiated Complaints', complaints, low_good),
-        safety_card('Reported Incidents', incidents, low_good),
-        f'<div class="safety-card"><div class="val {("val-good" if nf == 0 else "val-bad") if nf is not None else "val-na"}">{fine_display}</div><div class="lbl">Fines (Count & Total)</div></div>',
-        safety_card('Payment Denials', payment_denials, low_good),
-        safety_card('Total Penalties', total_penalties, low_good),
-        safety_card('Infection Control Citations', infection_cites, low_good),
+        safety_card('Substantiated Complaints', complaints, complaint_color),
+        safety_card('Reported Incidents', incidents, incident_color),
+        f'<div class="safety-card"><div class="val {fine_cls}">{fine_display}</div><div class="lbl">Fines (Count & Total)</div></div>',
+        safety_card('Payment Denials', payment_denials, penalty_color),
+        safety_card('Total Penalties', total_penalties, penalty_color),
+        safety_card('Infection Control Citations', infection_cites, infection_color),
     ]
     return f'<div class="safety-grid">{"".join(cards)}</div>'
 
