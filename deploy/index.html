@@ -1342,19 +1342,24 @@
         display: flex;
         order: 2;
         padding: 2px;
-        margin-right: 6px;
+        margin-right: 8px;
+        flex: 1;
+        justify-content: center;
       }
       nav.in-tool .nav-mode-btn {
-        padding: 5px 10px;
-        font-size: 11px;
+        padding: 6px 14px;
+        font-size: 12px;
         white-space: nowrap;
       }
       nav.in-tool .logo {
         font-size: 0.9rem;
       }
+      nav.in-tool .logo-text {
+        display: none;
+      }
       nav.in-tool .logo-badge {
-        font-size: 0.55rem;
-        padding: 0.12rem 0.25rem;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
       }
 
       .nav-cta {
@@ -1647,12 +1652,12 @@
   <nav id="mainNav">
     <a href="#" class="logo" onclick="showTab('home'); return false;">
       <span class="logo-badge">SNF</span>
-      compare
+      <span class="logo-text">compare</span>
     </a>
     <a href="snf-facility-compare.html" class="mobile-compare-btn">Compare Tool</a>
     <div class="nav-mode-toggle">
-      <button class="nav-mode-btn active" onclick="switchNavMode('pro')">For Nurses</button>
-      <button class="nav-mode-btn" onclick="switchNavMode('family')">For Patients</button>
+      <button class="nav-mode-btn active" onclick="switchNavMode('pro')">🩺 Nurses</button>
+      <button class="nav-mode-btn" onclick="switchNavMode('family')">👨‍👩‍👧 Family</button>
     </div>
     <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
