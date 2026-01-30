@@ -325,9 +325,10 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .rating-card .val{font-size:32px}
 .rating-card .stars svg{width:16px;height:16px}
 .rating-card .lbl{font-size:10px}
-table{font-size:12px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-th,td{padding:10px 12px;white-space:nowrap}
+table{font-size:12px}
+th,td{padding:10px 12px}
 th{font-size:10px}
+td:first-child{min-width:180px;white-space:normal}
 .wage-card{padding:16px 12px}
 .wage-card .val{font-size:22px}
 .wage-card .lbl{font-size:10px}
