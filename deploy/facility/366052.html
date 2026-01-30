@@ -73,8 +73,7 @@ a:hover{color:var(--primary-dark)}
 .hero .phone svg{width:16px;height:16px;opacity:0.5;color:var(--text-muted)}
 .hero-image{border-radius:16px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.12);border:4px solid white}
 .hero-image img{width:100%;height:280px;object-fit:cover;display:block}
-@media(max-width:700px){.hero{padding:20px 0}.hero-grid{grid-template-columns:1fr;gap:16px}.hero-image{order:-1;margin:0 -12px}.hero-image img{height:180px;border-radius:0}.hero h1{font-size:20px}.hero-ratings{gap:6px;flex-wrap:wrap}.hero-rating-item{padding:8px 6px;flex:1 1 22%;min-width:70px}.hero-rating-item .r-stars{font-size:13px}.hero-rating-item .r-lbl{font-size:8px}.hero-rating-item .r-tip{display:none}}
-@media(max-width:400px){.hero-image{display:none}.hero-ratings{gap:4px}.hero-rating-item{flex:1 1 45%}}
+@media(max-width:700px){.hero{padding:24px 0}.hero-grid{grid-template-columns:1fr;gap:20px}.hero-image{order:-1}.hero-image img{height:200px}.hero h1{font-size:22px}.hero-ratings{gap:4px}.hero-rating-item{padding:6px 4px}.hero-rating-item .r-stars{font-size:12px}.hero-rating-item .r-lbl{font-size:8px}}
 .section{margin:28px auto;max-width:980px;padding:0 24px}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);overflow:hidden;margin-bottom:24px;transition:box-shadow .3s,transform .3s}
 .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
@@ -105,14 +104,13 @@ a:hover{color:var(--primary-dark)}
 .rating-card .stars .empty{color:rgba(255,255,255,0.3)}
 .rating-card .lbl{font-size:11px;font-weight:700;opacity:0.95;text-transform:uppercase;letter-spacing:0.8px;position:relative}
 .rating-card .na{font-size:32px;font-weight:700;opacity:0.7}
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:0 24px}
-@media(max-width:700px){.table-wrap{margin:0 -16px;padding:0;position:relative}.table-wrap::after{content:'';position:absolute;top:0;right:0;bottom:0;width:24px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.9));pointer-events:none}}
-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;min-width:500px}
-th{text-align:left;padding:12px 16px;background:#f8fafc;color:var(--text-muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--border);white-space:nowrap}
-td{padding:12px 16px;border-bottom:1px solid #f3f4f6;color:#374151}
-td:first-child{font-weight:500;color:#111827}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px}
+th{text-align:left;padding:12px 16px;background:#f8fafc;color:var(--text-muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--border)}
+td{padding:14px 16px;border-bottom:1px solid #f3f4f6;color:#374151;transition:background .15s}
 tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#f8fdfb}
 tbody tr:nth-child(even) td{background:#fafbfc}
+tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .val-good{color:#059669;font-weight:700}
 .val-warn{color:#d97706;font-weight:700}
 .val-bad{color:#dc2626;font-weight:700}
@@ -131,8 +129,8 @@ tbody tr:nth-child(even) td{background:#fafbfc}
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media(max-width:700px){.info-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.info-grid{grid-template-columns:1fr}}
-.info-item{padding:16px;background:#fafbfc;border-radius:var(--radius-sm);border:1px solid #f0f0f0}
-@media(min-width:601px){.info-item:hover{background:#f3f4f6;border-color:#e5e7eb}}
+.info-item{padding:16px;background:#fafbfc;border-radius:var(--radius-sm);border:1px solid #f0f0f0;transition:all .2s}
+.info-item:hover{background:#f0fdf9;border-color:rgba(16,185,129,0.2)}
 .info-item .lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
 .info-item .val{font-size:15px;color:var(--text);font-weight:700}
 .turnover-grid{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px}
@@ -173,40 +171,42 @@ tbody tr:nth-child(even) td{background:#fafbfc}
 .qm-bad{color:#dc2626;font-weight:600}
 .qm-neutral{color:#374151;font-weight:500}
 .empty-state{padding:40px 24px;text-align:center;color:var(--text-muted);font-size:14px;font-weight:500}
-@media(max-width:600px){
+@media(max-width:480px){
 .container{padding:0 16px}
-.section{padding:0 12px;margin:16px auto}
-.card{margin-bottom:12px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.card:hover{transform:none;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.card-header{padding:12px 16px}
-.card-header h2{font-size:12px;gap:6px}
+.hero{padding:24px 0 20px}
+.hero h1{font-size:22px;line-height:1.3}
+.hero .address{font-size:13px;flex-wrap:wrap}
+.hero .phone{font-size:14px}
+.hero-badge{font-size:11px;padding:5px 10px;margin-bottom:12px}
+.section{padding:0 12px;margin:20px auto}
+.card{margin-bottom:16px;border-radius:12px}
+.card-header{padding:14px 16px}
+.card-header h2{font-size:13px;gap:8px}
 .card-header h2::before{width:3px;height:14px}
-.card-body{padding:12px}
-table{font-size:12px;min-width:420px}
+.card-body{padding:16px}
+.rating-card{padding:16px 12px;border-radius:10px}
+.rating-card .val{font-size:32px}
+.rating-card .stars svg{width:16px;height:16px}
+.rating-card .lbl{font-size:10px}
+table{font-size:12px}
 th,td{padding:10px 12px}
 th{font-size:10px}
-td:first-child{min-width:140px;position:sticky;left:0;background:white;z-index:1}
-tbody tr:nth-child(even) td:first-child{background:#fafbfc}
-.wages-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-.wage-card{padding:14px 10px}
-.wage-card .val{font-size:20px}
-.wage-card .lbl{font-size:9px}
-.info-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-.info-item{padding:10px}
-.info-item .lbl{font-size:9px;margin-bottom:2px}
-.info-item .val{font-size:13px}
-.turnover-grid{gap:8px;margin-top:12px}
-.turnover-card{padding:12px;min-width:auto;flex:1 1 45%}
-.turnover-val{font-size:18px}
-.turnover-lbl{font-size:9px}
-.safety-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-.safety-card{padding:12px}
-.safety-card .val{font-size:20px}
-.safety-card .lbl{font-size:9px}
-.qm-type{padding:10px 14px;font-size:10px}
-.qm-table tr td:first-child{padding-left:24px}
-.qm-table tr td:first-child::before{left:8px;width:6px;height:6px}
-.disclaimer{padding:14px;font-size:11px;margin:12px 12px 80px;border-radius:10px}
+td:first-child{min-width:180px;white-space:normal}
+.wage-card{padding:16px 12px}
+.wage-card .val{font-size:22px}
+.wage-card .lbl{font-size:10px}
+.info-item{padding:12px}
+.info-item .lbl{font-size:10px}
+.info-item .val{font-size:14px}
+.turnover-grid{gap:10px}
+.turnover-card{padding:14px 16px;min-width:auto;flex:1}
+.turnover-val{font-size:20px}
+.turnover-lbl{font-size:10px}
+.safety-card{padding:14px}
+.safety-card .val{font-size:22px}
+.safety-card .lbl{font-size:10px}
+.qm-type{padding:10px 16px;font-size:11px}
+.disclaimer{padding:16px;font-size:11px;margin:16px 12px 0}
 }
 .footer{background:linear-gradient(180deg,#111827 0%,#0f172a 100%);padding:48px 24px;margin-top:48px;color:#9ca3af;font-size:13px}
 .footer-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
@@ -272,7 +272,7 @@ tbody tr:nth-child(even) td:first-child{background:#fafbfc}
 </div>
 </div>
 <div class="hero-image">
-<img src="../images/facilities2/facility2.png" alt="GABLES CARE CENTER INC facility exterior" loading="lazy">
+<img src="../images/facilities2/facility3.png" alt="GABLES CARE CENTER INC facility exterior" loading="lazy">
 </div>
 </div>
 </div>
@@ -282,10 +282,10 @@ tbody tr:nth-child(even) td:first-child{background:#fafbfc}
 
 <div class="card">
 <div class="card-header"><h2>Staffing Details<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Hours of care provided per resident per day by staff type. Higher staffing generally correlates with better outcomes. CMS recommends 4.1+ total hours daily.</span></span></h2></div>
-<div class="card-body"><div class="table-wrap"><table>
+<div class="card-body"><table>
 <thead><tr><th>Role</th><th>Reported Hrs/Res/Day</th><th>Case-Mix Adjusted</th><th>Weekend</th></tr></thead>
 <tbody><tr><td style="font-weight:600">Registered Nurse (RN)</td><td>0.74</td><td>0.69</td><td>0.52</td></tr><tr><td style="font-weight:600">Licensed Practical Nurse (LPN)</td><td>0.91</td><td>0.88</td><td>N/A</td></tr><tr><td style="font-weight:600">Certified Nursing Assistant (CNA)</td><td>2.01</td><td>2.36</td><td>N/A</td></tr><tr><td style="font-weight:600">Physical Therapist (PT)</td><td>0.08</td><td>N/A</td><td>N/A</td></tr><tr><td style="font-weight:600">Total Nursing</td><td>3.66</td><td>3.93</td><td>3.00</td></tr></tbody>
-</table></div><div class="turnover-grid"><div class="turnover-card"><div class="turnover-val val-good">29.4%</div><div class="turnover-lbl">Total Nursing Turnover</div></div><div class="turnover-card"><div class="turnover-val val-good">6.3%</div><div class="turnover-lbl">RN Turnover</div></div><div class="turnover-card"><div class="turnover-val">2</div><div class="turnover-lbl">Administrators Left</div></div></div></div>
+</table><div class="turnover-grid"><div class="turnover-card"><div class="turnover-val val-good">29.4%</div><div class="turnover-lbl">Total Nursing Turnover</div></div><div class="turnover-card"><div class="turnover-val val-good">6.3%</div><div class="turnover-lbl">RN Turnover</div></div><div class="turnover-card"><div class="turnover-val">2</div><div class="turnover-lbl">Administrators Left</div></div></div></div>
 </div>
 
 <div class="card">
@@ -301,11 +301,11 @@ tbody tr:nth-child(even) td:first-child{background:#fafbfc}
 <div class="card">
 <div class="card-header"><h2>Quality Measures (MDS)<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Clinical outcomes from Minimum Data Set assessments. Lower percentages are generally better (fewer falls, infections, etc). Compare to state and national averages.</span></span></h2></div>
 <div class="card-body" style="padding:0"><div class="qm-type qm-section-great">Long-Stay Measures</div>
-<div class="table-wrap"><table class="qm-table">
+<div style="overflow-x:auto"><table class="qm-table">
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
 <tbody><tr class="qm-warn"><td style="max-width:300px">Percentage of long-stay residents whose need for help with daily activities has increased *</td><td><span class="qm-bad">35.2%</span></td><td><span class="qm-mid">11.3%</span></td><td><span class="qm-warn">19.6%</span></td><td><span class="qm-mid">9.8%</span></td><td style="font-weight:600"><span class="qm-warn">19.1%</span></td></tr><tr class="qm-mid"><td style="max-width:300px">Percentage of long-stay residents who lose too much weight</td><td><span class="qm-good">3.6%</span></td><td><span class="qm-warn">17.3%</span></td><td><span class="qm-good">4%</span></td><td><span class="qm-good">2.0%</span></td><td style="font-weight:600"><span class="qm-mid">6.8%</span></td></tr><tr class="qm-great"><td style="max-width:300px">Percentage of long-stay residents with a catheter inserted and left in their bladder *</td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td style="font-weight:600"><span class="qm-great">0%</span></td></tr><tr class="qm-great"><td style="max-width:300px">Percentage of long-stay residents with a urinary tract infection *</td><td><span class="qm-good">3.3%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td style="font-weight:600"><span class="qm-great">0.9%</span></td></tr><tr class="qm-warn"><td style="max-width:300px">Percentage of long-stay residents who have depressive symptoms</td><td><span class="qm-mid">7.1%</span></td><td><span class="qm-mid">10.2%</span></td><td><span class="qm-bad">22.9%</span></td><td><span class="qm-bad">22.2%</span></td><td style="font-weight:600"><span class="qm-warn">14.9%</span></td></tr><tr class="qm-great"><td style="max-width:300px">Percentage of long-stay residents who were physically restrained</td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td><span class="qm-great">0%</span></td><td style="font-weight:600"><span class="qm-great">0%</span></td></tr><tr class="qm-good"><td style="max-width:300px">Percentage of long-stay residents experiencing one or more falls with major injury *</td><td><span class="qm-good">3.3%</span></td><td><span class="qm-great">1.7%</span></td><td><span class="qm-good">3.6%</span></td><td><span class="qm-mid">5.4%</span></td><td style="font-weight:600"><span class="qm-good">3.5%</span></td></tr><tr class="qm-great"><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the pneumococcal vaccine</td><td><span class="qm-great">100%</span></td><td><span class="qm-great">100%</span></td><td><span class="qm-great">100%</span></td><td><span class="qm-great">100%</span></td><td style="font-weight:600"><span class="qm-great">100%</span></td></tr><tr class=""><td style="max-width:300px">Percentage of long-stay residents who received an antipsychotic medication *</td><td><span class="qm-neutral">1.7%</span></td><td><span class="qm-neutral">5.3%</span></td><td><span class="qm-neutral">3.7%</span></td><td><span class="qm-neutral">5.4%</span></td><td style="font-weight:600"><span class="qm-neutral">4.0%</span></td></tr><tr class="qm-warn"><td style="max-width:300px">Percentage of long-stay residents whose ability to walk independently worsened *</td><td><span class="qm-bad">47.3%</span></td><td><span class="qm-mid">11.9%</span></td><td><span class="qm-mid">5.4%</span></td><td><span class="qm-mid">10.9%</span></td><td style="font-weight:600"><span class="qm-warn">19.1%</span></td></tr><tr class=""><td style="max-width:300px">Percentage of long-stay residents who received an antianxiety or hypnotic medication</td><td><span class="qm-neutral">23.2%</span></td><td><span class="qm-neutral">30.2%</span></td><td><span class="qm-neutral">31.4%</span></td><td><span class="qm-neutral">39.2%</span></td><td style="font-weight:600"><span class="qm-neutral">30.8%</span></td></tr><tr class="qm-great"><td style="max-width:300px">Percentage of long-stay residents assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600"><span class="qm-great">98.4%</span></td></tr><tr class="qm-good"><td style="max-width:300px">Percentage of long-stay residents with pressure ulcers *</td><td><span class="qm-good">4.1%</span></td><td><span class="qm-good">3.0%</span></td><td><span class="qm-good">4.9%</span></td><td><span class="qm-great">1.7%</span></td><td style="font-weight:600"><span class="qm-good">3.5%</span></td></tr><tr class="qm-bad"><td style="max-width:300px">Percentage of long-stay residents with new or worsened bowel or bladder incontinence</td><td><span class="qm-bad">37.1%</span></td><td><span class="qm-bad">24.2%</span></td><td><span class="qm-bad">22.8%</span></td><td><span class="qm-bad">25.1%</span></td><td style="font-weight:600"><span class="qm-bad">27.5%</span></td></tr></tbody>
 </table></div><div class="qm-type qm-section-good">Short-Stay Measures</div>
-<div class="table-wrap"><table class="qm-table">
+<div style="overflow-x:auto"><table class="qm-table">
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
 <tbody><tr class="qm-good"><td style="max-width:300px">Percentage of short-stay residents assessed and appropriately given the pneumococcal vaccine</td><td><span class="qm-great">99.1%</span></td><td><span class="qm-good">95.5%</span></td><td><span class="qm-mid">92.0%</span></td><td><span class="qm-mid">93.8%</span></td><td style="font-weight:600"><span class="qm-good">95.0%</span></td></tr><tr class=""><td style="max-width:300px">Percentage of short-stay residents who newly received an antipsychotic medication *</td><td><span class="qm-neutral">0%</span></td><td><span class="qm-neutral">1.3%</span></td><td><span class="qm-neutral">0%</span></td><td><span class="qm-neutral">0%</span></td><td style="font-weight:600"><span class="qm-neutral">0.3%</span></td></tr><tr class="qm-warn"><td style="max-width:300px">Percentage of short-stay residents who were assessed and appropriately given the seasonal influenza vaccine</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td style="font-weight:600"><span class="qm-warn">83.6%</span></td></tr></tbody>
 </table></div><p style="padding:12px;font-size:11px;color:#9ca3af">* Used in CMS Five-Star Quality Rating. Values rounded to one decimal place.</p></div>
@@ -318,7 +318,7 @@ tbody tr:nth-child(even) td:first-child{background:#fafbfc}
 
 <div class="card">
 <div class="card-header"><h2>Inspection History<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Recent state health inspections and complaint investigations. Click survey dates to see detailed findings. Focus on scope and severity of deficiencies.</span></span></h2></div>
-<div class="card-body" style="padding:0"><div class="table-wrap"><table>
+<div class="card-body" style="padding:0"><div style="overflow-x:auto"><table>
 <thead><tr><th>Category</th><th>Cycle 1<br><span style="font-weight:400;font-size:11px">2024-04-12</span></th><th>Cycle 2<br><span style="font-weight:400;font-size:11px">2022-05-05</span></th><th>Cycle 3<br><span style="font-weight:400;font-size:11px">2019-07-23</span></th></tr></thead>
 <tbody><tr style="background:#f9fafb"><td style="font-weight:700">Total Health Deficiencies</td><td class="val-warn" style="font-weight:700">3</td><td class="val-bad" style="font-weight:700">8</td><td class="val-bad" style="font-weight:700">20</td></tr><tr style="background:#f3f4f6"><td style="font-weight:700">Total Fire Safety Deficiencies</td><td style="font-weight:700">7</td><td style="font-weight:700">7</td><td style="font-weight:700">14</td></tr><tr><td>Freedom from Abuse/Neglect</td><td class="">0</td><td class="">0</td><td class="val-warn">1</td></tr><tr><td>Quality of Life & Care</td><td class="val-warn">1</td><td class="val-bad">3</td><td class="val-bad">8</td></tr><tr><td>Resident Assessment</td><td class="">0</td><td class="val-warn">1</td><td class="val-bad">4</td></tr><tr><td>Nursing & Physician Services</td><td class="">0</td><td class="">0</td><td class="val-warn">1</td></tr><tr><td>Resident Rights</td><td class="">0</td><td class="val-bad">4</td><td class="val-warn">2</td></tr><tr><td>Nutrition & Dietary</td><td class="">0</td><td class="">0</td><td class="">0</td></tr><tr><td>Pharmacy Services</td><td class="">0</td><td class="">0</td><td class="val-warn">2</td></tr><tr><td>Environmental</td><td class="">0</td><td class="">0</td><td class="">0</td></tr><tr><td>Administration</td><td class="">0</td><td class="">0</td><td class="">0</td></tr><tr><td>Infection Control</td><td class="val-warn">2</td><td class="">0</td><td class="val-warn">2</td></tr><tr><td>Emergency Preparedness</td><td class="">0</td><td class="">0</td><td class="">0</td></tr></tbody>
 </table></div></div>
