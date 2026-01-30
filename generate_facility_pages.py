@@ -4,6 +4,7 @@ import csv
 import os
 import sys
 import html as html_mod
+import random
 from collections import defaultdict
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,6 +29,29 @@ STATE_MIN_WAGES = {
 WAGE_MULT = {'NP': 3.0, 'RN': 2.2, 'LPN': 1.4, 'CNA': 0.7}
 WAGE_BOUNDS = {'NP': (20, 250), 'RN': (15, 180), 'LPN': (8, 120), 'CNA': (5, 60)}
 IQR_UPPER = {'NP': 172.08, 'RN': 126.20, 'LPN': 80.32, 'CNA': 36.12}
+
+# ── Image handling ─────────────────────────────────────────────────────────────
+IMAGES_DIR = os.path.join(BASE_DIR, 'images', 'facilities')
+FALLBACK_IMAGES = ['facility1.png', 'facility2.png', 'facility3.png', 'facility4.png']
+MIN_IMAGE_SIZE = 10000  # Images under 10KB are likely grey placeholders
+
+def get_valid_images():
+    """Scan facilities images folder and return set of CCNs with valid (non-grey) images."""
+    valid = set()
+    if os.path.exists(IMAGES_DIR):
+        for f in os.listdir(IMAGES_DIR):
+            if f.endswith('.jpg'):
+                path = os.path.join(IMAGES_DIR, f)
+                if os.path.getsize(path) >= MIN_IMAGE_SIZE:
+                    valid.add(f.replace('.jpg', ''))
+    return valid
+
+def get_image_path(ccn, valid_images):
+    """Return image path for a facility - real image or random fallback."""
+    if ccn in valid_images:
+        return f'../images/facilities/{ccn}.jpg'
+    else:
+        return f'../images/facilities2/{random.choice(FALLBACK_IMAGES)}'
 
 # ── Utility functions ──────────────────────────────────────────────────────────
 
@@ -239,6 +263,15 @@ a:hover{color:var(--primary-dark)}
 .hero .phone a{color:var(--primary);display:inline-flex;align-items:center;gap:6px}
 .hero .phone a:hover{color:var(--primary-dark)}
 .hero .phone svg{width:16px;height:16px}
+.facility-overview{max-width:980px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.facility-overview-left{display:flex;flex-direction:column;gap:16px}
+.facility-overview-right{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.facility-overview-right img{width:100%;height:280px;object-fit:cover;display:block}
+.overview-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.overview-stat{background:white;border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);text-align:center}
+.overview-stat .stat-val{font-size:28px;font-weight:800;color:var(--primary)}
+.overview-stat .stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;margin-top:4px}
+@media(max-width:700px){.facility-overview{grid-template-columns:1fr;padding:16px}.facility-overview-right img{height:200px}.overview-stats{grid-template-columns:repeat(2,1fr)}}
 .section{margin:28px auto;max-width:980px;padding:0 24px}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);overflow:hidden;margin-bottom:24px;transition:box-shadow .3s,transform .3s}
 .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
@@ -813,7 +846,7 @@ def build_schema_json(ccn, p, wages):
     return '\n'.join(scripts)
 
 
-def generate_html(ccn, p, quality_measures, penalties, surveys, wages):
+def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_path):
     name = esc(p.get('Provider Name', 'Unknown Facility'))
     address_parts = [p.get('Provider Address', ''), p.get('City/Town', ''), p.get('State', '')]
     zipcode = p.get('ZIP Code', '').strip()
@@ -831,6 +864,12 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages):
     inspections_html = build_inspection_section(surveys)
 
     phone_link = f'<a href="tel:{phone}" class="phone">{phone}</a>' if phone else ''
+
+    # Get ratings for overview section
+    overall = safe_int(p.get('Overall Rating', ''))
+    health_insp = safe_int(p.get('Health Inspection Rating', ''))
+    quality_rating = safe_int(p.get('QM Rating', ''))
+    staffing_rating = safe_int(p.get('Staffing Rating', ''))
 
     schema_html = build_schema_json(ccn, p, wages)
 
@@ -860,6 +899,20 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages):
 <h1>{name}</h1>
 <p class="address"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>{full_address}</p>
 {f'<p class="phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>{phone_link}</p>' if phone else ''}
+</div>
+</div>
+
+<div class="facility-overview">
+<div class="facility-overview-left">
+<div class="overview-stats">
+<div class="overview-stat"><div class="stat-val">{overall if overall else 'N/A'}</div><div class="stat-lbl">Overall Rating</div></div>
+<div class="overview-stat"><div class="stat-val">{health_insp if health_insp else 'N/A'}</div><div class="stat-lbl">Health Inspection</div></div>
+<div class="overview-stat"><div class="stat-val">{quality_rating if quality_rating else 'N/A'}</div><div class="stat-lbl">Quality Rating</div></div>
+<div class="overview-stat"><div class="stat-val">{staffing_rating if staffing_rating else 'N/A'}</div><div class="stat-lbl">Staffing Rating</div></div>
+</div>
+</div>
+<div class="facility-overview-right">
+<img src="{image_path}" alt="{name} facility exterior" loading="lazy">
 </div>
 </div>
 
@@ -1039,13 +1092,19 @@ def main():
     total = len(providers)
     print(f'Generating {total} facility pages...')
 
+    # Get valid facility images
+    valid_images = get_valid_images()
+    print(f'  {len(valid_images)} valid facility images found')
+
     for i, (ccn, p) in enumerate(providers.items()):
+        image_path = get_image_path(ccn, valid_images)
         html = generate_html(
             ccn, p,
             quality.get(ccn, []),
             penalties.get(ccn, []),
             surveys.get(ccn, []),
             all_wages.get(ccn),
+            image_path,
         )
         filepath = os.path.join(OUTPUT_DIR, f'{ccn}.html')
         with open(filepath, 'w', encoding='utf-8') as f:
