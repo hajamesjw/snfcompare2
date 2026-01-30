@@ -853,11 +853,11 @@
           ? `<span class="metric ${ratingColor(f.overallRating)}">${f.overallRating}★ Overall</span>
              <span class="metric ${ratingColor(f.healthInspection)}">${f.healthInspection}★ Inspection</span>
              <span class="metric ${ratingColor(f.qualityRating)}">${f.qualityRating}★ Quality</span>
-             ${f.deficiencies !== undefined ? `<span class="metric ${defColor(f.deficiencies)}">${f.deficiencies} defic.</span>` : ''}
-             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`
+             ${f.deficiencies !== undefined ? `<span class="metric ${defColor(f.deficiencies)}">${f.deficiencies} deficiencies</span>` : ''}
+             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/patient</span>` : ''}`
           : `<span class="metric ${ratingColor(f.overallRating)}">${f.overallRating}★ Overall</span>
              ${wage ? `<span class="metric wage">$${wage.toFixed(0)}/hr</span>` : ''}
-             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`;
+             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/patient</span>` : ''}`;
 
         marker.bindPopup(`
           <div class="map-popup">
