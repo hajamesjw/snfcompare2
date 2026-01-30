@@ -111,8 +111,13 @@
     .sidebar-add-btn.added { background:#0d9488; color:white; border-color:#0d9488; }
     .sidebar-add-btn.added:hover { background:#0f766e; }
     .map-popup { font-family:'Plus Jakarta Sans',sans-serif; min-width:240px; }
-    .map-popup h4 { font-size:14px; font-weight:600; color:#111827; margin-bottom:4px; }
-    .map-popup .location { font-size:12px; color:#6b7280; margin-bottom:8px; }
+    .map-popup h4 { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .map-popup h4 a { color:#111827; text-decoration:none; }
+    .map-popup h4 a:hover { color:#0d9488; text-decoration:underline; }
+    .map-popup .location { font-size:11px; color:#6b7280; margin-bottom:4px; }
+    .map-popup .phone { font-size:11px; margin-bottom:8px; }
+    .map-popup .phone a { color:#0d9488; text-decoration:none; font-weight:500; }
+    .map-popup .phone a:hover { text-decoration:underline; }
     .map-popup .metrics { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
     .map-popup .metric { font-size:11px; padding:3px 8px; border-radius:4px; font-weight:500; }
     .map-popup .metric.rating { background:#f0fdfa; color:#0d9488; }
@@ -851,15 +856,16 @@
 
         marker.bindPopup(`
           <div class="map-popup">
-            <h4>${f.name}</h4>
-            <div class="location">${f.city}, ${f.state} ${f.zip}</div>
+            <h4><a href="facility/${f.ccn}.html" target="_blank">${f.name}</a></h4>
+            <div class="location">${f.streetAddress ? f.streetAddress + ', ' : ''}${f.city}, ${f.state} ${f.zip}</div>
+            ${f.phone ? `<div class="phone"><a href="tel:${f.phone}">${f.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</a></div>` : ''}
             <div class="metrics">${popupMetrics}</div>
             <div class="actions">
               <button class="select-btn ${isSelected ? 'selected' : ''}" onclick="toggleSelectFromMap(${f.id})">${isSelected ? 'Remove' : 'Add to Compare'}</button>
               <a href="facility/${f.ccn}.html" target="_blank" class="details-link">View Full Profile</a>
             </div>
           </div>
-        `, {maxWidth: 280, closeOnClick: false, autoClose: false});
+        `, {maxWidth: 300, closeOnClick: false, autoClose: false});
         
         marker.on('click', () => highlightSidebarCard(f.id));
         mapMarkers.push(marker);
