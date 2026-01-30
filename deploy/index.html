@@ -388,7 +388,9 @@
       margin-right: 12px;
     }
 
-    /* Nav mode toggle - shown on mobile when in tool (matches desktop selector) */
+    /* Nav mode toggle (For Nurses / For Patients)
+       - Hidden by default
+       - Shown via nav.in-tool on desktop, and mobile @900px breakpoint */
     .nav-mode-toggle {
       display: none;
       background: #f3f4f6;
@@ -2599,6 +2601,7 @@
     function toggleMobileMenu() {
       const btn = document.querySelector('.hamburger');
       const nav = document.getElementById('navLinks');
+      if (!btn || !nav) return;
       btn.classList.toggle('open');
       nav.classList.toggle('open');
     }
@@ -2606,6 +2609,7 @@
     function closeMobileMenu() {
       const btn = document.querySelector('.hamburger');
       const nav = document.getElementById('navLinks');
+      if (!btn || !nav) return;
       btn.classList.remove('open');
       nav.classList.remove('open');
     }
@@ -2613,6 +2617,7 @@
     function switchNavMode(mode) {
       const proBtn = document.getElementById('navProBtn');
       const famBtn = document.getElementById('navFamilyBtn');
+      if (!proBtn || !famBtn) return;
       proBtn.classList.remove('active-pro');
       famBtn.classList.remove('active-family');
       if (mode === 'pro') {
@@ -2621,12 +2626,13 @@
         famBtn.classList.add('active-family');
       }
       const iframe = document.getElementById('tool-iframe');
+      if (!iframe) return;
       const iframeMode = mode === 'pro' ? 'professional' : 'family';
       try {
         if (iframe.contentWindow && iframe.contentWindow.setMode) {
           iframe.contentWindow.setMode(iframeMode);
         }
-      } catch(e) {}
+      } catch(e) { /* cross-origin expected */ }
     }
 
     function showTab(tab, audienceType) {
