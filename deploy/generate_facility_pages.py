@@ -252,6 +252,43 @@ def apply_iqr_filter(all_wages):
                 break
     return all_wages
 
+def compute_state_wage_medians(all_wages, providers):
+    """Compute median wages per state for each role (with IQR outlier removal)."""
+    from statistics import median
+    state_wages = {}  # {state: {role: [wages]}}
+
+    for ccn, w in all_wages.items():
+        if w is None:
+            continue
+        state = providers.get(ccn, {}).get('State', '')
+        if not state:
+            continue
+        if state not in state_wages:
+            state_wages[state] = {'NP': [], 'RN': [], 'LPN': [], 'CNA': []}
+        for role in ('NP', 'RN', 'LPN', 'CNA'):
+            if w.get(role):
+                state_wages[state][role].append(w[role])
+
+    # Compute medians with IQR outlier removal
+    state_medians = {}
+    for state, roles in state_wages.items():
+        state_medians[state] = {}
+        for role, wages in roles.items():
+            if len(wages) < 5:
+                state_medians[state][role] = median(wages) if wages else None
+                continue
+            # IQR filter
+            sorted_w = sorted(wages)
+            q1_idx = len(sorted_w) // 4
+            q3_idx = 3 * len(sorted_w) // 4
+            q1, q3 = sorted_w[q1_idx], sorted_w[q3_idx]
+            iqr = q3 - q1
+            lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
+            filtered = [w for w in wages if lo <= w <= hi]
+            state_medians[state][role] = median(filtered) if filtered else median(wages)
+
+    return state_medians
+
 # ── CSS ────────────────────────────────────────────────────────────────────────
 
 PAGE_CSS = """
@@ -354,10 +391,15 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .val-na{color:#9ca3af}
 .wages-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:700px){.wages-grid{grid-template-columns:repeat(2,1fr)}}
-.wage-card{background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%);border-radius:var(--radius-sm);padding:24px 16px;text-align:center;border:1px solid rgba(16,185,129,0.15);transition:transform .2s,box-shadow .2s}
-.wage-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,185,129,0.15)}
-.wage-card .val{font-size:28px;font-weight:800;color:#047857;letter-spacing:-0.5px}
-.wage-card .lbl{font-size:11px;color:#059669;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px}
+.wage-card{background:linear-gradient(135deg,#f9fafb 0%,#f3f4f6 100%);border-radius:var(--radius-sm);padding:24px 16px;text-align:center;border:1px solid #e5e7eb;transition:transform .2s,box-shadow .2s}
+.wage-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.08)}
+.wage-card .val{font-size:28px;font-weight:800;color:#374151;letter-spacing:-0.5px}
+.wage-card .lbl{font-size:11px;color:#6b7280;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px}
+.wage-card.wage-great{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border-color:rgba(22,163,74,0.25)}.wage-card.wage-great .val{color:#15803d}.wage-card.wage-great .lbl{color:#166534}
+.wage-card.wage-good{background:linear-gradient(135deg,#f7fee7 0%,#ecfccb 100%);border-color:rgba(101,163,13,0.25)}.wage-card.wage-good .val{color:#4d7c0f}.wage-card.wage-good .lbl{color:#3f6212}
+.wage-card.wage-mid{background:linear-gradient(135deg,#f9fafb 0%,#f3f4f6 100%);border-color:#e5e7eb}.wage-card.wage-mid .val{color:#374151}.wage-card.wage-mid .lbl{color:#6b7280}
+.wage-card.wage-warn{background:linear-gradient(135deg,#fefce8 0%,#fef9c3 100%);border-color:rgba(234,179,8,0.25)}.wage-card.wage-warn .val{color:#a16207}.wage-card.wage-warn .lbl{color:#854d0e}
+.wage-card.wage-bad{background:linear-gradient(135deg,#fef2f2 0%,#fee2e2 100%);border-color:rgba(220,38,38,0.25)}.wage-card.wage-bad .val{color:#dc2626}.wage-card.wage-bad .lbl{color:#991b1b}
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media(max-width:700px){.info-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.info-grid{grid-template-columns:1fr}}
@@ -544,14 +586,56 @@ def build_staffing_table(p):
 <tbody>{rows_html}</tbody>
 </table>{turnover_html}'''
 
-def build_wages_section(wages):
+def build_wages_section(wages, state, state_medians):
     if wages is None:
-        return '<div class="empty-state">Wage estimates not available for this facility</div>'
+        return '<div class="empty-state">Wage estimates not available for this facility</div>', 'section-mid'
+
+    medians = state_medians.get(state, {})
     cards = []
+    scores = []
+
     for role in ('NP', 'RN', 'LPN', 'CNA'):
         v = wages.get(role)
-        cards.append(f'<div class="wage-card"><div class="val">{fmt_wage(v)}</div><div class="lbl">{role} Est. Hourly</div></div>')
-    return f'<div class="wages-grid">{"".join(cards)}</div><p style="margin-top:12px;font-size:12px;color:#9ca3af">Estimates derived from CMS Cost Report data and staffing levels.</p>'
+        med = medians.get(role)
+        cls = ''
+        if v is not None and med is not None and med > 0:
+            # Calculate percentile-like score: how far above/below median
+            pct_diff = (v - med) / med * 100  # e.g., +10 means 10% above median
+            # Higher wages = better for workers
+            if pct_diff >= 15:
+                cls = 'wage-great'
+                scores.append(100)
+            elif pct_diff >= 5:
+                cls = 'wage-good'
+                scores.append(75)
+            elif pct_diff >= -5:
+                cls = 'wage-mid'
+                scores.append(50)
+            elif pct_diff >= -15:
+                cls = 'wage-warn'
+                scores.append(25)
+            else:
+                cls = 'wage-bad'
+                scores.append(0)
+        cards.append(f'<div class="wage-card {cls}"><div class="val">{fmt_wage(v)}</div><div class="lbl">{role} Est. Hourly</div></div>')
+
+    # Section color based on average score
+    section_color = 'section-mid'
+    if scores:
+        avg = sum(scores) / len(scores)
+        if avg >= 80:
+            section_color = 'section-great'
+        elif avg >= 60:
+            section_color = 'section-good'
+        elif avg >= 40:
+            section_color = 'section-mid'
+        elif avg >= 20:
+            section_color = 'section-warn'
+        else:
+            section_color = 'section-bad'
+
+    html = f'<div class="wages-grid">{"".join(cards)}</div><p style="margin-top:12px;font-size:12px;color:#9ca3af">Estimates derived from CMS Cost Report data and staffing levels.</p>'
+    return html, section_color
 
 def build_facility_info(p):
     beds = p.get('Number of Certified Beds', '').strip()
@@ -1077,17 +1161,18 @@ def build_schema_json(ccn, p, wages):
     return '\n'.join(scripts)
 
 
-def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_path):
+def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_path, state_medians):
     name = esc(p.get('Provider Name', 'Unknown Facility'))
     address_parts = [p.get('Provider Address', ''), p.get('City/Town', ''), p.get('State', '')]
+    state = p.get('State', '')
     zipcode = p.get('ZIP Code', '').strip()
-    city_state_zip = f"{esc(p.get('City/Town', ''))}, {esc(p.get('State', ''))} {esc(zipcode)}"
+    city_state_zip = f"{esc(p.get('City/Town', ''))}, {esc(state)} {esc(zipcode)}"
     full_address = f"{esc(p.get('Provider Address', ''))}, {city_state_zip}"
     phone = esc(p.get('Telephone Number', '').strip())
 
     ratings_html = build_ratings_section(p)
     staffing_html = build_staffing_table(p)
-    wages_html = build_wages_section(wages)
+    wages_html, wages_color = build_wages_section(wages, state, state_medians)
     info_html = build_facility_info(p)
     safety_html, safety_color = build_safety_section(p)
     qm_html = build_quality_measures_section(quality_measures)
@@ -1160,7 +1245,7 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_pat
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Estimated Wages<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Wages estimated from CMS cost report data. These are modeled averages, not actual job postings. Actual wages may vary based on experience and shift.</span></span></h2></div>
+<div class="card-header {wages_color}"><h2>Estimated Wages<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Wages estimated from CMS cost report data. These are modeled averages, not actual job postings. Actual wages may vary based on experience and shift.</span></span></h2></div>
 <div class="card-body">{wages_html}</div>
 </div>
 
@@ -1354,6 +1439,10 @@ def main():
     final = sum(1 for w in all_wages.values() if w is not None)
     print(f'  {final} wages after IQR filter')
 
+    print('Computing state wage medians...')
+    state_medians = compute_state_wage_medians(all_wages, providers)
+    print(f'  {len(state_medians)} states with wage data')
+
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     total = len(providers)
     print(f'Generating {total} facility pages...')
@@ -1371,6 +1460,7 @@ def main():
             surveys.get(ccn, []),
             all_wages.get(ccn),
             image_path,
+            state_medians,
         )
         filepath = os.path.join(OUTPUT_DIR, f'{ccn}.html')
         with open(filepath, 'w', encoding='utf-8') as f:
