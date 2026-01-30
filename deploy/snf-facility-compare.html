@@ -1422,12 +1422,10 @@
       const wins = selectedFacilities.map(()=>0);
       scoreMetrics.forEach(m=>{
         const vals = selectedFacilities.map(f=>f[m.key]);
-        const isWageKey = m.key && m.key.startsWith('wage');
-        const wageRole = isWageKey ? m.key.replace('wage','') : null;
-        const nums = vals.filter(v=>typeof v==='number' && (!isWageKey || isValidWage(v, wageRole)));
+        const nums = vals.filter(v=>typeof v==='number');
         if(nums.length<2)return;
         const best = m.better==='higher'?Math.max(...nums):Math.min(...nums);
-        vals.forEach((v,i)=>{ if(v===best && (!isWageKey || isValidWage(v, wageRole))) wins[i]++; });
+        vals.forEach((v,i)=>{ if(v===best) wins[i]++; });
       });
       // Rank facilities
       const maxWins=Math.max(...wins), minWins=Math.min(...wins);
@@ -1443,11 +1441,9 @@
       const secondaryLabel = mode==='family' ? 'Best Indicators' : 'Best Wages';
       const secondaryIcon = mode==='family' ? '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' : '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
       const wageVals = selectedFacilities.map(f=>f[secondaryKey]);
-      const isSecondaryWage = secondaryKey && secondaryKey.startsWith('wage');
-      const secondaryWageRole = isSecondaryWage ? secondaryKey.replace('wage','') : null;
-      const wageNums = wageVals.filter(v=>typeof v==='number' && (!isSecondaryWage || isValidWage(v, secondaryWageRole)));
+      const wageNums = wageVals.filter(v=>typeof v==='number');
       const bestWage = wageNums.length ? Math.max(...wageNums) : null;
-      const bestWageIdx = bestWage !== null ? wageVals.findIndex(v=>v===bestWage && (!isSecondaryWage || isValidWage(v, secondaryWageRole))) : -1;
+      const bestWageIdx = bestWage !== null ? wageVals.findIndex(v=>v===bestWage) : -1;
       const winnerIdx = rankings.findIndex(r=>r==='winner');
 
       document.getElementById('facilityHeaders').innerHTML=selectedFacilities.map((f,i)=>{
@@ -1475,11 +1471,6 @@
       if(m.type==='coming-soon')return'<span class="coming-soon-pill">Coming Soon</span>';
       if(m.type==='benefit-blur')return`<span class="benefit-unlock" onclick="showBenefitsPopup()">Get Access <span class="soon-tag">Soon</span></span>`;
       if(v==null)return'N/A';
-      // Check for outlier wages
-      if(m.key && m.key.startsWith('wage')) {
-        const wageRole = m.key.replace('wage','');
-        if(!isValidWage(v, wageRole)) return 'N/A';
-      }
       if(m.type==='rating')return`<span class="rating-pill r${v}">${v}<span class="star">&#9733;</span></span>`;
       if(m.type==='boolean')return v?'<span class="boolean-yes">&#10003; Yes</span>':'<span class="boolean-no">&#10007; No</span>';
       if(m.type==='currency')return'$'+v.toFixed(2);
@@ -1711,12 +1702,10 @@
         // Normal section rendering
         return`<div class="comparison-section"><div class="comparison-section-header"><h2>${sec.category}</h2></div>${sec.items.map(m=>{
         const vals=selectedFacilities.map(f=>f[m.key]);
-        const isWageKey = m.key && m.key.startsWith('wage');
-        const wageRole = isWageKey ? m.key.replace('wage','') : null;
-        const nums=vals.filter(v=>typeof v==='number' && (!isWageKey || isValidWage(v, wageRole)));
+        const nums=vals.filter(v=>typeof v==='number');
         const best=m.better==='neutral'||!nums.length?null:(m.better==='higher'?Math.max(...nums):Math.min(...nums));
         return`<div class="comparison-row"><p class="label">${m.label}</p><div class="comparison-values">${selectedFacilities.map(f=>{
-          const v=f[m.key]; const ib=best!==null&&m.better!=='neutral'&&v===best&&(!isWageKey||isValidWage(v,wageRole));
+          const v=f[m.key]; const ib=best!==null&&m.better!=='neutral'&&v===best;
           return`<div class="comparison-value ${ib?'best':''}"><span class="value">${fmtVal(v,m)}</span>${ib?'<p class="best-label">Best</p>':''}</div>`;
         }).join('')}</div></div>`;
       }).join('')}</div>`;
