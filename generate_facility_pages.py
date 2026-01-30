@@ -379,6 +379,19 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .safety-card .lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:6px;text-transform:uppercase;letter-spacing:0.3px;line-height:1.4}
 .qm-type{font-size:12px;font-weight:700;color:#065f46;padding:14px 24px;background:linear-gradient(90deg,#ecfdf5,#d1fae5);border-bottom:1px solid rgba(16,185,129,0.2);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:8px}
 .qm-type::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%}
+.qm-table tr{position:relative}
+.qm-table tr td:first-child{padding-left:28px}
+.qm-table tr td:first-child::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#9ca3af}
+.qm-table tr.qm-great td:first-child::before{background:#10b981}
+.qm-table tr.qm-good td:first-child::before{background:#22c55e}
+.qm-table tr.qm-mid td:first-child::before{background:#eab308}
+.qm-table tr.qm-warn td:first-child::before{background:#f97316}
+.qm-table tr.qm-bad td:first-child::before{background:#ef4444}
+.qm-great{color:#059669;font-weight:600}
+.qm-good{color:#16a34a;font-weight:600}
+.qm-mid{color:#ca8a04;font-weight:600}
+.qm-warn{color:#ea580c;font-weight:600}
+.qm-bad{color:#dc2626;font-weight:600}
 .empty-state{padding:40px 24px;text-align:center;color:var(--text-muted);font-size:14px;font-weight:500}
 @media(max-width:480px){
 .container{padding:0 16px}
@@ -626,14 +639,33 @@ def build_quality_measures_section(measures):
     long_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('long')]
     short_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('short')]
 
-    def fmt_measure(val):
+    def get_qm_color(val):
+        """Get color class for quality measure - lower is better"""
+        if val is None:
+            return ''
+        if val < 5:
+            return 'qm-great'
+        elif val < 10:
+            return 'qm-good'
+        elif val < 20:
+            return 'qm-mid'
+        elif val < 30:
+            return 'qm-warn'
+        else:
+            return 'qm-bad'
+
+    def fmt_measure(val, with_color=False):
         """Format measure value: round to 1 decimal, add % suffix, strip .0"""
         raw = val.strip() if val else ''
         if not raw or raw == 'N/A':
             return 'N/A'
         try:
             num = float(raw)
-            return f'{int(num)}%' if num == int(num) else f'{num:.1f}%'
+            formatted = f'{int(num)}%' if num == int(num) else f'{num:.1f}%'
+            if with_color:
+                color_class = get_qm_color(num)
+                return f'<span class="{color_class}">{formatted}</span>'
+            return formatted
         except ValueError:
             return esc(raw)
 
@@ -643,16 +675,23 @@ def build_quality_measures_section(measures):
         rows = ''
         for m in sorted(items, key=lambda x: x.get('Measure Code', '')):
             desc = esc(m.get('Measure Description', ''))
-            q1 = fmt_measure(m.get('Q1 Measure Score', ''))
-            q2 = fmt_measure(m.get('Q2 Measure Score', ''))
-            q3 = fmt_measure(m.get('Q3 Measure Score', ''))
-            q4 = fmt_measure(m.get('Q4 Measure Score', ''))
-            avg = fmt_measure(m.get('Four Quarter Average Score', ''))
+            q1 = fmt_measure(m.get('Q1 Measure Score', ''), with_color=True)
+            q2 = fmt_measure(m.get('Q2 Measure Score', ''), with_color=True)
+            q3 = fmt_measure(m.get('Q3 Measure Score', ''), with_color=True)
+            q4 = fmt_measure(m.get('Q4 Measure Score', ''), with_color=True)
+            avg_raw = m.get('Four Quarter Average Score', '').strip()
+            avg = fmt_measure(avg_raw, with_color=True)
+            # Get color for the row indicator bar
+            try:
+                avg_num = float(avg_raw) if avg_raw else None
+            except ValueError:
+                avg_num = None
+            bar_color = get_qm_color(avg_num)
             used = m.get('Used in Quality Measure Five Star Rating', '').strip()
             star_marker = ' *' if used and used.upper() == 'Y' else ''
-            rows += f'<tr><td style="max-width:300px">{desc}{star_marker}</td><td>{q1}</td><td>{q2}</td><td>{q3}</td><td>{q4}</td><td style="font-weight:600">{avg}</td></tr>'
+            rows += f'<tr class="{bar_color}"><td style="max-width:300px">{desc}{star_marker}</td><td>{q1}</td><td>{q2}</td><td>{q3}</td><td>{q4}</td><td style="font-weight:600">{avg}</td></tr>'
         return f'''<div class="qm-type">{label}</div>
-<div style="overflow-x:auto"><table>
+<div style="overflow-x:auto"><table class="qm-table">
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
 <tbody>{rows}</tbody>
 </table></div>'''
