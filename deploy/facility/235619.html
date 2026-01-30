@@ -42,15 +42,10 @@ a:hover{color:var(--primary-dark)}
 .hero .phone a{color:var(--primary);display:inline-flex;align-items:center;gap:6px}
 .hero .phone a:hover{color:var(--primary-dark)}
 .hero .phone svg{width:16px;height:16px}
-.facility-overview{max-width:980px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
-.facility-overview-left{display:flex;flex-direction:column;gap:16px}
-.facility-overview-right{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-.facility-overview-right img{width:100%;height:280px;object-fit:cover;display:block}
-.overview-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.overview-stat{background:white;border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);text-align:center}
-.overview-stat .stat-val{font-size:28px;font-weight:800;color:var(--primary)}
-.overview-stat .stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:600;margin-top:4px}
-@media(max-width:700px){.facility-overview{grid-template-columns:1fr;padding:16px}.facility-overview-right img{height:200px}.overview-stats{grid-template-columns:repeat(2,1fr)}}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.hero-image{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg)}
+.hero-image img{width:100%;height:260px;object-fit:cover;display:block}
+@media(max-width:700px){.hero-grid{grid-template-columns:1fr;gap:20px}.hero-image{order:-1}.hero-image img{height:200px}}
 .section{margin:28px auto;max-width:980px;padding:0 24px}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);overflow:hidden;margin-bottom:24px;transition:box-shadow .3s,transform .3s}
 .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
@@ -191,24 +186,17 @@ td:first-child{min-width:180px;white-space:normal}
 
 <div class="hero">
 <div class="container">
+<div class="hero-grid">
+<div class="hero-info">
 <div class="hero-badge"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Verified CMS Data</div>
 <h1>Church of Christ Care Center</h1>
 <p class="address"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>23575 15 Mile Rd, Clinton Township, MI 48035</p>
 <p class="phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:5867912470" class="phone">5867912470</a></p>
 </div>
-</div>
-
-<div class="facility-overview">
-<div class="facility-overview-left">
-<div class="overview-stats">
-<div class="overview-stat"><div class="stat-val">3</div><div class="stat-lbl">Overall Rating</div></div>
-<div class="overview-stat"><div class="stat-val">3</div><div class="stat-lbl">Health Inspection</div></div>
-<div class="overview-stat"><div class="stat-val">2</div><div class="stat-lbl">Quality Rating</div></div>
-<div class="overview-stat"><div class="stat-val">3</div><div class="stat-lbl">Staffing Rating</div></div>
-</div>
-</div>
-<div class="facility-overview-right">
+<div class="hero-image">
 <img src="../images/facilities/235619.jpg" alt="Church of Christ Care Center facility exterior" loading="lazy">
+</div>
+</div>
 </div>
 </div>
 
