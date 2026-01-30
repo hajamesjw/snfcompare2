@@ -161,9 +161,11 @@
     .card-content { padding:14px; }
     .card-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
     .rating-badge { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; }
-    .rating-badge.high { background:linear-gradient(135deg,#10b981,#059669); }
-    .rating-badge.medium { background:linear-gradient(135deg,#f59e0b,#d97706); }
-    .rating-badge.low { background:linear-gradient(135deg,#ef4444,#dc2626); }
+    .rating-badge.rating-5 { background:linear-gradient(135deg,#10b981,#059669); }
+    .rating-badge.rating-4 { background:linear-gradient(135deg,#22c55e,#16a34a); }
+    .rating-badge.rating-3 { background:linear-gradient(135deg,#f59e0b,#d97706); }
+    .rating-badge.rating-2 { background:linear-gradient(135deg,#f97316,#ea580c); }
+    .rating-badge.rating-1 { background:linear-gradient(135deg,#ef4444,#dc2626); }
     .rating-badge.pro { background:linear-gradient(135deg,#14b8a6,#0d9488); }
     .rating-badge span { color:white; font-weight:700; font-size:15px; }
     .rating-badge::after { content:'★'; position:absolute; bottom:-2px; right:-2px; font-size:10px; color:white; background:#111827; width:16px; height:16px; border-radius:4px; display:flex; align-items:center; justify-content:center; }
@@ -1034,7 +1036,7 @@
 
     function renderFamilyCard(f) {
       const sel=selectedFacilities.some(s=>s.id===f.id);
-      const rc=f.overallRating>=4?'high':f.overallRating===3?'medium':'low';
+      const rc=`rating-${f.overallRating}`;
       const dc=f.deficiencies<=2?'good':f.deficiencies<=5?'warning':'danger';
       const ir=`rating-${f.healthInspection}`, qr=`rating-${f.qualityRating}`;
       const hc=f.totalHrs!=null?(f.totalHrs>=4.5?'good':f.totalHrs>=3.5?'warning':'danger'):'';
