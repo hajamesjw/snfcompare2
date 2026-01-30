@@ -1138,7 +1138,7 @@
       const dc=f.deficiencies<=2?'good':f.deficiencies<=5?'warning':'danger';
       const ir=`rating-${f.healthInspection}`, qr=`rating-${f.qualityRating}`;
       const hc=f.totalHrs!=null?(f.totalHrs>=4.5?'good':f.totalHrs>=3.5?'warning':'danger'):'';
-      return `<div class="facility-card ${sel?'selected-family':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge ${rc}"><span>${f.overallRating}/5</span></div><div class="card-title-section"><h3>${f.name}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip ${ir}"><span class="metric-value">${f.healthInspection}★</span><span class="metric-label">Inspection</span></div><div class="metric-chip ${qr}"><span class="metric-value">${f.qualityRating}★</span><span class="metric-label">Quality</span></div><div class="metric-chip ${hc}"><span class="metric-value">${f.totalHrs!=null?f.totalHrs.toFixed(1):'N/A'}</span><span class="metric-label">Hrs Daily Care</span></div><div class="metric-chip ${dc} has-info"><span class="info-btn" onclick="event.stopPropagation();showDefModal(${f.id})"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg></span><span class="metric-value">${f.deficiencies}</span><span class="metric-label">Deficiencies</span></div></div><div class="card-footer"><div class="footer-left"><span class="tag-pill ${f.acceptsMedicaid?'medicaid':'rejected'}">${f.acceptsMedicaid?'✓':'✗'} Medicaid</span><span class="tag-pill ${f.acceptsMedicare?'medicare':'rejected'}">${f.acceptsMedicare?'✓':'✗'} Medicare</span><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link" target="_blank" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
+      return `<div class="facility-card ${sel?'selected-family':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge ${rc}"><span>${f.overallRating}/5</span></div><div class="card-title-section"><h3>${f.name}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip ${ir} has-info"><span class="info-btn" onclick="event.stopPropagation();showInfoModal('inspection',${f.id})"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg></span><span class="metric-value">${f.healthInspection}★</span><span class="metric-label">Inspection</span></div><div class="metric-chip ${qr} has-info"><span class="info-btn" onclick="event.stopPropagation();showInfoModal('quality',${f.id})"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg></span><span class="metric-value">${f.qualityRating}★</span><span class="metric-label">Quality</span></div><div class="metric-chip ${hc}"><span class="metric-value">${f.totalHrs!=null?f.totalHrs.toFixed(1):'N/A'}</span><span class="metric-label">Hrs Daily Care</span></div><div class="metric-chip ${dc} has-info"><span class="info-btn" onclick="event.stopPropagation();showInfoModal('deficiencies',${f.id})"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg></span><span class="metric-value">${f.deficiencies}</span><span class="metric-label">Deficiencies</span></div></div><div class="card-footer"><div class="footer-left"><span class="tag-pill ${f.acceptsMedicaid?'medicaid':'rejected'}">${f.acceptsMedicaid?'✓':'✗'} Medicaid</span><span class="tag-pill ${f.acceptsMedicare?'medicare':'rejected'}">${f.acceptsMedicare?'✓':'✗'} Medicare</span><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link" target="_blank" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
     }
 
     // Wage bounds per role - values outside these are likely data errors
@@ -1163,35 +1163,84 @@
 
     function renderStars(r) { return `<div class="star-rating">${[1,2,3,4,5].map(i=>`<svg class="${i<=r?'filled':'empty'}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}</div>`; }
 
-    function showDefModal(id) {
+    function showInfoModal(type, id) {
       const f = facilityById[id];
       if (!f) return;
+      const ratingClass = (r) => r >= 4 ? 'good' : r === 3 ? 'warning' : 'danger';
       const defClass = f.deficiencies <= 2 ? 'good' : f.deficiencies <= 5 ? 'warning' : 'danger';
       const compClass = (f.complaints || 0) <= 1 ? 'good' : (f.complaints || 0) <= 3 ? 'warning' : 'danger';
       const fineClass = (f.fines || 0) === 0 ? 'good' : (f.fines || 0) <= 2 ? 'warning' : 'danger';
-      document.getElementById('defModalBody').innerHTML = `
-        <div class="def-stat-grid">
-          <div class="def-stat ${defClass}">
-            <div class="def-stat-value">${f.deficiencies ?? 'N/A'}</div>
-            <div class="def-stat-label">Deficiencies</div>
+
+      let title = '', content = '';
+
+      if (type === 'inspection') {
+        title = 'Health Inspection Rating';
+        content = `
+          <div class="def-stat-grid">
+            <div class="def-stat ${ratingClass(f.healthInspection)}">
+              <div class="def-stat-value">${f.healthInspection}★</div>
+              <div class="def-stat-label">This Facility</div>
+            </div>
+            <div class="def-stat ${defClass}">
+              <div class="def-stat-value">${f.deficiencies ?? 'N/A'}</div>
+              <div class="def-stat-label">Deficiencies Found</div>
+            </div>
+            <div class="def-stat ${compClass}">
+              <div class="def-stat-value">${f.complaints ?? 0}</div>
+              <div class="def-stat-label">Complaints</div>
+            </div>
+            <div class="def-stat ${fineClass}">
+              <div class="def-stat-value">${f.fines ?? 0}</div>
+              <div class="def-stat-label">Fines Issued</div>
+            </div>
           </div>
-          <div class="def-stat ${compClass}">
-            <div class="def-stat-value">${f.complaints ?? 'N/A'}</div>
-            <div class="def-stat-label">Complaints</div>
+          <div class="def-explain">
+            <strong>Why this matters:</strong> State inspectors visit unannounced to check safety, cleanliness, and care quality. <strong>5★ = excellent</strong> with few issues found. <strong>1★ = serious problems</strong> detected. Look for facilities with 4-5 stars and few deficiencies for peace of mind.
+          </div>`;
+      } else if (type === 'quality') {
+        title = 'Quality of Care Rating';
+        content = `
+          <div class="def-stat-grid">
+            <div class="def-stat ${ratingClass(f.qualityRating)}">
+              <div class="def-stat-value">${f.qualityRating}★</div>
+              <div class="def-stat-label">This Facility</div>
+            </div>
+            <div class="def-stat ${ratingClass(f.staffingRating)}">
+              <div class="def-stat-value">${f.staffingRating}★</div>
+              <div class="def-stat-label">Staffing Level</div>
+            </div>
           </div>
-          <div class="def-stat ${fineClass}">
-            <div class="def-stat-value">${f.fines ?? 0}</div>
-            <div class="def-stat-label">Fines Issued</div>
+          <div class="def-explain">
+            <strong>Why this matters:</strong> This measures actual patient outcomes—how well residents maintain their health and independence. It tracks things like preventing falls, managing pain, and avoiding hospital readmissions. <strong>5★ = residents thrive</strong> with excellent care outcomes. <strong>1★ = concerning patterns</strong> in resident health.
+          </div>`;
+      } else {
+        title = 'Deficiencies & Complaints';
+        content = `
+          <div class="def-stat-grid">
+            <div class="def-stat ${defClass}">
+              <div class="def-stat-value">${f.deficiencies ?? 'N/A'}</div>
+              <div class="def-stat-label">Deficiencies</div>
+            </div>
+            <div class="def-stat ${compClass}">
+              <div class="def-stat-value">${f.complaints ?? 0}</div>
+              <div class="def-stat-label">Complaints</div>
+            </div>
+            <div class="def-stat ${fineClass}">
+              <div class="def-stat-value">${f.fines ?? 0}</div>
+              <div class="def-stat-label">Fines Issued</div>
+            </div>
+            <div class="def-stat ${ratingClass(f.healthInspection)}">
+              <div class="def-stat-value">${f.healthInspection}★</div>
+              <div class="def-stat-label">Inspection Rating</div>
+            </div>
           </div>
-          <div class="def-stat">
-            <div class="def-stat-value">${f.healthInspection}★</div>
-            <div class="def-stat-label">Inspection Rating</div>
-          </div>
-        </div>
-        <div class="def-explain">
-          <strong>What are deficiencies?</strong> Issues identified during state health inspections, ranging from minor paperwork errors to serious care problems. Lower is better. The national average is about 8 deficiencies per facility.
-        </div>
-      `;
+          <div class="def-explain">
+            <strong>Why this matters:</strong> Deficiencies are problems found during inspections—from minor paperwork issues to serious safety concerns. Complaints are issues reported by families or staff. <strong>Fewer = better.</strong> The national average is ~8 deficiencies. Facilities with 0-3 deficiencies and no fines typically provide safer care.
+          </div>`;
+      }
+
+      document.querySelector('.def-modal-header h3').textContent = title;
+      document.getElementById('defModalBody').innerHTML = content;
       document.getElementById('defModalOverlay').classList.add('visible');
     }
     function closeDefModal() {
