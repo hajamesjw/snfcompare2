@@ -485,17 +485,28 @@ def build_quality_measures_section(measures):
     long_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('long')]
     short_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('short')]
 
+    def fmt_measure(val):
+        """Format measure value: round to 1 decimal, add % suffix"""
+        raw = val.strip() if val else ''
+        if not raw or raw == 'N/A':
+            return 'N/A'
+        try:
+            num = float(raw)
+            return f'{num:.1f}%'
+        except ValueError:
+            return esc(raw)
+
     def measures_table(items, label):
         if not items:
             return ''
         rows = ''
         for m in sorted(items, key=lambda x: x.get('Measure Code', '')):
             desc = esc(m.get('Measure Description', ''))
-            q1 = esc(m.get('Q1 Measure Score', 'N/A').strip() or 'N/A')
-            q2 = esc(m.get('Q2 Measure Score', 'N/A').strip() or 'N/A')
-            q3 = esc(m.get('Q3 Measure Score', 'N/A').strip() or 'N/A')
-            q4 = esc(m.get('Q4 Measure Score', 'N/A').strip() or 'N/A')
-            avg = esc(m.get('Four Quarter Average Score', 'N/A').strip() or 'N/A')
+            q1 = fmt_measure(m.get('Q1 Measure Score', ''))
+            q2 = fmt_measure(m.get('Q2 Measure Score', ''))
+            q3 = fmt_measure(m.get('Q3 Measure Score', ''))
+            q4 = fmt_measure(m.get('Q4 Measure Score', ''))
+            avg = fmt_measure(m.get('Four Quarter Average Score', ''))
             used = m.get('Used in Quality Measure Five Star Rating', '').strip()
             star_marker = ' *' if used and used.upper() == 'Y' else ''
             rows += f'<tr><td style="max-width:300px">{desc}{star_marker}</td><td>{q1}</td><td>{q2}</td><td>{q3}</td><td>{q4}</td><td style="font-weight:600">{avg}</td></tr>'
@@ -508,7 +519,7 @@ def build_quality_measures_section(measures):
     html = measures_table(long_stay, 'Long-Stay Measures')
     html += measures_table(short_stay, 'Short-Stay Measures')
     if html:
-        html += '<p style="padding:12px;font-size:11px;color:#9ca3af">* Used in CMS Five-Star Quality Rating</p>'
+        html += '<p style="padding:12px;font-size:11px;color:#9ca3af">* Used in CMS Five-Star Quality Rating. Values rounded to one decimal place.</p>'
     return html
 
 def build_penalties_section(penalties):
