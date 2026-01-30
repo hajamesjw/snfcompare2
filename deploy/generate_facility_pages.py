@@ -294,7 +294,7 @@ def compute_state_wage_medians(all_wages, providers):
 PAGE_CSS = """
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--primary:#0d9488;--primary-dark:#0f766e;--accent:#10b981;--text:#111827;--text-muted:#6b7280;--bg:#f8fafc;--card:#ffffff;--border:#e5e7eb;--shadow-sm:0 1px 2px rgba(0,0,0,0.04);--shadow:0 4px 6px -1px rgba(0,0,0,0.07),0 2px 4px -1px rgba(0,0,0,0.04);--shadow-lg:0 20px 40px -12px rgba(0,0,0,0.12);--radius:16px;--radius-sm:12px}
-body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(180deg,#f0fdfa 0%,#f8fafc 100%);background-attachment:fixed;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(180deg,#f8fafc 0%,#f1f5f9 100%);background-attachment:fixed;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:var(--primary);text-decoration:none;transition:color .2s}
 a:hover{color:var(--primary-dark)}
 .container{max-width:980px;margin:0 auto;padding:0 24px}
@@ -978,7 +978,7 @@ def build_inspection_section(surveys):
 
     rows = ''
     # Total health deficiencies row
-    rows += '<tr style="background:#f0fdf4"><td style="font-weight:700">Total Health Deficiencies</td>'
+    rows += '<tr style="background:#f9fafb"><td style="font-weight:700">Total Health Deficiencies</td>'
     for s in sorted_s:
         v = s.get('Total Number of Health Deficiencies', '').strip()
         vi = safe_int(v)
@@ -989,7 +989,7 @@ def build_inspection_section(surveys):
     rows += '</tr>'
 
     # Total fire safety row
-    rows += '<tr style="background:#eff6ff"><td style="font-weight:700">Total Fire Safety Deficiencies</td>'
+    rows += '<tr style="background:#f3f4f6"><td style="font-weight:700">Total Fire Safety Deficiencies</td>'
     for s in sorted_s:
         v = s.get('Total Number of Fire Safety Deficiencies', '').strip()
         rows += f'<td style="font-weight:700">{esc(v) if v else "N/A"}</td>'
