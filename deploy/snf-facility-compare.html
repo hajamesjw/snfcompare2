@@ -1471,6 +1471,7 @@
       if(m.type==='coming-soon')return'<span class="coming-soon-pill">Coming Soon</span>';
       if(m.type==='benefit-blur')return`<span class="benefit-unlock" onclick="showBenefitsPopup()">Get Access <span class="soon-tag">Soon</span></span>`;
       if(v==null)return'N/A';
+      if(m.key&&m.key.startsWith('wage')&&!isValidWage(v,m.key.replace('wage','')))return'N/A';
       if(m.type==='rating')return`<span class="rating-pill r${v}">${v}<span class="star">&#9733;</span></span>`;
       if(m.type==='boolean')return v?'<span class="boolean-yes">&#10003; Yes</span>':'<span class="boolean-no">&#10007; No</span>';
       if(m.type==='currency')return'$'+v.toFixed(2);
