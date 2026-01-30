@@ -308,6 +308,42 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .qm-type{font-size:12px;font-weight:700;color:#065f46;padding:14px 24px;background:linear-gradient(90deg,#ecfdf5,#d1fae5);border-bottom:1px solid rgba(16,185,129,0.2);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:8px}
 .qm-type::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%}
 .empty-state{padding:40px 24px;text-align:center;color:var(--text-muted);font-size:14px;font-weight:500}
+@media(max-width:480px){
+.container{padding:0 16px}
+.hero{padding:24px 0 20px}
+.hero h1{font-size:22px;line-height:1.3}
+.hero .address{font-size:13px;flex-wrap:wrap}
+.hero .phone{font-size:14px}
+.hero-badge{font-size:11px;padding:5px 10px;margin-bottom:12px}
+.section{padding:0 12px;margin:20px auto}
+.card{margin-bottom:16px;border-radius:12px}
+.card-header{padding:14px 16px}
+.card-header h2{font-size:13px;gap:8px}
+.card-header h2::before{width:3px;height:14px}
+.card-body{padding:16px}
+.rating-card{padding:16px 12px;border-radius:10px}
+.rating-card .val{font-size:32px}
+.rating-card .stars svg{width:16px;height:16px}
+.rating-card .lbl{font-size:10px}
+table{font-size:12px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+th,td{padding:10px 12px;white-space:nowrap}
+th{font-size:10px}
+.wage-card{padding:16px 12px}
+.wage-card .val{font-size:22px}
+.wage-card .lbl{font-size:10px}
+.info-item{padding:12px}
+.info-item .lbl{font-size:10px}
+.info-item .val{font-size:14px}
+.turnover-grid{gap:10px}
+.turnover-card{padding:14px 16px;min-width:auto;flex:1}
+.turnover-val{font-size:20px}
+.turnover-lbl{font-size:10px}
+.safety-card{padding:14px}
+.safety-card .val{font-size:22px}
+.safety-card .lbl{font-size:10px}
+.qm-type{padding:10px 16px;font-size:11px}
+.disclaimer{padding:16px;font-size:11px;margin:16px 12px 0}
+}
 .footer{background:linear-gradient(180deg,#111827 0%,#0f172a 100%);padding:48px 24px;margin-top:48px;color:#9ca3af;font-size:13px}
 .footer-inner{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
 .footer-logo{display:flex;align-items:center;gap:8px;color:white;font-weight:800;font-size:16px}
