@@ -80,6 +80,11 @@ a:hover{color:var(--primary-dark)}
 .card-header{padding:18px 24px;border-bottom:1px solid #f3f4f6;background:linear-gradient(180deg,#fafbfc 0%,#f8f9fa 100%);display:flex;align-items:center;justify-content:space-between}
 .card-header h2{font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:10px}
 .card-header h2::before{content:'';width:4px;height:18px;background:linear-gradient(180deg,var(--accent),var(--primary));border-radius:2px}
+.card-header.section-great h2::before{background:linear-gradient(180deg,#16a34a,#15803d)}
+.card-header.section-good h2::before{background:linear-gradient(180deg,#65a30d,#4d7c0f)}
+.card-header.section-mid h2::before{background:linear-gradient(180deg,#9ca3af,#6b7280)}
+.card-header.section-warn h2::before{background:linear-gradient(180deg,#eab308,#ca8a04)}
+.card-header.section-bad h2::before{background:linear-gradient(180deg,#dc2626,#b91c1c)}
 .section-info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#e5e7eb;cursor:pointer;flex-shrink:0}
 .section-info svg{width:12px;height:12px;stroke:#6b7280}
 .section-info .tip{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);background:#1f2937;color:white;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:500;white-space:normal;width:280px;text-transform:none;letter-spacing:normal;line-height:1.5;opacity:0;visibility:hidden;transition:all .2s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:left}
@@ -262,7 +267,7 @@ td:first-child{min-width:180px;white-space:normal}
 </div>
 </div>
 <div class="hero-image">
-<img src="../images/facilities2/facility1.png" alt="TUSCANY GARDENS facility exterior" loading="lazy">
+<img src="../images/facilities2/facility2.png" alt="TUSCANY GARDENS facility exterior" loading="lazy">
 </div>
 </div>
 </div>
@@ -289,7 +294,7 @@ td:first-child{min-width:180px;white-space:normal}
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Safety &amp; Compliance<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Deficiencies found during inspections, complaints filed, and fines issued. Lower numbers indicate better compliance. US average is about 8 deficiencies.</span></span></h2></div>
+<div class="card-header section-warn"><h2>Safety &amp; Compliance<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Deficiencies found during inspections, complaints filed, and fines issued. Lower numbers indicate better compliance. US average is about 8 deficiencies.</span></span></h2></div>
 <div class="card-body"><div class="safety-grid"><div class="safety-card"><div class="val val-bad">15</div><div class="lbl">Cycle 1 Health Deficiencies</div></div><div class="safety-card"><div class="val val-bad">21</div><div class="lbl">Cycle 2/3 Health Deficiencies</div></div><div class="safety-card"><div class="val val-bad">19</div><div class="lbl">Substantiated Complaints</div></div><div class="safety-card"><div class="val val-good">0</div><div class="lbl">Reported Incidents</div></div><div class="safety-card"><div class="val val-good">0 ($0)</div><div class="lbl">Fines (Count & Total)</div></div><div class="safety-card"><div class="val val-good">0</div><div class="lbl">Payment Denials</div></div><div class="safety-card"><div class="val val-good">0</div><div class="lbl">Total Penalties</div></div><div class="safety-card"><div class="val val-good">0</div><div class="lbl">Infection Control Citations</div></div></div></div>
 </div>
 
