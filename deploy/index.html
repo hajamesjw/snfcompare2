@@ -1319,8 +1319,11 @@
       }
       
       nav {
-        padding: 1rem;
+        padding: 0.75rem 0.75rem;
         flex-wrap: wrap;
+      }
+      nav.in-tool {
+        flex-wrap: nowrap;
       }
 
       .hamburger {
@@ -1338,13 +1341,20 @@
       nav.in-tool .nav-mode-toggle {
         display: flex;
         order: 2;
+        padding: 2px;
+        margin-right: 6px;
+      }
+      nav.in-tool .nav-mode-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+        white-space: nowrap;
       }
       nav.in-tool .logo {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
       nav.in-tool .logo-badge {
-        font-size: 0.6rem;
-        padding: 0.15rem 0.3rem;
+        font-size: 0.55rem;
+        padding: 0.12rem 0.25rem;
       }
 
       .nav-cta {
