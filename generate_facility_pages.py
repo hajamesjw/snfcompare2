@@ -1250,11 +1250,6 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_pat
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Facility Information<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Basic facility details including ownership type, bed count, and insurance accepted. Ownership type can affect staffing and care quality.</span></span></h2></div>
-<div class="card-body">{info_html}</div>
-</div>
-
-<div class="card">
 <div class="card-header {safety_color}"><h2>Safety &amp; Compliance<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Deficiencies found during inspections, complaints filed, and fines issued. Lower numbers indicate better compliance. US average is about 8 deficiencies.</span></span></h2></div>
 <div class="card-body">{safety_html}</div>
 </div>
@@ -1272,6 +1267,11 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages, image_pat
 <div class="card">
 <div class="card-header"><h2>Inspection History<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Recent state health inspections and complaint investigations. Click survey dates to see detailed findings. Focus on scope and severity of deficiencies.</span></span></h2></div>
 <div class="card-body" style="padding:0">{inspections_html}</div>
+</div>
+
+<div class="card">
+<div class="card-header section-mid"><h2>Facility Information<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Basic facility details including ownership type, bed count, and insurance accepted.</span></span></h2></div>
+<div class="card-body">{info_html}</div>
 </div>
 
 </div>
