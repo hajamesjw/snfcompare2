@@ -291,13 +291,13 @@
     .comparison-view.visible { display:block; }
     .comparison-view.family { background:#f8fafc; }
     .comparison-view.pro { background:#f8fafc; }
-    .comparison-header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,.95); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
-    .comparison-header-top { max-width:1000px; margin:0 auto; padding:10px 20px 6px; display:flex; align-items:center; gap:12px; }
-    .back-btn { padding:10px; margin-left:-10px; border-radius:10px; background:none; border:none; cursor:pointer; transition:all .15s; }
-    .back-btn:hover { background:#f3f4f6; }
-    .back-btn svg { width:22px; height:22px; color:#6b7280; }
-    .comparison-header-top h1 { font-weight:700; color:#111827; font-size:20px; letter-spacing:-0.01em; }
-    .comparison-header-top p { font-size:13px; color:#6b7280; margin-top:2px; }
+    .comparison-header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
+    .comparison-header-top { max-width:1000px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:16px; }
+    .back-btn { padding:8px; margin-left:-8px; border-radius:8px; background:none; border:none; cursor:pointer; transition:all .15s; color:#9ca3af; }
+    .back-btn:hover { background:#f3f4f6; color:#374151; }
+    .back-btn svg { width:20px; height:20px; }
+    .comparison-header-top h1 { font-weight:700; color:#111827; font-size:18px; letter-spacing:-0.01em; margin:0; }
+    .comparison-header-top p { font-size:12px; color:#9ca3af; margin:2px 0 0; }
     .facility-headers { max-width:1000px; margin:0 auto; padding:0 20px 12px; display:flex; gap:10px; }
     .facility-header-card { flex:1; border-radius:12px; padding:14px 14px; display:flex; flex-direction:column; gap:4px; position:relative; transition:all .2s; min-height:95px; }
     .facility-header-card.family { background:linear-gradient(145deg,#3b82f6 0%,#2563eb 100%); color:white; box-shadow:0 4px 20px rgba(59,130,246,.3); }
@@ -356,18 +356,18 @@
     .full-breakdown-btn:hover svg { transform:translateY(2px); }
     .full-breakdown-btn.expanded { background:linear-gradient(135deg,#6b7280,#4b5563); box-shadow:0 4px 14px rgba(107,114,128,.3); }
     .full-breakdown-btn.expanded:hover { background:linear-gradient(135deg,#9ca3af,#6b7280); }
-    .share-section { display:flex; align-items:center; gap:8px; margin-left:auto; }
-    .share-label { font-size:12px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.05em; }
-    .share-buttons { display:flex; align-items:center; gap:6px; background:#f3f4f6; border-radius:12px; padding:5px; }
-    .share-icon-btn { width:38px; height:38px; border-radius:8px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; background:white; color:#374151; box-shadow:0 1px 3px rgba(0,0,0,.08); }
-    .share-icon-btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.15); }
+    .share-section { display:flex; align-items:center; gap:10px; margin-left:auto; }
+    .share-label { font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; letter-spacing:0.03em; }
+    .share-buttons { display:flex; align-items:center; gap:4px; }
+    .share-icon-btn { width:32px; height:32px; border-radius:6px; border:1px solid #e5e7eb; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; background:white; color:#6b7280; }
+    .share-icon-btn:hover { border-color:#d1d5db; color:#374151; background:#f9fafb; }
     .share-icon-btn.copy { color:#0d9488; }
-    .share-icon-btn.copy:hover { background:#0d9488; color:white; }
+    .share-icon-btn.copy:hover { background:#f0fdfa; border-color:#99f6e4; }
     .share-icon-btn.email { color:#3b82f6; }
-    .share-icon-btn.email:hover { background:#3b82f6; color:white; }
+    .share-icon-btn.email:hover { background:#eff6ff; border-color:#bfdbfe; }
     .share-icon-btn.sms { color:#22c55e; }
-    .share-icon-btn.sms:hover { background:#22c55e; color:white; }
-    .share-icon-btn svg { width:18px; height:18px; }
+    .share-icon-btn.sms:hover { background:#f0fdf4; border-color:#bbf7d0; }
+    .share-icon-btn svg { width:16px; height:16px; }
     .share-icon-btn-label { font-size:10px; font-weight:600; margin-top:2px; }
     .share-floating { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg, #1f2937 0%, #111827 100%); border-radius:60px; padding:12px 16px 12px 24px; display:none; align-items:center; gap:16px; box-shadow:0 10px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.05); z-index:50; }
     .share-floating.visible { display:flex; animation:popIn .3s cubic-bezier(.34,1.56,.64,1); }
