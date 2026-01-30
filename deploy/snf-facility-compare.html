@@ -1502,17 +1502,12 @@
         btn.classList.remove('expanded');
         return;
       }
-      // Check if user already unlocked
-      if (localStorage.getItem('snf_breakdown_unlocked')) {
-        showFullBreakdown = true;
-        renderComparisonContent();
-        const btn = document.getElementById('fullBreakdownBtn');
-        btn.innerHTML = 'Collapse ' + collapseIcon;
-        btn.classList.add('expanded');
-        return;
-      }
-      // Show email capture popup
-      document.getElementById('breakdownGatePopup').classList.add('visible');
+      // TEMPORARILY DISABLED: email gate - just expand directly
+      showFullBreakdown = true;
+      renderComparisonContent();
+      const btn = document.getElementById('fullBreakdownBtn');
+      btn.innerHTML = 'Collapse ' + collapseIcon;
+      btn.classList.add('expanded');
     }
 
     function closeBreakdownGate() {
