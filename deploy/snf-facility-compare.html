@@ -1030,6 +1030,9 @@
         }
       }
       const wk=wKey(), lk=lKey();
+      // Calculate median wage for sorting (wages closest to median are more reliable)
+      const wages = f.map(x => x[wk]).filter(w => w != null).sort((a,b) => a - b);
+      const medianWage = wages.length > 0 ? wages[Math.floor(wages.length / 2)] : 0;
       // Check if all visible card fields are complete (no N/A)
       const hasAllVisibleData = (x) => {
         if (mode === 'family') {
@@ -1040,6 +1043,8 @@
           return x[wk] != null && x[lk] != null && x.turnover != null;
         }
       };
+      // Distance from median wage (lower = more trustworthy)
+      const wageDeviation = (x) => x[wk] != null ? Math.abs(x[wk] - medianWage) : 999;
       // Secondary data completeness score
       const dataScore = (x) => {
         let score = 0;
@@ -1064,7 +1069,12 @@
         const aVisible = hasAllVisibleData(a) ? 1 : 0;
         const bVisible = hasAllVisibleData(b) ? 1 : 0;
         if (bVisible !== aVisible) return bVisible - aVisible;
-        // Second tiebreaker: more complete data overall
+        // Second tiebreaker (Pro mode): wages closest to median are more reliable
+        if (mode !== 'family') {
+          const wageDiff = wageDeviation(a) - wageDeviation(b);
+          if (Math.abs(wageDiff) > 1) return wageDiff;
+        }
+        // Third tiebreaker: more complete data overall
         return dataScore(b) - dataScore(a);
       });
     }
