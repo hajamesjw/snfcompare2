@@ -1030,7 +1030,17 @@
         }
       }
       const wk=wKey(), lk=lKey();
-      // Data completeness score - higher is better (more complete data)
+      // Check if all visible card fields are complete (no N/A)
+      const hasAllVisibleData = (x) => {
+        if (mode === 'family') {
+          // Family card shows: deficiencies, healthInspection, qualityRating, totalHrs
+          return x.deficiencies != null && x.healthInspection != null && x.qualityRating != null && x.totalHrs != null;
+        } else {
+          // Pro card shows: wage, load, turnover
+          return x[wk] != null && x[lk] != null && x.turnover != null;
+        }
+      };
+      // Secondary data completeness score
       const dataScore = (x) => {
         let score = 0;
         if (x.overallRating != null) score++;
@@ -1050,7 +1060,12 @@
         if (mode==='family') { switch(sortBy){ case'rating':primary=b.overallRating-a.overallRating;break; case'inspection':primary=b.healthInspection-a.healthInspection;break; case'staffing':primary=(b.totalHrs||0)-(a.totalHrs||0);break; } }
         else { switch(sortBy){ case'rating':primary=b.overallRating-a.overallRating;break; case'wage':primary=(b[wk]||0)-(a[wk]||0);break; case'load':primary=(a[lk]||999)-(b[lk]||999);break; case'turnover':primary=(a.turnover||999)-(b.turnover||999);break; } }
         if (primary !== 0) return primary;
-        return dataScore(b) - dataScore(a); // Tiebreaker: more complete data first
+        // First tiebreaker: facilities with all visible data come first
+        const aVisible = hasAllVisibleData(a) ? 1 : 0;
+        const bVisible = hasAllVisibleData(b) ? 1 : 0;
+        if (bVisible !== aVisible) return bVisible - aVisible;
+        // Second tiebreaker: more complete data overall
+        return dataScore(b) - dataScore(a);
       });
     }
 
