@@ -387,6 +387,34 @@
       margin-right: 12px;
     }
 
+    /* Nav mode toggle - shown on mobile when in tool */
+    .nav-mode-toggle {
+      display: none;
+      background: #f3f4f6;
+      border-radius: 50px;
+      padding: 2px;
+      margin-left: auto;
+      margin-right: 10px;
+    }
+    .nav-mode-btn {
+      padding: 5px 10px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #6b7280;
+      transition: all 0.2s;
+    }
+    .nav-mode-btn.active {
+      background: white;
+      color: #10b981;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+    nav.in-tool .logo { font-size: 1rem; }
+    nav.in-tool .logo-badge { font-size: 0.65rem; padding: 0.2rem 0.35rem; }
+
     .nav-cta {
       padding: 0.6rem 1.25rem;
       background: #10b981;
@@ -1297,6 +1325,20 @@
         display: block;
         order: 2;
       }
+      nav.in-tool .mobile-compare-btn {
+        display: none;
+      }
+      nav.in-tool .nav-mode-toggle {
+        display: flex;
+        order: 2;
+      }
+      nav.in-tool .logo {
+        font-size: 0.95rem;
+      }
+      nav.in-tool .logo-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.3rem;
+      }
 
       .nav-cta {
         display: none;
@@ -1585,12 +1627,16 @@
 </head>
 <body>
   <!-- Navigation -->
-  <nav>
+  <nav id="mainNav">
     <a href="#" class="logo" onclick="showTab('home'); return false;">
       <span class="logo-badge">SNF</span>
       compare
     </a>
     <a href="snf-facility-compare.html" class="mobile-compare-btn">Compare Tool</a>
+    <div class="nav-mode-toggle">
+      <button class="nav-mode-btn active" onclick="switchNavMode('pro')">For Nurses</button>
+      <button class="nav-mode-btn" onclick="switchNavMode('family')">For Patients</button>
+    </div>
     <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -2539,12 +2585,26 @@
       nav.classList.remove('open');
     }
 
+    function switchNavMode(mode) {
+      const btns = document.querySelectorAll('.nav-mode-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btns[mode === 'pro' ? 0 : 1].classList.add('active');
+      const iframe = document.getElementById('tool-iframe');
+      const iframeMode = mode === 'pro' ? 'professional' : 'family';
+      try {
+        if (iframe.contentWindow && iframe.contentWindow.setMode) {
+          iframe.contentWindow.setMode(iframeMode);
+        }
+      } catch(e) {}
+    }
+
     function showTab(tab, audienceType) {
       const landing = document.getElementById('landing-content');
       const tool = document.getElementById('tool-content');
       const newsletter = document.getElementById('newsletter-content');
       const navLinks = document.querySelectorAll('.nav-link');
       const footer = document.querySelector('footer');
+      const mainNav = document.getElementById('mainNav');
 
       document.querySelectorAll('.legal-page').forEach(p => p.style.display = 'none');
       landing.style.display = 'none';
@@ -2552,10 +2612,15 @@
       newsletter.style.display = 'none';
       footer.style.display = 'none';
       navLinks.forEach(l => l.classList.remove('active'));
+      mainNav.classList.remove('in-tool');
 
       if (tab === 'tool') {
         tool.style.display = 'block';
         currentTab = audienceType === 'family' ? 'family' : 'pro';
+        mainNav.classList.add('in-tool');
+        const navBtns = document.querySelectorAll('.nav-mode-btn');
+        navBtns.forEach(b => b.classList.remove('active'));
+        navBtns[audienceType === 'family' ? 1 : 0].classList.add('active');
 
         const iframe = document.getElementById('tool-iframe');
         const iframeMode = audienceType === 'pro' ? 'professional' : 'family';
