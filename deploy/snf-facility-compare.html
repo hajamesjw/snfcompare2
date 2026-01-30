@@ -120,12 +120,10 @@
     .map-popup .phone a:hover { text-decoration:underline; }
     .map-popup .metrics { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
     .map-popup .metric { font-size:11px; padding:3px 8px; border-radius:4px; font-weight:500; }
-    .map-popup .metric.rating { background:#f0fdfa; color:#0d9488; }
-    .map-popup .metric.inspect { background:#dbeafe; color:#1d4ed8; }
-    .map-popup .metric.quality { background:#fef3c7; color:#b45309; }
+    .map-popup .metric.good { background:#dcfce7; color:#166534; }
+    .map-popup .metric.warn { background:#fef3c7; color:#92400e; }
+    .map-popup .metric.bad { background:#fee2e2; color:#dc2626; }
     .map-popup .metric.wage { background:#d1fae5; color:#047857; }
-    .map-popup .metric.staff { background:#ede9fe; color:#6d28d9; }
-    .map-popup .metric.def { background:#fee2e2; color:#dc2626; }
     .map-popup .actions { display:flex; gap:8px; margin-top:8px; }
     .map-popup .select-btn { flex:1; padding:6px 10px; background:#0d9488; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; }
     .map-popup .select-btn:hover { background:#0f766e; }
@@ -848,15 +846,18 @@
           fillOpacity: 0.85
         }).addTo(facilityMap);
         
+        const ratingColor = (r) => r >= 4 ? 'good' : r === 3 ? 'warn' : 'bad';
+        const defColor = (d) => d <= 2 ? 'good' : d <= 5 ? 'warn' : 'bad';
+        const hrsColor = (h) => h >= 4.5 ? 'good' : h >= 3.5 ? 'warn' : 'bad';
         const popupMetrics = mode === 'family'
-          ? `<span class="metric rating">${f.overallRating}★ Overall</span>
-             <span class="metric inspect">${f.healthInspection}★ Inspection</span>
-             <span class="metric quality">${f.qualityRating}★ Quality</span>
-             ${f.deficiencies !== undefined ? `<span class="metric def">${f.deficiencies} deficiencies</span>` : ''}
-             ${f.totalHrs ? `<span class="metric staff">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`
-          : `<span class="metric rating">${f.overallRating}★ Overall</span>
-             ${wage ? `<span class="metric wage">$${wage.toFixed(0)}/hr (est.)</span>` : ''}
-             ${f.totalHrs ? `<span class="metric staff">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`;
+          ? `<span class="metric ${ratingColor(f.overallRating)}">${f.overallRating}★ Overall</span>
+             <span class="metric ${ratingColor(f.healthInspection)}">${f.healthInspection}★ Inspection</span>
+             <span class="metric ${ratingColor(f.qualityRating)}">${f.qualityRating}★ Quality</span>
+             ${f.deficiencies !== undefined ? `<span class="metric ${defColor(f.deficiencies)}">${f.deficiencies} defic.</span>` : ''}
+             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`
+          : `<span class="metric ${ratingColor(f.overallRating)}">${f.overallRating}★ Overall</span>
+             ${wage ? `<span class="metric wage">$${wage.toFixed(0)}/hr</span>` : ''}
+             ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/pt</span>` : ''}`;
 
         marker.bindPopup(`
           <div class="map-popup">
