@@ -639,22 +639,59 @@ def build_quality_measures_section(measures):
     long_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('long')]
     short_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('short')]
 
-    def get_qm_color(val):
-        """Get color class for quality measure - lower is better"""
+    def is_higher_better(desc):
+        """Analyze measure description to determine if higher percentage is better"""
+        desc_lower = desc.lower()
+        # Higher is better: vaccines, assessments, proper care given
+        higher_good = ['vaccine', 'vaccinated', 'immuniz', 'appropriately given',
+                       'assessed and given', 'received', 'offered']
+        # Lower is better: negative outcomes
+        lower_good = ['fall', 'pressure ulcer', 'pressure sore', 'infection', 'uti ',
+                      'urinary tract', 'pain', 'restrain', 'weight loss', 'lost weight',
+                      'catheter', 'emergency', 'er visit', 'hospital', 'depress',
+                      'antipsychotic', 'decline', 'decreased', 'worsen', 'increased need',
+                      'help with daily activities has increased', 'physically restrained',
+                      'one or more falls', 'major injury', 'symptoms of depression']
+
+        for keyword in higher_good:
+            if keyword in desc_lower:
+                return True
+        for keyword in lower_good:
+            if keyword in desc_lower:
+                return False
+        # Default: lower is better (most quality measures)
+        return False
+
+    def get_qm_color(val, higher_is_better=False):
+        """Get color class for quality measure"""
         if val is None:
             return ''
-        if val < 5:
-            return 'qm-great'
-        elif val < 10:
-            return 'qm-good'
-        elif val < 20:
-            return 'qm-mid'
-        elif val < 30:
-            return 'qm-warn'
+        if higher_is_better:
+            # Higher is better (e.g., vaccine rates)
+            if val >= 95:
+                return 'qm-great'
+            elif val >= 85:
+                return 'qm-good'
+            elif val >= 70:
+                return 'qm-mid'
+            elif val >= 50:
+                return 'qm-warn'
+            else:
+                return 'qm-bad'
         else:
-            return 'qm-bad'
+            # Lower is better (e.g., falls, infections)
+            if val < 5:
+                return 'qm-great'
+            elif val < 10:
+                return 'qm-good'
+            elif val < 20:
+                return 'qm-mid'
+            elif val < 30:
+                return 'qm-warn'
+            else:
+                return 'qm-bad'
 
-    def fmt_measure(val, with_color=False):
+    def fmt_measure(val, higher_is_better=False, with_color=False):
         """Format measure value: round to 1 decimal, add % suffix, strip .0"""
         raw = val.strip() if val else ''
         if not raw or raw == 'N/A':
@@ -663,7 +700,7 @@ def build_quality_measures_section(measures):
             num = float(raw)
             formatted = f'{int(num)}%' if num == int(num) else f'{num:.1f}%'
             if with_color:
-                color_class = get_qm_color(num)
+                color_class = get_qm_color(num, higher_is_better)
                 return f'<span class="{color_class}">{formatted}</span>'
             return formatted
         except ValueError:
@@ -674,19 +711,21 @@ def build_quality_measures_section(measures):
             return ''
         rows = ''
         for m in sorted(items, key=lambda x: x.get('Measure Code', '')):
-            desc = esc(m.get('Measure Description', ''))
-            q1 = fmt_measure(m.get('Q1 Measure Score', ''), with_color=True)
-            q2 = fmt_measure(m.get('Q2 Measure Score', ''), with_color=True)
-            q3 = fmt_measure(m.get('Q3 Measure Score', ''), with_color=True)
-            q4 = fmt_measure(m.get('Q4 Measure Score', ''), with_color=True)
+            desc_raw = m.get('Measure Description', '')
+            desc = esc(desc_raw)
+            higher_better = is_higher_better(desc_raw)
+            q1 = fmt_measure(m.get('Q1 Measure Score', ''), higher_better, with_color=True)
+            q2 = fmt_measure(m.get('Q2 Measure Score', ''), higher_better, with_color=True)
+            q3 = fmt_measure(m.get('Q3 Measure Score', ''), higher_better, with_color=True)
+            q4 = fmt_measure(m.get('Q4 Measure Score', ''), higher_better, with_color=True)
             avg_raw = m.get('Four Quarter Average Score', '').strip()
-            avg = fmt_measure(avg_raw, with_color=True)
+            avg = fmt_measure(avg_raw, higher_better, with_color=True)
             # Get color for the row indicator bar
             try:
                 avg_num = float(avg_raw) if avg_raw else None
             except ValueError:
                 avg_num = None
-            bar_color = get_qm_color(avg_num)
+            bar_color = get_qm_color(avg_num, higher_better)
             used = m.get('Used in Quality Measure Five Star Rating', '').strip()
             star_marker = ' *' if used and used.upper() == 'Y' else ''
             rows += f'<tr class="{bar_color}"><td style="max-width:300px">{desc}{star_marker}</td><td>{q1}</td><td>{q2}</td><td>{q3}</td><td>{q4}</td><td style="font-weight:600">{avg}</td></tr>'
