@@ -377,8 +377,13 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .safety-card:hover{border-color:rgba(16,185,129,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
 .safety-card .val{font-size:28px;font-weight:800;letter-spacing:-0.5px}
 .safety-card .lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:6px;text-transform:uppercase;letter-spacing:0.3px;line-height:1.4}
-.qm-type{font-size:12px;font-weight:700;color:#065f46;padding:14px 24px;background:linear-gradient(90deg,#ecfdf5,#d1fae5);border-bottom:1px solid rgba(16,185,129,0.2);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:8px}
-.qm-type::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%}
+.qm-type{font-size:12px;font-weight:700;padding:14px 24px;border-bottom:1px solid rgba(0,0,0,0.1);text-transform:uppercase;letter-spacing:0.8px;display:flex;align-items:center;gap:8px}
+.qm-type::before{content:'';width:8px;height:8px;border-radius:50%}
+.qm-type.qm-section-great{color:#065f46;background:linear-gradient(90deg,#ecfdf5,#d1fae5)}.qm-type.qm-section-great::before{background:#10b981}
+.qm-type.qm-section-good{color:#166534;background:linear-gradient(90deg,#f0fdf4,#dcfce7)}.qm-type.qm-section-good::before{background:#22c55e}
+.qm-type.qm-section-mid{color:#854d0e;background:linear-gradient(90deg,#fefce8,#fef9c3)}.qm-type.qm-section-mid::before{background:#eab308}
+.qm-type.qm-section-warn{color:#9a3412;background:linear-gradient(90deg,#fff7ed,#ffedd5)}.qm-type.qm-section-warn::before{background:#f97316}
+.qm-type.qm-section-bad{color:#991b1b;background:linear-gradient(90deg,#fef2f2,#fee2e2)}.qm-type.qm-section-bad::before{background:#ef4444}
 .qm-table tr{position:relative}
 .qm-table tr td:first-child{padding-left:28px}
 .qm-table tr td:first-child::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#9ca3af}
@@ -710,6 +715,7 @@ def build_quality_measures_section(measures):
         if not items:
             return ''
         rows = ''
+        quality_scores = []  # Track normalized scores (0-100, higher=better)
         for m in sorted(items, key=lambda x: x.get('Measure Code', '')):
             desc_raw = m.get('Measure Description', '')
             desc = esc(desc_raw)
@@ -726,10 +732,32 @@ def build_quality_measures_section(measures):
             except ValueError:
                 avg_num = None
             bar_color = get_qm_color(avg_num, higher_better)
+            # Track normalized score for section average
+            if avg_num is not None:
+                if higher_better:
+                    quality_scores.append(avg_num)  # Higher is better, use as-is
+                else:
+                    quality_scores.append(100 - avg_num)  # Lower is better, invert
             used = m.get('Used in Quality Measure Five Star Rating', '').strip()
             star_marker = ' *' if used and used.upper() == 'Y' else ''
             rows += f'<tr class="{bar_color}"><td style="max-width:300px">{desc}{star_marker}</td><td>{q1}</td><td>{q2}</td><td>{q3}</td><td>{q4}</td><td style="font-weight:600">{avg}</td></tr>'
-        return f'''<div class="qm-type">{label}</div>
+
+        # Calculate section header color based on average quality
+        section_color = ''
+        if quality_scores:
+            avg_quality = sum(quality_scores) / len(quality_scores)
+            if avg_quality >= 90:
+                section_color = 'qm-section-great'
+            elif avg_quality >= 80:
+                section_color = 'qm-section-good'
+            elif avg_quality >= 70:
+                section_color = 'qm-section-mid'
+            elif avg_quality >= 60:
+                section_color = 'qm-section-warn'
+            else:
+                section_color = 'qm-section-bad'
+
+        return f'''<div class="qm-type {section_color}">{label}</div>
 <div style="overflow-x:auto"><table class="qm-table">
 <thead><tr><th>Measure</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>4-Qtr Avg</th></tr></thead>
 <tbody>{rows}</tbody>
