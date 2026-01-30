@@ -15,13 +15,25 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans',sans-serif; }
     html { scroll-behavior:smooth; }
     body { background:#f8fafc; min-height:100vh; }
-    .header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
+    .site-nav { display:flex; align-items:center; justify-content:space-between; padding:0.875rem 1.5rem; background:white; border-bottom:1px solid #eee; position:sticky; top:0; z-index:50; }
+    .site-nav .logo { display:flex; align-items:center; gap:0.5rem; font-weight:800; font-size:1.125rem; color:#1a1a1a; text-decoration:none; }
+    .site-nav .logo-badge { background:#10b981; color:white; padding:0.2rem 0.4rem; border-radius:5px; font-size:0.7rem; font-weight:700; }
+    .site-nav .nav-links { display:flex; align-items:center; gap:0.25rem; }
+    .site-nav .nav-link { padding:0.4rem 0.75rem; text-decoration:none; color:#666; font-size:0.85rem; font-weight:500; border-radius:6px; transition:all 0.2s; }
+    .site-nav .nav-link:hover { color:#1a1a1a; background:#f5f5f5; }
+    .site-nav .nav-link.active { background:#e8faf3; color:#10b981; }
+    .site-nav .nav-link-soon { display:inline-flex; align-items:center; gap:0.4rem; }
+    .site-nav .nav-soon-badge { background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:white; font-size:0.55rem; font-weight:700; text-transform:uppercase; padding:0.15rem 0.4rem; border-radius:10px; }
+    .site-nav .nav-cta { padding:0.5rem 1rem; background:#10b981; color:#fff; border:none; border-radius:6px; font-size:0.85rem; font-weight:700; text-decoration:none; transition:all 0.2s; }
+    .site-nav .nav-cta:hover { background:#059669; }
+    @media(max-width:768px) { .site-nav .nav-links { display:none; } .site-nav .nav-cta { padding:0.4rem 0.75rem; font-size:0.8rem; } .site-nav { padding:0.625rem 1rem; } .header { top:44px; } }
+    .header { position:sticky; top:52px; z-index:40; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
     .header-content { max-width:1400px; margin:0 auto; padding:8px 20px 10px; }
     .mode-toggle-container { display:flex; justify-content:center; margin-bottom:8px; }
     .mode-toggle { background:#f3f4f6; border-radius:9999px; padding:2px; display:inline-flex; }
     .mode-btn { padding:5px 14px; border-radius:9999px; font-size:12px; font-weight:600; border:none; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all .2s; background:transparent; color:#6b7280; }
     .mode-btn:hover { color:#374151; }
-    .mode-btn.active-family { background:white; color:#4f46e5; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+    .mode-btn.active-family { background:white; color:#2563eb; box-shadow:0 1px 2px rgba(0,0,0,.08); }
     .mode-btn.active-pro { background:white; color:#0d9488; box-shadow:0 1px 2px rgba(0,0,0,.08); }
     .mode-btn svg { width:14px; height:14px; }
     .main-row { display:flex; align-items:center; justify-content:center; gap:12px; }
@@ -46,11 +58,11 @@
     .sort-options::-webkit-scrollbar { display:none; }
     .sort-btn { flex-shrink:0; padding:6px 12px; border-radius:16px; font-size:12px; font-weight:600; border:1px solid #e5e7eb; cursor:pointer; transition:all .15s; background:white; color:#4b5563; }
     .sort-btn:hover { background:#f9fafb; border-color:#d1d5db; }
-    .sort-btn.active-family { background:#4f46e5; color:white; border-color:#4f46e5; }
+    .sort-btn.active-family { background:#2563eb; color:white; border-color:#2563eb; }
     .sort-btn.active-pro { background:#0d9488; color:white; border-color:#0d9488; }
     .sort-btn.coming-soon { background:linear-gradient(135deg,#fef3c7,#fde68a); border-color:#fcd34d; color:#92400e; }
     .sort-btn.coming-soon:hover { background:linear-gradient(135deg,#fde68a,#fcd34d); border-color:#f59e0b; }
-    .soon-badge { font-size:9px; font-weight:700; background:#f59e0b; color:white; padding:2px 5px; border-radius:4px; margin-left:6px; text-transform:uppercase; vertical-align:middle; }
+    .soon-badge { font-size:9px; font-weight:700; background:#f59e0b; color:white; padding:2px 5px; border-radius:4px; margin-left:6px; text-transform:uppercase; vertical-align:1px; }
     .benefits-popup-overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:100; display:none; align-items:center; justify-content:center; padding:20px; }
     .benefits-popup-overlay.visible { display:flex; animation:fadeIn .2s ease; }
     .benefits-popup { background:white; border-radius:16px; max-width:380px; width:100%; box-shadow:0 20px 40px rgba(0,0,0,.2); position:relative; overflow:hidden; }
@@ -138,10 +150,10 @@
     .instructions.family .instructions-icon { background:#c7d2fe; }
     .instructions.pro .instructions-icon { background:#99f6e4; }
     .instructions-icon svg { width:16px; height:16px; }
-    .instructions.family .instructions-icon svg { color:#4f46e5; }
+    .instructions.family .instructions-icon svg { color:#2563eb; }
     .instructions.pro .instructions-icon svg { color:#0d9488; }
     .instructions p { font-size:13px; line-height:1.4; }
-    .instructions.family p { color:#4338ca; }
+    .instructions.family p { color:#1d4ed8; }
     .instructions.pro p { color:#0f766e; }
     #listView { transition:opacity .15s ease; }
     .results-count { max-width:1400px; margin:0 auto; padding:8px 20px 12px; font-size:13px; color:#6b7280; }
@@ -152,14 +164,14 @@
     .facility-card { position:relative; background:white; border-radius:14px; border:1px solid #e5e7eb; box-shadow:0 1px 3px rgba(0,0,0,.04); transition:all .2s; cursor:pointer; overflow:hidden; }
     .facility-card:hover { border-color:#d1d5db; box-shadow:0 4px 12px rgba(0,0,0,.08); transform:translateY(-2px); }
     .facility-card:active { transform:translateY(0) scale(.995); }
-    .facility-card.selected-family { border-color:#818cf8; box-shadow:0 0 0 3px rgba(99,102,241,.15),0 4px 12px rgba(99,102,241,.1); background:#fafaff; }
+    .facility-card.selected-family { border-color:#60a5fa; box-shadow:0 0 0 3px rgba(59,130,246,.15),0 4px 12px rgba(59,130,246,.1); background:#eff6ff; }
     .facility-card.selected-pro { border-color:#2dd4bf; box-shadow:0 0 0 3px rgba(45,212,191,.15),0 4px 12px rgba(20,184,166,.1); background:#f0fdfa; }
     .selection-indicator { position:absolute; top:0; left:0; right:0; height:3px; background:transparent; transition:all .2s; }
-    .facility-card.selected-family .selection-indicator { background:linear-gradient(90deg,#6366f1,#818cf8); }
+    .facility-card.selected-family .selection-indicator { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
     .facility-card.selected-pro .selection-indicator { background:linear-gradient(90deg,#14b8a6,#2dd4bf); }
     .selection-checkbox { position:absolute; top:12px; right:12px; width:22px; height:22px; border-radius:6px; border:2px solid #d1d5db; background:white; display:flex; align-items:center; justify-content:center; z-index:10; transition:all .15s; }
     .facility-card:hover .selection-checkbox { border-color:#9ca3af; }
-    .facility-card.selected-family .selection-checkbox { background:#6366f1; border-color:#6366f1; }
+    .facility-card.selected-family .selection-checkbox { background:#3b82f6; border-color:#3b82f6; }
     .facility-card.selected-pro .selection-checkbox { background:#14b8a6; border-color:#14b8a6; }
     .selection-checkbox svg { width:14px; height:14px; color:white; opacity:0; transition:opacity .15s; }
     .facility-card.selected-family .selection-checkbox svg, .facility-card.selected-pro .selection-checkbox svg { opacity:1; }
@@ -175,7 +187,7 @@
     .rating-badge .rating-value { color:white; font-weight:700; font-size:16px; text-shadow:0 1px 2px rgba(0,0,0,.2); line-height:1.1; }
     .rating-badge::after { content:'★'; position:absolute; bottom:-3px; right:-3px; font-size:9px; color:white; background:#111827; width:18px; height:18px; border-radius:5px; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,.2); }
     .card-title-section { flex:1; min-width:0; padding-right:28px; }
-    .card-title-section h3 { font-weight:600; color:#111827; font-size:15px; line-height:1.3; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-transform:none; mask-image:linear-gradient(to right, black 85%, transparent); -webkit-mask-image:linear-gradient(to right, black 85%, transparent); }
+    .card-title-section h3 { font-weight:600; color:#111827; font-size:15px; line-height:1.3; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-transform:none; mask-image:linear-gradient(to right, black 85%, transparent); -webkit-mask-image:linear-gradient(to right, black 85%, transparent); }
     .card-title-section .contact-info { font-size:11px; color:#6b7280; display:flex; flex-direction:column; gap:1px; }
     .card-title-section .contact-row { display:flex; align-items:center; gap:5px; line-height:1.4; }
     .card-title-section .contact-row svg { width:12px; height:12px; flex-shrink:0; opacity:0.5; }
@@ -205,8 +217,12 @@
     .info-tip { position:absolute; top:2px; right:2px; width:14px; height:14px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.08); border-radius:50%; transition:all .15s; }
     .info-tip:hover { background:rgba(0,0,0,0.15); }
     .info-tip svg { width:10px; height:10px; stroke:#6b7280; }
-    .info-tip .tip { position:absolute; bottom:calc(100% + 6px); right:-4px; background:#111827; color:#e5e7eb; padding:8px 11px; border-radius:6px; font-size:11px; font-weight:400; line-height:1.4; width:max-content; max-width:190px; text-align:left; opacity:0; visibility:hidden; transition:all .12s; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.25); pointer-events:none; }
-    .info-tip .tip::after { content:''; position:absolute; top:100%; right:8px; border:5px solid transparent; border-top-color:#111827; }
+    .info-tip .tip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); background:#111827; color:#e5e7eb; padding:8px 11px; border-radius:6px; font-size:11px; font-weight:400; line-height:1.4; width:max-content; max-width:190px; text-align:left; opacity:0; visibility:hidden; transition:all .12s; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.25); pointer-events:none; }
+    .info-tip .tip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#111827; }
+    .info-tip.tip-left .tip { left:0; transform:none; }
+    .info-tip.tip-left .tip::after { left:8px; transform:none; }
+    .info-tip.tip-right .tip { left:auto; right:0; transform:none; }
+    .info-tip.tip-right .tip::after { left:auto; right:8px; transform:none; }
     .info-tip:hover .tip, .info-tip:focus .tip, .info-tip.active .tip { opacity:1; visibility:visible; }
     .def-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:all .2s; }
     .def-modal-overlay.visible { opacity:1; visibility:visible; }
@@ -270,7 +286,7 @@
     .tray-chip button svg { width:10px; height:10px; color:white; }
     .tray-content { background:#111827; border-radius:50px; padding:6px 6px 6px 16px; box-shadow:0 4px 20px rgba(0,0,0,.25); display:flex; align-items:center; gap:12px; transition:transform .2s ease, padding .2s ease, gap .2s ease; }
     .tray-content:hover { transform:scale(1.08); padding:10px 10px 10px 20px; gap:14px; }
-    .tray-content.family { background:#4338ca; }
+    .tray-content.family { background:#1d4ed8; }
     .tray-count { font-size:14px; font-weight:500; color:white; white-space:nowrap; cursor:pointer; padding:4px 8px; border-radius:20px; display:flex; align-items:center; gap:4px; transition:background .15s; }
     .tray-count:hover { background:rgba(255,255,255,.15); }
     .tray-count svg { width:14px; height:14px; transition:transform .2s; }
@@ -278,7 +294,7 @@
     .tray-clear { background:rgba(255,255,255,.15); border:none; color:rgba(255,255,255,.7); font-size:11px; cursor:pointer; padding:4px 8px; border-radius:20px; white-space:nowrap; transition:all .15s; }
     .tray-clear:hover { background:rgba(255,255,255,.25); color:white; }
     .compare-btn { padding:10px 20px; border-radius:50px; font-weight:600; font-size:14px; border:none; cursor:pointer; transition:all .15s; display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap; }
-    .compare-btn.family { background:white; color:#4338ca; }
+    .compare-btn.family { background:white; color:#1d4ed8; }
     .compare-btn.pro { background:#10b981; color:white; }
     .compare-btn:disabled { opacity:.5; cursor:not-allowed; }
     .compare-btn:not(:disabled):hover { transform:scale(1.02); }
@@ -296,7 +312,7 @@
     .comparison-header-top p { font-size:13px; color:#6b7280; margin-top:2px; }
     .facility-headers { max-width:1000px; margin:0 auto; padding:0 20px 12px; display:flex; gap:10px; }
     .facility-header-card { flex:1; border-radius:12px; padding:14px 14px; display:flex; flex-direction:column; gap:4px; position:relative; transition:all .2s; min-height:95px; }
-    .facility-header-card.family { background:linear-gradient(145deg,#6366f1 0%,#4f46e5 100%); color:white; box-shadow:0 4px 20px rgba(99,102,241,.3); }
+    .facility-header-card.family { background:linear-gradient(145deg,#3b82f6 0%,#2563eb 100%); color:white; box-shadow:0 4px 20px rgba(59,130,246,.3); }
     .facility-header-card.pro { background:#f8fafc; color:#111827; border:1px solid #e2e8f0; }
     .facility-header-card.winner { background:linear-gradient(145deg,#1e293b 0%,#0f172a 100%); color:white; box-shadow:0 4px 20px rgba(15,23,42,.35); }
     .facility-header-card.wage-winner { background:linear-gradient(145deg,#16a34a 0%,#15803d 100%); color:white; box-shadow:0 4px 20px rgba(22,163,74,.3); }
@@ -526,6 +542,15 @@
       <div class="def-modal-body" id="defModalBody"></div>
     </div>
   </div>
+  <nav class="site-nav">
+    <a href="index.html" class="logo"><span class="logo-badge">SNF</span>compare</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="snf-facility-compare.html" class="nav-link active">Compare Tool</a>
+      <span class="nav-link nav-link-soon">Job Board <span class="nav-soon-badge">Coming Soon</span></span>
+    </div>
+    <a href="snf-facility-compare.html" class="nav-cta">Compare Now</a>
+  </nav>
   <div id="browseView" class="browse-view">
     <div class="header">
       <div class="header-content">
@@ -750,7 +775,9 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => { renderSortOptions(); loadFromUrl(); detectUserLocation(); });
+    function initPage() { renderSortOptions(); loadFromUrl(); detectUserLocation(); }
+    document.addEventListener('DOMContentLoaded', initPage);
+    window.addEventListener('pageshow', (e) => { if (e.persisted) initPage(); });
     document.addEventListener('click', (e) => { if (!e.target.closest('.info-tip')) document.querySelectorAll('.info-tip.active').forEach(t => t.classList.remove('active')); });
 
     async function detectUserLocation() {
@@ -763,12 +790,12 @@
           // Store location internally without showing in UI (less creepy)
           detectedLocation = { city: data.city.toLowerCase(), state: data.region_code, radius: 100 };
         } else {
-          // Default to New York for non-US visitors
-          detectedLocation = { city: 'new york', state: 'NY', radius: 100 };
+          // Default to Miami for non-US visitors
+          detectedLocation = { city: 'miami', state: 'FL', radius: 100 };
         }
       } catch (e) {
-        // Default to New York on error
-        detectedLocation = { city: 'new york', state: 'NY', radius: 100 };
+        // Default to Miami on error
+        detectedLocation = { city: 'miami', state: 'FL', radius: 100 };
       }
       renderFacilities();
     }
@@ -902,13 +929,13 @@
 
         marker.bindPopup(`
           <div class="map-popup">
-            <h4><a href="facility/${f.ccn}.html" target="_blank">${f.name}</a></h4>
+            <h4><a href="facility/${f.ccn}.html" target="_blank">${titleCase(f.name)}</a></h4>
             <div class="location">${f.streetAddress ? f.streetAddress + ', ' : ''}${f.city}, ${f.state} ${f.zip}</div>
             ${f.phone ? `<div class="phone"><a href="tel:${f.phone}">${f.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</a></div>` : ''}
             <div class="metrics">${popupMetrics}</div>
             <div class="actions">
               <button class="select-btn ${isSelected ? 'selected' : ''}" onclick="toggleSelectFromMap(${f.id})">${isSelected ? 'Remove' : 'Add to Compare'}</button>
-              <a href="facility/${f.ccn}.html" target="_blank" class="details-link">View Full Profile</a>
+              <a href="facility/${f.ccn}.html" class="details-link">View Full Profile</a>
             </div>
           </div>
         `, {maxWidth: 300, closeOnClick: false, autoClose: false});
@@ -926,7 +953,7 @@
         sidebarHtml += `
           <div class="map-sidebar-card ${isSelected ? 'selected' : ''}" data-id="${f.id}">
             <div class="card-main" onclick="panToFacility(${f.id})">
-              <h4>${f.name}</h4>
+              <h4>${titleCase(f.name)}</h4>
               <div class="location">${f.city}, ${f.state}</div>
               <div class="metrics">${sidebarMetrics}</div>
             </div>
@@ -1143,7 +1170,7 @@
       const dc=f.deficiencies<=2?'good':f.deficiencies<=5?'warning':'danger';
       const ir=`rating-${f.healthInspection}`, qr=`rating-${f.qualityRating}`;
       const hc=f.totalHrs!=null?(f.totalHrs>=4.5?'good':f.totalHrs>=3.5?'warning':'danger'):'';
-      return `<div class="facility-card ${sel?'selected-family':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge ${rc}"><span class="rating-label">Rated</span><span class="rating-value">${f.overallRating}/5</span></div><div class="card-title-section"><h3>${f.name}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip ${ir} has-info"><span class="info-tip" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Surprise inspections by state. 4-5★ = safe bet. Below 3★? Ask why before visiting.</span></span><span class="metric-value">${f.healthInspection}★</span><span class="metric-label">Inspection</span></div><div class="metric-chip ${qr} has-info"><span class="info-tip" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Real resident outcomes: falls, ER visits, infections. This is what actually happens to people there.</span></span><span class="metric-value">${f.qualityRating}★</span><span class="metric-label">Quality</span></div><div class="metric-chip ${hc}"><span class="metric-value">${f.totalHrs!=null?f.totalHrs.toFixed(1):'N/A'}</span><span class="metric-label">Hrs Daily Care</span></div><div class="metric-chip ${dc} has-info"><span class="info-tip" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Problems found by inspectors. US avg is 8. Under 4 is great. Over 10? Red flag.</span></span><span class="metric-value">${f.deficiencies}</span><span class="metric-label">Deficiencies</span></div></div><div class="card-footer"><div class="footer-left"><span class="tag-pill ${f.acceptsMedicaid?'medicaid':'rejected'}">${f.acceptsMedicaid?'✓':'✗'} Medicaid</span><span class="tag-pill ${f.acceptsMedicare?'medicare':'rejected'}">${f.acceptsMedicare?'✓':'✗'} Medicare</span><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link" target="_blank" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
+      return `<div class="facility-card ${sel?'selected-family':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge ${rc}"><span class="rating-label">Rated</span><span class="rating-value">${f.overallRating}/5</span></div><div class="card-title-section"><h3>${titleCase(f.name)}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip ${ir} has-info"><span class="info-tip tip-left" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Surprise inspections by state. 4-5★ = safe bet. Below 3★? Ask why before visiting.</span></span><span class="metric-value">${f.healthInspection}★</span><span class="metric-label">Inspection</span></div><div class="metric-chip ${qr} has-info"><span class="info-tip" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Real resident outcomes: falls, ER visits, infections. This is what actually happens to people there.</span></span><span class="metric-value">${f.qualityRating}★</span><span class="metric-label">Quality</span></div><div class="metric-chip ${hc}"><span class="metric-value">${f.totalHrs!=null?f.totalHrs.toFixed(1):'N/A'}</span><span class="metric-label">Hrs Daily Care</span></div><div class="metric-chip ${dc} has-info"><span class="info-tip tip-right" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Problems found by inspectors. US avg is 8. Under 4 is great. Over 10? Red flag.</span></span><span class="metric-value">${f.deficiencies}</span><span class="metric-label">Deficiencies</span></div></div><div class="card-footer"><div class="footer-left"><span class="tag-pill ${f.acceptsMedicaid?'medicaid':'rejected'}">${f.acceptsMedicaid?'✓':'✗'} Medicaid</span><span class="tag-pill ${f.acceptsMedicare?'medicare':'rejected'}">${f.acceptsMedicare?'✓':'✗'} Medicare</span><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
     }
 
     // Wage bounds per role - values outside these are likely data errors
@@ -1163,10 +1190,12 @@
       const [gd,bd]=lt[role]||[8,14];
       const lc=load!=null?(load<=gd?'good':load<=bd?'warning':'danger'):'';
       const tc=turnover!=null?(turnover<30?'good':turnover<50?'warning':'danger'):'';
-      return `<div class="facility-card ${sel?'selected-pro':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge rating-${f.overallRating}"><span class="rating-label">Rated</span><span class="rating-value">${f.overallRating}/5</span></div><div class="card-title-section"><h3>${f.name}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip wage"><span class="metric-value">${validWage?'$'+wage.toFixed(2):'N/A'}</span><span class="metric-label">${role}/hr (est.)</span></div><div class="metric-chip ${lc}"><span class="metric-value">${load!=null?(role==='NP'?Math.round(load):load.toFixed(1)):'N/A'}</span><span class="metric-label">patients/${role}</span></div><div class="metric-chip ${tc}"><span class="metric-value">${turnover!=null?turnover+'%':'N/A'}</span><span class="metric-label">turnover</span></div></div><div class="card-footer"><div class="footer-left"><div class="star-row"><span class="rating-label">Staff</span>${renderStars(f.staffingRating)}</div><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link pro" target="_blank" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
+      return `<div class="facility-card ${sel?'selected-pro':''}" onclick="toggleSelect(${f.id})"><div class="selection-indicator"></div><div class="selection-checkbox">${chk}</div><div class="card-content"><div class="card-header"><div class="rating-badge rating-${f.overallRating}"><span class="rating-label">Rated</span><span class="rating-value">${f.overallRating}/5</span></div><div class="card-title-section"><h3>${titleCase(f.name)}</h3><div class="contact-info"><div class="contact-row"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${f.streetAddress?f.streetAddress+', ':''}${f.city}, ${f.state} ${f.zip}</div>${f.phone?'<div class="contact-row phone"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><a href="tel:'+f.phone+'">'+f.phone.replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3')+'</a></div>':''}</div></div></div><div class="metrics-row"><div class="metric-chip wage"><span class="metric-value">${validWage?'$'+wage.toFixed(2):'N/A'}</span><span class="metric-label">${role}/hr (est.)</span></div><div class="metric-chip ${lc}"><span class="metric-value">${load!=null?(role==='NP'?Math.round(load):load.toFixed(1)):'N/A'}</span><span class="metric-label">patients/${role}</span></div><div class="metric-chip ${tc}"><span class="metric-value">${turnover!=null?turnover+'%':'N/A'}</span><span class="metric-label">turnover</span></div></div><div class="card-footer"><div class="footer-left"><div class="star-row"><span class="rating-label">Staff</span>${renderStars(f.staffingRating)}</div><span class="residents-info">${ppl}${f.avgResidentsDay!=null?f.avgResidentsDay+' residents':''}</span></div><a href="facility/${f.ccn}.html?ref=${mode}" class="view-link pro" onclick="event.stopPropagation()">View Full Profile<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a></div></div></div>`;
     }
 
     function renderStars(r) { return `<div class="star-rating">${[1,2,3,4,5].map(i=>`<svg class="${i<=r?'filled':'empty'}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}</div>`; }
+
+    function titleCase(str) { return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()); }
 
     function showInfoModal(type, id) {
       const f = facilityById[id];
@@ -1445,9 +1474,9 @@
         }
         return `<div class="facility-header-card ${cls}">
           ${badge}
-          <h3>${f.name}</h3>
+          <h3>${titleCase(f.name)}</h3>
           <span class="facility-location">${f.city}, ${f.state}</span>
-          <a href="facility/${f.ccn}.html?ref=${mode}" target="_blank" class="facility-info-link">View Full Profile <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a href="facility/${f.ccn}.html?ref=${mode}" class="facility-info-link">View Full Profile <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>`;
       }).join('');
     }
