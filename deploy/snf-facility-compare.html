@@ -919,10 +919,10 @@
              ${f.totalHrs ? `<span class="metric ${hrsColor(f.totalHrs)}">${f.totalHrs.toFixed(1)} hrs/patient</span>` : ''}`;
 
         const imgPath = `images/facilities/${f.ccn}.jpg`;
-        const fallbackImg = 'images/facilities2/1.jpg';
+        const placeholderImg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect fill='%23f3f4f6' width='100' height='100'/%3E%3Ctext x='50' y='45' text-anchor='middle' font-family='system-ui' font-size='10' fill='%239ca3af'%3EPhoto%3C/text%3E%3Ctext x='50' y='58' text-anchor='middle' font-family='system-ui' font-size='10' fill='%239ca3af'%3EComing Soon%3C/text%3E%3C/svg%3E`
         marker.bindPopup(`
           <div class="map-popup">
-            <img class="popup-img" src="${imgPath}" onerror="this.src='${fallbackImg}'" alt="${titleCase(f.name)}">
+            <img class="popup-img" src="${imgPath}" onerror="this.onerror=null;this.src='${placeholderImg}'" alt="${titleCase(f.name)}">
             <div class="popup-content">
               <h4><a href="facility/${f.ccn}.html" target="_blank">${titleCase(f.name)}</a></h4>
               <div class="location">${f.streetAddress ? f.streetAddress + ', ' : ''}${f.city}, ${f.state} ${f.zip}</div>
