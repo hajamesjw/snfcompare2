@@ -1430,10 +1430,11 @@
         const best = m.better==='higher'?Math.max(...nums):Math.min(...nums);
         vals.forEach((v,i)=>{ if(v===best) wins[i]++; });
       });
-      // Rank facilities
+      // Rank facilities - only first with maxWins gets 'winner'
       const maxWins=Math.max(...wins), minWins=Math.min(...wins);
+      let winnerAssigned = false;
       const rankings = wins.map(w=>{
-        if(w===maxWins && maxWins>minWins) return 'winner';
+        if(w===maxWins && maxWins>minWins && !winnerAssigned) { winnerAssigned=true; return 'winner'; }
         if(w===minWins && maxWins>minWins) return 'loser';
         return 'middle';
       });
