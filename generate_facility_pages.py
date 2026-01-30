@@ -48,7 +48,13 @@ def esc(s):
 
 def fmt_pct(v):
     f = safe_float(v)
-    return f'{f:.1f}%' if f is not None else 'N/A'
+    if f is None:
+        return 'N/A'
+    return f'{int(f)}%' if f == int(f) else f'{f:.1f}%'
+
+def fmt_pct_val(f):
+    """Format a float percentage, stripping .0 if whole number"""
+    return f'{int(f)}%' if f == int(f) else f'{f:.1f}%'
 
 def fmt_dollars(v):
     f = safe_float(v)
@@ -377,10 +383,10 @@ def build_staffing_table(p):
     turnover_html = '<div class="turnover-grid">'
     if turnover is not None:
         tc = 'val-good' if turnover < 30 else ('val-warn' if turnover < 50 else 'val-bad')
-        turnover_html += f'<div class="turnover-card"><div class="turnover-val {tc}">{turnover:.1f}%</div><div class="turnover-lbl">Total Nursing Turnover</div></div>'
+        turnover_html += f'<div class="turnover-card"><div class="turnover-val {tc}">{fmt_pct_val(turnover)}</div><div class="turnover-lbl">Total Nursing Turnover</div></div>'
     if rn_turnover is not None:
         rc = 'val-good' if rn_turnover < 30 else ('val-warn' if rn_turnover < 50 else 'val-bad')
-        turnover_html += f'<div class="turnover-card"><div class="turnover-val {rc}">{rn_turnover:.1f}%</div><div class="turnover-lbl">RN Turnover</div></div>'
+        turnover_html += f'<div class="turnover-card"><div class="turnover-val {rc}">{fmt_pct_val(rn_turnover)}</div><div class="turnover-lbl">RN Turnover</div></div>'
     if admin_left:
         turnover_html += f'<div class="turnover-card"><div class="turnover-val">{esc(admin_left)}</div><div class="turnover-lbl">Administrators Left</div></div>'
     turnover_html += '</div>'
@@ -496,13 +502,13 @@ def build_quality_measures_section(measures):
     short_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('short')]
 
     def fmt_measure(val):
-        """Format measure value: round to 1 decimal, add % suffix"""
+        """Format measure value: round to 1 decimal, add % suffix, strip .0"""
         raw = val.strip() if val else ''
         if not raw or raw == 'N/A':
             return 'N/A'
         try:
             num = float(raw)
-            return f'{num:.1f}%'
+            return f'{int(num)}%' if num == int(num) else f'{num:.1f}%'
         except ValueError:
             return esc(raw)
 
