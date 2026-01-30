@@ -15,36 +15,36 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Plus Jakarta Sans',sans-serif; }
     html { scroll-behavior:smooth; }
     body { background:#f8fafc; min-height:100vh; }
-    .header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.95); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
-    .header-content { max-width:1400px; margin:0 auto; padding:10px 20px; }
+    .header { position:sticky; top:0; z-index:40; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid #e5e7eb; }
+    .header-content { max-width:1400px; margin:0 auto; padding:8px 20px 10px; }
     .mode-toggle-container { display:flex; justify-content:center; margin-bottom:8px; }
-    .mode-toggle { background:#f3f4f6; border-radius:9999px; padding:3px; display:inline-flex; }
-    .mode-btn { padding:8px 20px; border-radius:9999px; font-size:14px; font-weight:600; border:none; cursor:pointer; display:flex; align-items:center; gap:8px; transition:all .2s; background:transparent; color:#6b7280; }
+    .mode-toggle { background:#f3f4f6; border-radius:9999px; padding:2px; display:inline-flex; }
+    .mode-btn { padding:5px 14px; border-radius:9999px; font-size:12px; font-weight:600; border:none; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all .2s; background:transparent; color:#6b7280; }
     .mode-btn:hover { color:#374151; }
-    .mode-btn.active-family { background:white; color:#4f46e5; box-shadow:0 1px 3px rgba(0,0,0,.1); }
-    .mode-btn.active-pro { background:white; color:#0d9488; box-shadow:0 1px 3px rgba(0,0,0,.1); }
-    .mode-btn svg { width:18px; height:18px; }
-    .title-section { display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
-    .title-left { text-align:center; }
-    .title-section h1 { font-size:24px; font-weight:700; color:#111827; letter-spacing:-0.02em; margin-bottom:2px; }
-    .title-section p { font-size:14px; color:#6b7280; }
-    .search-filter-row { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
-    .role-toggle { display:flex; align-items:center; gap:3px; background:#f3f4f6; border-radius:9999px; padding:3px; }
-    .role-btn { padding:8px 14px; border-radius:9999px; font-size:13px; font-weight:600; border:none; cursor:pointer; transition:all .15s; background:transparent; color:#6b7280; }
+    .mode-btn.active-family { background:white; color:#4f46e5; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+    .mode-btn.active-pro { background:white; color:#0d9488; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+    .mode-btn svg { width:14px; height:14px; }
+    .main-row { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .title-section { flex-shrink:0; }
+    .title-section h1 { font-size:20px; font-weight:700; color:#111827; letter-spacing:-0.02em; margin:0; line-height:1.2; }
+    .title-section p { font-size:12px; color:#6b7280; margin:2px 0 0; }
+    .search-filter-row { display:flex; align-items:center; gap:10px; flex:1; justify-content:flex-end; }
+    .role-toggle { display:flex; align-items:center; gap:2px; background:#f3f4f6; border-radius:9999px; padding:2px; }
+    .role-btn { padding:6px 11px; border-radius:9999px; font-size:12px; font-weight:600; border:none; cursor:pointer; transition:all .15s; background:transparent; color:#6b7280; }
     .role-btn:hover { color:#374151; background:rgba(0,0,0,.03); }
     .role-btn.active { background:#0d9488; color:white; box-shadow:0 1px 2px rgba(0,0,0,.1); }
-    .search-container { position:relative; display:flex; align-items:center; background:white; border:1px solid #d1d5db; border-radius:50px; transition:all .2s; min-width:360px; max-width:480px; box-shadow:0 1px 3px rgba(0,0,0,.05); }
-    .search-container:focus-within { border-color:#0d9488; box-shadow:0 0 0 3px rgba(13,148,136,.12); }
-    .search-container svg.search-icon { position:absolute; left:16px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:#9ca3af; pointer-events:none; }
-    .search-input { flex:1; padding:11px 8px 11px 46px; background:transparent; border:none; font-size:15px; outline:none; min-width:0; }
-    .search-divider { width:1px; height:28px; background:#e5e7eb; }
-    .radius-select { padding:11px 16px; background:transparent; border:none; font-size:14px; font-weight:500; color:#0d9488; outline:none; cursor:pointer; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230d9488'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 8px center; background-size:16px; padding-right:32px; }
+    .search-container { position:relative; display:flex; align-items:center; background:white; border:1px solid #d1d5db; border-radius:50px; transition:all .2s; min-width:280px; max-width:360px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    .search-container:focus-within { border-color:#0d9488; box-shadow:0 0 0 2px rgba(13,148,136,.1); }
+    .search-container svg.search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:#9ca3af; pointer-events:none; }
+    .search-input { flex:1; padding:8px 8px 8px 36px; background:transparent; border:none; font-size:14px; outline:none; min-width:0; }
+    .search-divider { width:1px; height:24px; background:#e5e7eb; }
+    .radius-select { padding:8px 12px; background:transparent; border:none; font-size:13px; font-weight:500; color:#0d9488; outline:none; cursor:pointer; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230d9488'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 6px center; background-size:14px; padding-right:26px; }
     .search-input:focus { outline:none; }
     .search-input::placeholder { color:#9ca3af; }
-    .sort-row { display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:0 auto; padding:8px 20px 10px; gap:16px; border-top:1px solid #f3f4f6; background:#fafafa; }
-    .sort-options { display:flex; gap:8px; overflow-x:auto; flex:1; -webkit-overflow-scrolling:touch; }
+    .sort-row { display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:0 auto; padding:6px 20px 8px; gap:12px; border-top:1px solid #f3f4f6; background:#fafafa; }
+    .sort-options { display:flex; gap:6px; overflow-x:auto; flex:1; -webkit-overflow-scrolling:touch; }
     .sort-options::-webkit-scrollbar { display:none; }
-    .sort-btn { flex-shrink:0; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600; border:1px solid #e5e7eb; cursor:pointer; transition:all .15s; background:white; color:#4b5563; }
+    .sort-btn { flex-shrink:0; padding:6px 12px; border-radius:16px; font-size:12px; font-weight:600; border:1px solid #e5e7eb; cursor:pointer; transition:all .15s; background:white; color:#4b5563; }
     .sort-btn:hover { background:#f9fafb; border-color:#d1d5db; }
     .sort-btn.active-family { background:#4f46e5; color:white; border-color:#4f46e5; }
     .sort-btn.active-pro { background:#0d9488; color:white; border-color:#0d9488; }
@@ -126,8 +126,7 @@
     .map-popup .details-link { flex:1; padding:6px 10px; background:#f3f4f6; color:#111827; border:none; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; text-align:center; text-decoration:none; }
     .map-popup .details-link:hover { background:#e5e7eb; color:#000; }
     @media (max-width:900px) { .map-sidebar { display:none; } }
-    .instructions { max-width:1400px; margin:8px auto 6px; padding:0 20px; }
-    .instructions-inner { border-radius:10px; padding:8px 12px; display:flex; align-items:center; gap:10px; }
+    .instructions { display:none; }
     .instructions.family .instructions-inner { background:#eef2ff; border:1px solid #e0e7ff; }
     .instructions.pro .instructions-inner { background:#f0fdfa; border:1px solid #ccfbf1; }
     .instructions-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -353,26 +352,25 @@
 
     /* Mobile styles */
     @media (max-width: 640px) {
-      .header-content { padding:8px 16px; }
+      .header-content { padding:8px 12px; }
       .mode-toggle-container { margin-bottom:6px; }
-      .mode-btn { padding:6px 12px; font-size:12px; gap:5px; }
-      .mode-btn svg { width:14px; height:14px; }
-      .title-section { margin-bottom:8px; }
-      .title-section h1 { font-size:18px; }
+      .mode-btn { padding:5px 10px; font-size:11px; gap:4px; }
+      .mode-btn svg { width:12px; height:12px; }
+      .main-row { flex-direction:column; gap:8px; align-items:stretch; }
+      .title-section { text-align:center; }
+      .title-section h1 { font-size:17px; }
       .title-section p { font-size:11px; }
-      .search-filter-row { flex-direction:column; gap:8px; }
+      .search-filter-row { flex-direction:column; gap:6px; justify-content:center; }
       .search-container { min-width:100%; max-width:100%; }
+      .role-toggle { justify-content:center; }
       .role-btn { padding:5px 10px; font-size:11px; }
-      .search-input { padding:10px 12px 10px 38px; font-size:14px; }
-      .search-container svg.search-icon { width:16px; height:16px; left:12px; }
-      .sort-row { padding:6px 16px 8px; flex-wrap:wrap; gap:8px; }
-      .sort-options { gap:6px; width:100%; order:2; padding-bottom:2px; }
-      .sort-btn { padding:6px 10px; font-size:11px; border-radius:16px; }
+      .search-input { padding:9px 10px 9px 34px; font-size:14px; }
+      .search-container svg.search-icon { width:14px; height:14px; left:12px; }
+      .sort-row { padding:6px 12px; flex-wrap:wrap; gap:6px; }
+      .sort-options { gap:5px; width:100%; order:2; }
+      .sort-btn { padding:5px 10px; font-size:11px; border-radius:14px; }
       .view-toggle { order:1; margin-left:auto; }
-      .soon-badge { font-size:8px; padding:2px 4px; margin-left:4px; }
-      .instructions { padding:0 16px; margin:4px 0; }
-      .instructions-inner { padding:6px 10px; }
-      .instructions p { font-size:12px; }
+      .soon-badge { font-size:7px; padding:2px 4px; margin-left:3px; }
       .results-count { padding:6px 16px 10px; font-size:12px; }
       .facility-list { padding:0 12px 180px; gap:10px; grid-template-columns:1fr; }
       .card-content { padding:12px; }
@@ -498,22 +496,22 @@
             </button>
           </div>
         </div>
-        <div class="title-section">
-          <div class="title-left">
+        <div class="main-row">
+          <div class="title-section">
             <h1 id="pageTitle">Find Your Workplace</h1>
             <p id="pageSubtitle">Compare facilities by pay, workload & culture</p>
           </div>
-        </div>
-        <div class="search-filter-row">
-          <div class="search-container">
-            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input id="searchInput" type="text" class="search-input" placeholder="City, state, or zip..." oninput="handleSearch()">
-          </div>
-          <div id="roleToggle" class="role-toggle">
-            <button class="role-btn active" onclick="setRole('RN')">RN</button>
-            <button class="role-btn" onclick="setRole('LPN')">LPN</button>
-            <button class="role-btn" onclick="setRole('CNA')">CNA</button>
-            <button class="role-btn" onclick="setRole('NP')">NP</button>
+          <div class="search-filter-row">
+            <div class="search-container">
+              <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input id="searchInput" type="text" class="search-input" placeholder="City, state, or zip..." oninput="handleSearch()">
+            </div>
+            <div id="roleToggle" class="role-toggle">
+              <button class="role-btn active" onclick="setRole('RN')">RN</button>
+              <button class="role-btn" onclick="setRole('LPN')">LPN</button>
+              <button class="role-btn" onclick="setRole('CNA')">CNA</button>
+              <button class="role-btn" onclick="setRole('NP')">NP</button>
+            </div>
           </div>
         </div>
       </div>
