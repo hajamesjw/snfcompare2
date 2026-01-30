@@ -459,8 +459,10 @@
       .results-count { padding:8px 24px 12px; }
     }
 
-    /* Hide mode toggle when in iframe (header has it) */
-    body.in-iframe .mode-toggle-container { display: none !important; }
+    /* Hide mode toggle when in iframe on tablet/mobile (header has it there) */
+    @media (max-width: 900px) {
+      body.in-iframe .mode-toggle-container { display: none !important; }
+    }
 
   </style>
   <script type="application/ld+json">
