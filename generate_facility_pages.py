@@ -239,6 +239,12 @@ a:hover{color:var(--primary-dark)}
 .card-header{padding:18px 24px;border-bottom:1px solid #f3f4f6;background:linear-gradient(180deg,#fafbfc 0%,#f8f9fa 100%);display:flex;align-items:center;justify-content:space-between}
 .card-header h2{font-size:15px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:10px}
 .card-header h2::before{content:'';width:4px;height:18px;background:linear-gradient(180deg,var(--accent),var(--primary));border-radius:2px}
+.section-info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#e5e7eb;cursor:pointer;flex-shrink:0}
+.section-info svg{width:12px;height:12px;stroke:#6b7280}
+.section-info .tip{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);background:#1f2937;color:white;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:500;white-space:normal;width:280px;text-transform:none;letter-spacing:normal;line-height:1.5;opacity:0;visibility:hidden;transition:all .2s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:left}
+.section-info .tip::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#1f2937}
+.section-info:hover .tip{opacity:1;visibility:visible}
+@media(max-width:600px){.section-info .tip{width:220px;left:0;transform:none}.section-info .tip::before{left:9px;transform:none}}
 .card-body{padding:24px}
 .ratings-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:700px){.ratings-grid{grid-template-columns:repeat(2,1fr)}}
@@ -813,42 +819,42 @@ def generate_html(ccn, p, quality_measures, penalties, surveys, wages):
 <div class="section">
 
 <div class="card">
-<div class="card-header"><h2>Ratings Overview</h2></div>
+<div class="card-header"><h2>Ratings Overview<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">CMS Five-Star ratings based on health inspections, quality measures, and staffing levels. 5 stars = much above average, 1 star = much below average.</span></span></h2></div>
 <div class="card-body">{ratings_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Staffing Details</h2></div>
+<div class="card-header"><h2>Staffing Details<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Hours of care provided per resident per day by staff type. Higher staffing generally correlates with better outcomes. CMS recommends 4.1+ total hours daily.</span></span></h2></div>
 <div class="card-body">{staffing_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Estimated Wages</h2></div>
+<div class="card-header"><h2>Estimated Wages<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Wages estimated from CMS cost report data. These are modeled averages, not actual job postings. Actual wages may vary based on experience and shift.</span></span></h2></div>
 <div class="card-body">{wages_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Facility Information</h2></div>
+<div class="card-header"><h2>Facility Information<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Basic facility details including ownership type, bed count, and insurance accepted. Ownership type can affect staffing and care quality.</span></span></h2></div>
 <div class="card-body">{info_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Safety &amp; Compliance</h2></div>
+<div class="card-header"><h2>Safety &amp; Compliance<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Deficiencies found during inspections, complaints filed, and fines issued. Lower numbers indicate better compliance. US average is about 8 deficiencies.</span></span></h2></div>
 <div class="card-body">{safety_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Quality Measures (MDS)</h2></div>
+<div class="card-header"><h2>Quality Measures (MDS)<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Clinical outcomes from Minimum Data Set assessments. Lower percentages are generally better (fewer falls, infections, etc). Compare to state and national averages.</span></span></h2></div>
 <div class="card-body" style="padding:0">{qm_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Penalty History</h2></div>
+<div class="card-header"><h2>Penalty History<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Fines and payment denials imposed by CMS for serious violations. Frequent or large penalties may indicate ongoing compliance issues.</span></span></h2></div>
 <div class="card-body">{penalties_html}</div>
 </div>
 
 <div class="card">
-<div class="card-header"><h2>Inspection History</h2></div>
+<div class="card-header"><h2>Inspection History<span class="section-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg><span class="tip">Recent state health inspections and complaint investigations. Click survey dates to see detailed findings. Focus on scope and severity of deficiencies.</span></span></h2></div>
 <div class="card-body" style="padding:0">{inspections_html}</div>
 </div>
 
