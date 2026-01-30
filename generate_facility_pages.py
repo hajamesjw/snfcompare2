@@ -397,6 +397,7 @@ tbody tr:nth-child(even):hover td{background:#f0fdf9}
 .qm-mid{color:#ca8a04;font-weight:600}
 .qm-warn{color:#ea580c;font-weight:600}
 .qm-bad{color:#dc2626;font-weight:600}
+.qm-neutral{color:#374151;font-weight:500}
 .empty-state{padding:40px 24px;text-align:center;color:var(--text-muted);font-size:14px;font-weight:500}
 @media(max-width:480px){
 .container{padding:0 16px}
@@ -644,59 +645,72 @@ def build_quality_measures_section(measures):
     long_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('long')]
     short_stay = [m for m in measures if m.get('Resident type', '').strip().lower().startswith('short')]
 
-    def is_higher_better(desc):
-        """Analyze measure description to determine if higher percentage is better"""
+    def get_measure_direction(desc):
+        """Analyze measure description to determine if higher/lower is better, or ambiguous
+        Returns: 'higher', 'lower', or 'ambiguous'
+        """
         desc_lower = desc.lower()
+
+        # Ambiguous measures - can't easily say if higher/lower is better
+        ambiguous = ['antipsychotic', 'psychoactive', 'anti-anxiety', 'sedative',
+                     'hypnotic', 'medication', 'drug']
+        for keyword in ambiguous:
+            if keyword in desc_lower:
+                return 'ambiguous'
+
         # Higher is better: vaccines, assessments, proper care given
         higher_good = ['vaccine', 'vaccinated', 'immuniz', 'appropriately given',
                        'assessed and given', 'received', 'offered']
+        for keyword in higher_good:
+            if keyword in desc_lower:
+                return 'higher'
+
         # Lower is better: negative outcomes
         lower_good = ['fall', 'pressure ulcer', 'pressure sore', 'infection', 'uti ',
                       'urinary tract', 'pain', 'restrain', 'weight loss', 'lost weight',
                       'catheter', 'emergency', 'er visit', 'hospital', 'depress',
-                      'antipsychotic', 'decline', 'decreased', 'worsen', 'increased need',
+                      'decline', 'decreased', 'worsen', 'increased need',
                       'help with daily activities has increased', 'physically restrained',
                       'one or more falls', 'major injury', 'symptoms of depression']
-
-        for keyword in higher_good:
-            if keyword in desc_lower:
-                return True
         for keyword in lower_good:
             if keyword in desc_lower:
-                return False
+                return 'lower'
+
         # Default: lower is better (most quality measures)
-        return False
+        return 'lower'
 
-    def get_qm_color(val, higher_is_better=False):
-        """Get color class for quality measure"""
-        if val is None:
+    def get_qm_color(val, direction='lower'):
+        """Get color class for quality measure
+        direction: 'higher' (higher=better), 'lower' (lower=better), 'ambiguous' (no color)
+        """
+        if val is None or direction == 'ambiguous':
             return ''
-        if higher_is_better:
-            # Higher is better (e.g., vaccine rates)
-            if val >= 95:
-                return 'qm-great'
+        if direction == 'higher':
+            # Higher is better (e.g., vaccine rates) - percentile-based
+            if val >= 98:
+                return 'qm-great'  # Top 20%
+            elif val >= 95:
+                return 'qm-good'
             elif val >= 85:
-                return 'qm-good'
+                return 'qm-mid'
             elif val >= 70:
-                return 'qm-mid'
-            elif val >= 50:
                 return 'qm-warn'
             else:
-                return 'qm-bad'
+                return 'qm-bad'   # Bottom 20%
         else:
-            # Lower is better (e.g., falls, infections)
-            if val < 5:
-                return 'qm-great'
-            elif val < 10:
+            # Lower is better (e.g., falls, infections) - percentile-based
+            if val <= 2:
+                return 'qm-great'  # Top 20%
+            elif val <= 5:
                 return 'qm-good'
-            elif val < 20:
+            elif val <= 12:
                 return 'qm-mid'
-            elif val < 30:
+            elif val <= 20:
                 return 'qm-warn'
             else:
-                return 'qm-bad'
+                return 'qm-bad'   # Bottom 20%
 
-    def fmt_measure(val, higher_is_better=False, with_color=False):
+    def fmt_measure(val, direction='lower', with_color=False):
         """Format measure value: round to 1 decimal, add % suffix, strip .0"""
         raw = val.strip() if val else ''
         if not raw or raw == 'N/A':
@@ -705,8 +719,10 @@ def build_quality_measures_section(measures):
             num = float(raw)
             formatted = f'{int(num)}%' if num == int(num) else f'{num:.1f}%'
             if with_color:
-                color_class = get_qm_color(num, higher_is_better)
-                return f'<span class="{color_class}">{formatted}</span>'
+                color_class = get_qm_color(num, direction)
+                if color_class:
+                    return f'<span class="{color_class}">{formatted}</span>'
+                return f'<span class="qm-neutral">{formatted}</span>'
             return formatted
         except ValueError:
             return esc(raw)
@@ -719,22 +735,22 @@ def build_quality_measures_section(measures):
         for m in sorted(items, key=lambda x: x.get('Measure Code', '')):
             desc_raw = m.get('Measure Description', '')
             desc = esc(desc_raw)
-            higher_better = is_higher_better(desc_raw)
-            q1 = fmt_measure(m.get('Q1 Measure Score', ''), higher_better, with_color=True)
-            q2 = fmt_measure(m.get('Q2 Measure Score', ''), higher_better, with_color=True)
-            q3 = fmt_measure(m.get('Q3 Measure Score', ''), higher_better, with_color=True)
-            q4 = fmt_measure(m.get('Q4 Measure Score', ''), higher_better, with_color=True)
+            direction = get_measure_direction(desc_raw)
+            q1 = fmt_measure(m.get('Q1 Measure Score', ''), direction, with_color=True)
+            q2 = fmt_measure(m.get('Q2 Measure Score', ''), direction, with_color=True)
+            q3 = fmt_measure(m.get('Q3 Measure Score', ''), direction, with_color=True)
+            q4 = fmt_measure(m.get('Q4 Measure Score', ''), direction, with_color=True)
             avg_raw = m.get('Four Quarter Average Score', '').strip()
-            avg = fmt_measure(avg_raw, higher_better, with_color=True)
+            avg = fmt_measure(avg_raw, direction, with_color=True)
             # Get color for the row indicator bar
             try:
                 avg_num = float(avg_raw) if avg_raw else None
             except ValueError:
                 avg_num = None
-            bar_color = get_qm_color(avg_num, higher_better)
-            # Track normalized score for section average
-            if avg_num is not None:
-                if higher_better:
+            bar_color = get_qm_color(avg_num, direction)
+            # Track normalized score for section average (skip ambiguous)
+            if avg_num is not None and direction != 'ambiguous':
+                if direction == 'higher':
                     quality_scores.append(avg_num)  # Higher is better, use as-is
                 else:
                     quality_scores.append(100 - avg_num)  # Lower is better, invert
