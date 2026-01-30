@@ -338,6 +338,66 @@
       border: 1px solid #bbf7d0;
     }
 
+    @media (max-width: 480px) {
+      .job-board-popup {
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 16px;
+      }
+      .job-board-header {
+        padding: 1.5rem 1.25rem 1.25rem;
+      }
+      .job-board-header h3 {
+        font-size: 1.25rem;
+      }
+      .job-board-header p {
+        font-size: 0.875rem;
+      }
+      .job-board-benefits {
+        padding: 1rem 1.25rem;
+      }
+      .job-board-benefit {
+        padding: 0.65rem 0;
+        gap: 0.65rem;
+      }
+      .job-board-benefit-icon {
+        width: 28px;
+        height: 28px;
+      }
+      .job-board-benefit-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+      .job-board-benefit-text strong {
+        font-size: 0.85rem;
+      }
+      .job-board-benefit-text span {
+        font-size: 0.75rem;
+      }
+      .job-board-cta {
+        padding: 1rem 1.25rem 1.5rem;
+      }
+      .job-board-cta-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.65rem;
+      }
+      .job-board-form {
+        flex-direction: column;
+      }
+      .job-board-form input,
+      .job-board-form button {
+        padding: 0.85rem 1rem;
+        font-size: 0.9rem;
+      }
+      .job-board-x {
+        width: 30px;
+        height: 30px;
+        top: 12px;
+        right: 12px;
+        font-size: 1.2rem;
+      }
+    }
+
     /* Hamburger menu button - mobile only */
     .hamburger {
       display: none;
